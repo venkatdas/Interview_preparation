@@ -1,5 +1,4 @@
 #### Javascript Memoization - web dev simplified
 - Memoization is an optimization technique used in programming to improve the performance of functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This can help avoid redundant computations and speed up the execution of functions, especially in cases where the same inputs are used frequently.
 - Idea of this you store the previous results so that , if we call the function a bunch of times in a row with the same value we're caching the value based on the inputs
-
-  
+- In other words, memoization is a way to speed up a function by storing its previously computed results and returning them instead of recomputing the result whenever the function is called with the same arguments.
