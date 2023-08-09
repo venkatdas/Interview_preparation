@@ -48,3 +48,9 @@ console.log(squre(9999));
 console.log(squre(9999));
 console.log(squre(9999));
 ```
+#### Explanation
+- const prevValues = []: This initializes an array called prevValues which will be used to cache the previously computed results. It's intended to store computed square values for specific input numbers.
+- Whatever the result i got , that stoted in the nth position of the array prevValues[n]=result
+- if (prevValues[n] != null): This condition checks whether the square of the given number n has been previously computed and cached in the prevValues array
+- If the square for the given number is found in the cache (prevValues), the function directly returns that cached value, avoiding redundant calculations.
+- If the square for the given number is not found in the cache, the function enters a nested loop. This loop calculates the square of the number by incrementing result as it iterates through the nested loop.
