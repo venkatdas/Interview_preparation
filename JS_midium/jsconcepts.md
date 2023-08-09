@@ -25,3 +25,26 @@ console.log(squre(9999));
 
 
 ```
+
+### Memoization technique
+
+```javascript
+const prevValues=[]
+function squre(n) {
+if(prevValues[n]!= null){
+  return prevValues[n]
+}
+  let result = 0;
+  for (var i = 1; i <= n; i++) {
+    for (var j = 1; j <= n; j++) {
+      result += 1;
+    }
+  }
+  prevValues[n]=result
+  return result;
+}
+console.log(squre(9999));
+console.log(squre(9999));
+console.log(squre(9999));
+console.log(squre(9999));
+```
