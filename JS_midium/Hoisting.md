@@ -38,3 +38,18 @@ a = 5;
 console.log(a); // 5
 ```
 **However in JavaScript, initializations are not hoisted. For example,**
+
+```javascript
+// program to display value
+console.log(a);
+var a = 5; //undefined
+```
+Above program behave as
+
+```javascript
+var a;
+console.log(a);
+a = 5;
+```
+Only the declaration is moved to the memory in the compile phase. Hence, the value of variable a is undefined because a is printed without initializing it.
+
