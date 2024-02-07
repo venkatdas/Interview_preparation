@@ -2,7 +2,7 @@
 
 
 
-#### Hoisting
+1) #### Hoisting
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/c485d82f-2eb1-45bd-b991-7f635a2f5422)
 
@@ -38,7 +38,7 @@ abc();
 - Temporal dead zone , is the state where variables are in the scope but they are not yet declared
 
 
-  ### Implicit and Explicit binidng
+  2) ### Implicit and Explicit binidng
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/ed4cb430-63cd-4c12-89e0-dd58b5f2d283)
 
@@ -61,4 +61,6 @@ abc();
 
 
 
+
+3) ### Implementing a caching or memoize function in JS
 
