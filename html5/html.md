@@ -389,7 +389,23 @@ body {
 
 ```
 
+**24) cors in html?**
 
+**25)  Describe the 'picture' element in HTML5 and its use in responsive images.**
+
+- The <picture> element in HTML5 provides a flexible solution for delivering responsive images on web pages.
+-  It allows developers to define multiple sources for an image and lets the browser choose the most appropriate one based on the current viewing conditions, such as screen size, resolution, or type of device.
+-   This ensures that users receive images optimized for their viewing context, improving page load times and overall user experience.
+
+```html
+
+<picture>
+  <source media="(min-width: 800px)" srcset="large.jpg">
+  <source media="(min-width: 450px)" srcset="medium.jpg">
+  <img src="small.jpg" alt="An example image">
+</picture>
+
+```
 
 
 
