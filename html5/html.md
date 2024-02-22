@@ -52,10 +52,6 @@
 
 2) Explain meta tag in html
 
-<details>
-    
-<summary>Answer</summary>
-
 The <meta> tag defines metadata about an HTML document. Metadata is data (information) about data. <meta> tags always go inside the <head> element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.
 
 
@@ -65,7 +61,7 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 
 `<meta charset="UTF-8">`
 
-**Viewport Configuration for Mobile Devices: **It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
+**Viewport Configuration for Mobile Devices: ** It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
 
 
 `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
@@ -81,7 +77,7 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 
 
 `<meta name="author" content="John Doe">`
-**Refresh and Redirection: **It can be used to refresh the page or redirect to another page after a specified number of seconds.
+**Refresh and Redirection: ** It can be used to refresh the page or redirect to another page after a specified number of seconds.
 
 
 `<meta http-equiv="refresh" content="30; url=http://example.com/">`
@@ -89,7 +85,7 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 **Controlling Browser Caching:** It can instruct the browser how to cache the page, although HTTP headers often handle this more effectively.
 
 **Social Media Integration and SEO:** Meta tags such as Open Graph (used by Facebook) and Twitter Cards tags are used to control how content appears when shared on social media platforms, including specifying images, descriptions, and other elements for rich previews.
-</details>
+
 
 3) 
 
