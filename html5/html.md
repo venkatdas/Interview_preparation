@@ -211,6 +211,74 @@ The lang attribute in the <html> tag specifies the primary language of a webpage
         For Arabic: <html lang="ar">
 
 
+**13) Discuss the role of the 'table' element in HTML.**
+
+
+The <table> element in HTML plays a critical role in organizing and displaying data in a tabular format on web pages. It is designed to represent structured data — information that's logically arranged in rows and columns, much like in spreadsheets. The use of tables in HTML enables developers to present complex data in a way that's easy to understand and navigate for users. 
+
+**14) How do you create a numbered list in HTML?** 
+
+
+
+To create a numbered list in HTML, you use the <ol> (ordered list) element, with each item in the list wrapped in an <li> (list item) element. The numbers are automatically generated and displayed in front of each list item, typically starting at 1 and incrementing by 1 for each subsequent list item.
+
+
+
+```html
+<ol>
+  <li>First item
+    <ol>
+      <li>Subitem 1</li>
+      <li>Subitem 2</li>
+    </ol>
+  </li>
+  <li>Second item</li>
+</ol>
+
+```
+
+**15) 
+What is the purpose of the 'localStorage' and 'sessionStorage' objects in HTML5?**
+
+```html
+// Storing data in localStorage
+localStorage.setItem('username', 'JohnDoe');
+
+// Retrieving data from localStorage
+const username = localStorage.getItem('username');
+console.log(username); // Output: JohnDoe
+// To delete the key
+localStorage.removeItem('myKey');
+// To clear all the data
+localStorage.clear();
+
+// Storing data in sessionStorage
+sessionStorage.setItem('sessionKey', '123456');
+
+// Retrieving data from sessionStorage
+const sessionKey = sessionStorage.getItem('sessionKey');
+console.log(sessionKey); // Output: 123456
+```
+
+**localStorage**: It provides a way to store data across browser sessions. Data stored in localStorage persists even when the browser is closed and reopened. It's ideal for storing preferences, theme settings, or other data that should be retained across visits.
+- Data stored in localStorage has no expiration time, meaning it remains available even after the browser is closed and reopened.
+- It's ideal for storing preferences, themes, or any data that should persist across user visits and browser sessions.
+- : Data stored in localStorage is specific to the protocol of the page. It is also limited in size (usually up to 5MB) and is synchronous, which means it can potentially block the main thread if used excessively.
+
+**sessionStorage**: 
+- sessionStorage is used to store data for the duration of a page session. A session lasts as long as the browser is open, and survives over page reloads and restores, but not when the tab or browser is closed.
+- It's suitable for storing data that should only be available for a single session, such as form data on a multi-step process or temporary application state.
+-  Like localStorage, sessionStorage is limited in size and is specific to a single window or tab. Data stored in sessionStorage is also synchronous and can block the main thread if overused.
+
+
+**16) How do you create a hyperlink that opens in a new tab or window?**
+
+- To create a hyperlink in HTML that opens in a new tab or window, you can use the <a> (anchor) element with the **target** attribute set to **_blank**. This instructs the browser to open the linked document in a new tab or window rather than in the current tab. Here's how you do it:
+
+- `<a href="https://example.com" target="_blank">Visit Example.com</a>`
+
+- In this example, clicking on "Visit Example.com" will open the URL "https://example.com" in a new browser tab or window, depending on the browser settings and preferences. Using **target="_blank"** is widely used for external links or when you want to keep your website open while directing the user to another site.
+
 
 
 
