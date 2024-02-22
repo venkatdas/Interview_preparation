@@ -179,6 +179,41 @@ The <canvas> element in HTML5 is used to draw graphics on a web page via scripti
 </html>
 ```
 
+11) How do you embed audio and video in HTML5?
+
+
+In HTML5, embedding audio and video content into web pages is straightforward thanks to the <audio> and <video> elements. These elements provide built-in support for embedding media files directly into HTML documents without requiring external plugins or players
+
+```html
+<audio controls>
+  <source src="audiofile.mp3" type="audio/mp3">
+  <source src="audiofile.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<video controls width="250">
+  <source src="videofile.mp4" type="video/mp4">
+  <source src="videofile.ogg" type="video/ogg">
+  Your browser does not support the video tag.
+</video>
+
+```
+**controls:** Adds video controls, allowing the user to play, pause, adjust volume, and seek through the video or audio
+
+**12) What is the significance of the 'lang' attribute in the 'html' tag?**
+
+
+The lang attribute in the <html> tag specifies the primary language of a webpage's content. It is significant for enhancing web accessibility by helping screen readers pronounce text correctly, improving search engine optimization (SEO) by indicating the content's language to search engines, enabling browser-specific language functionality like spell-check, and facilitating content localization and language-specific styling.
+
+        For French: <html lang="fr">
+        For Spanish: <html lang="es">
+        For Japanese: <html lang="ja">
+        For Arabic: <html lang="ar">
+
+
+
+
+
 
 
 
