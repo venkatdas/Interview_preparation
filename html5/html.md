@@ -1,6 +1,6 @@
 ###Html
 
-#### Html5 Structure
+1 ) Html5 Structure
 
 ```html
 <!DOCTYPE html>
@@ -49,3 +49,13 @@
 </html>
 
 ```
+2) Explain meta tag in html
+
+<details>
+<summary>TITLE</summary>
+
+The <meta> tag defines metadata about an HTML document. Metadata is data (information) about data. <meta> tags always go inside the <head> element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.
+
+</details>
+
+
