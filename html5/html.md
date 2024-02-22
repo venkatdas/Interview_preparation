@@ -123,6 +123,71 @@ In HTML, both id and class attributes are used to identify and apply styles to e
 
 **class**  A class can be used on multiple elements within the same document. It is used to group elements that share the same styling or are meant to be targeted together with scripts or styles. In CSS, a class is referenced with a dot (.) prefix (e.g., .button). Classes are useful for applying the same style rules to multiple elements and for JavaScript operations that affect groups of elements.
 
+**9) How does the 'iframe' tag work in HTML?**
+
+The <iframe> tag in HTML is used to embed another HTML document within the current document. It creates a frame inside a webpage, allowing you to display a webpage, video, map, or any other web content independently of the rest of the page's content.
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document with Iframe</title>
+</head>
+<body>
+
+    <h1>Welcome to My Page</h1>
+    <p>This is a sample paragraph on my webpage.</p>
+
+    <!-- Embedding an iframe -->
+    <iframe src="https://example.com" width="600" height="400" style="border:0;">
+        Your browser does not support iframes.
+    </iframe>
+
+    <p>More content can go here.</p>
+
+</body>
+</html>
+```
+**10) Describe the purpose of the 'canvas' element in HTML5.**
+
+
+The <canvas> element in HTML5 is used to draw graphics on a web page via scripting (usually JavaScript). It provides a space in the HTML document where graphics can be rendered dynamically. The <canvas> element is particularly useful for rendering graphs, game graphics, art, or other visual images on the fly.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Example</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#FF0000';
+    ctx.fillRect(0, 0, 150, 75);
+</script>
+
+</body>
+</html>
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
