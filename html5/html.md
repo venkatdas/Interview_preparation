@@ -318,9 +318,10 @@ What is the purpose of the 'ruby' element in HTML?**
 **21) Describe the role of the 'figcaption' element in HTML.**
 
 
-- The <figcaption> element in HTML serves as a caption or legend for its parent <figure> element.
+- The figcaption element in HTML serves as a caption or legend for its parent <figure> element.
 - It provides a textual explanation or description associated with the figure that it captions, which can be an image, an illustration, a diagram, a code snippet, or any other content that is wrapped by a <figure> element.
-- The **<figcaption>**can be placed as the first or last child of the <figure> to indicate whether the caption appears above or below the content it describes.
+- 
+- The **figcaption**can be placed as the first or last child of the <figure> to indicate whether the caption appears above or below the content it describes.
 
   ```html
   <figure>
@@ -329,7 +330,7 @@ What is the purpose of the 'ruby' element in HTML?**
 </figure>
 ```
 
-- In this example, the **<figcaption>** element provides a textual description for the image, making it clear what the image represents or why it's significant within the context of the surrounding content.
+- In this example, the **figcaption** element provides a textual description for the image, making it clear what the image represents or why it's significant within the context of the surrounding content.
 - **Use with <figure>:** <figcaption> must be a child of a <figure> element. **It doesn't function as intended when used outside of a <figure>.
 **
 - The <figcaption> element thus plays a crucial role in associating text descriptions with figures in HTML documents, enhancing both the semantic structure of the content and its accessibility for all users.
