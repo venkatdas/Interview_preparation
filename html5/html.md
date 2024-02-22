@@ -61,23 +61,27 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 
 `<meta charset="UTF-8">`
 
-**Viewport Configuration for Mobile Devices: ** It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
+**Viewport Configuration for Mobile Devices:** It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
 
 
 `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+
 **Page Description:** It provides a brief description of the page's content, which search engines often display in search results. A well-crafted description can improve the chances of someone clicking on a link.
 
 
 `<meta name="description" content="A brief description of the page">`
+
 **Keywords:** Although less significant for SEO now due to past abuse, it was traditionally used to specify keywords relevant to the page's content to improve search engine rankings.
 
 
 `<meta name="keywords" content="HTML, CSS, JavaScript">`
+
 **Author:** It can specify the name of the author of the webpage.
 
 
 `<meta name="author" content="John Doe">`
-**Refresh and Redirection: ** It can be used to refresh the page or redirect to another page after a specified number of seconds.
+
+**Refresh and Redirection:** It can be used to refresh the page or redirect to another page after a specified number of seconds.
 
 
 `<meta http-equiv="refresh" content="30; url=http://example.com/">`
