@@ -91,6 +91,13 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 **Social Media Integration and SEO:** Meta tags such as Open Graph (used by Facebook) and Twitter Cards tags are used to control how content appears when shared on social media platforms, including specifying images, descriptions, and other elements for rich previews.
 
 
-3) 
+**3)  What is the role of the 'alt' attribute in the 'img' tag?**
+
+The `alt` attribute in the <img> tag specifies alternative text for an image, if the image cannot be displayed for any reason. This attribute plays several crucial roles in web development and accessibility:
+
+**SEO (Search Engine Optimization):** Search engines index the alt text, which helps them understand the content of the image and the context in which it's used on the webpage. Properly described alt text can improve the visibility of a website in search engine results, especially in image search results.
+
+`<img src="example.jpg" alt="Description of the image">`
+
 
 
