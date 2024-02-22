@@ -60,39 +60,35 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 
 
 
-Character Encoding: It specifies the character set used on the webpage, which is crucial for correctly displaying text, especially for languages with unique characters. A common practice is to set the character encoding to UTF-8, which supports most characters and symbols from all writing systems.
+**Character Encoding:** It specifies the character set used on the webpage, which is crucial for correctly displaying text, especially for languages with unique characters. A common practice is to set the character encoding to UTF-8, which supports most characters and symbols from all writing systems.
 
-html
-Copy code
-<meta charset="UTF-8">
-Viewport Configuration for Mobile Devices: It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
 
-html
-Copy code
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-Page Description: It provides a brief description of the page's content, which search engines often display in search results. A well-crafted description can improve the chances of someone clicking on a link.
+`<meta charset="UTF-8">`
 
-html
-Copy code
-<meta name="description" content="A brief description of the page">
-Keywords: Although less significant for SEO now due to past abuse, it was traditionally used to specify keywords relevant to the page's content to improve search engine rankings.
+**Viewport Configuration for Mobile Devices: **It controls the viewport's size and scale, which is particularly important for creating responsive designs that work well on mobile devices. For example, setting the viewport width to device-width and the initial scale to 1 ensures that the page uses the device's width and scales properly.
 
-html
-Copy code
-<meta name="keywords" content="HTML, CSS, JavaScript">
-Author: It can specify the name of the author of the webpage.
 
-html
-Copy code
-<meta name="author" content="John Doe">
-Refresh and Redirection: It can be used to refresh the page or redirect to another page after a specified number of seconds.
+`<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+**Page Description:** It provides a brief description of the page's content, which search engines often display in search results. A well-crafted description can improve the chances of someone clicking on a link.
 
-html
-Copy code
-<meta http-equiv="refresh" content="30; url=http://example.com/">
-Controlling Browser Caching: It can instruct the browser how to cache the page, although HTTP headers often handle this more effectively.
 
-Social Media Integration and SEO: Meta tags such as Open Graph (used by Facebook) and Twitter Cards tags are used to control how content appears when shared on social media platforms, including specifying images, descriptions, and other elements for rich previews.
+`<meta name="description" content="A brief description of the page">`
+**Keywords:** Although less significant for SEO now due to past abuse, it was traditionally used to specify keywords relevant to the page's content to improve search engine rankings.
+
+
+`<meta name="keywords" content="HTML, CSS, JavaScript">`
+**Author:** It can specify the name of the author of the webpage.
+
+
+`<meta name="author" content="John Doe">`
+**Refresh and Redirection: **It can be used to refresh the page or redirect to another page after a specified number of seconds.
+
+
+`<meta http-equiv="refresh" content="30; url=http://example.com/">`
+
+**Controlling Browser Caching:** It can instruct the browser how to cache the page, although HTTP headers often handle this more effectively.
+
+**Social Media Integration and SEO:** Meta tags such as Open Graph (used by Facebook) and Twitter Cards tags are used to control how content appears when shared on social media platforms, including specifying images, descriptions, and other elements for rich previews.
 </details>
 
 3) 
