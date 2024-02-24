@@ -85,7 +85,7 @@ let baz = 'qux'; // Uncaught SyntaxError: Identifier 'baz' has already been decl
 ```
 
 5)
-let and const differ in that let allows reassigning the variable's value while const does not.
+`let` and `const` differ in that `let` allows reassigning the variable's value while `const` does not.
 
 ```javascript
 // This is fine.
