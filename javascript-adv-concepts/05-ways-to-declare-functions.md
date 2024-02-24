@@ -11,3 +11,14 @@ greet("Alice");
 
 ```
 
+- Hoisting: Function declarations are hoisted, meaning they are moved to the top of their scope before code execution. Thus, you can call a function before it's declared in the code.
+
+  Example
+
+```
+foo(); // 'FOOOOO'
+function foo() {
+  console.log('FOOOOO');
+}
+```
+
