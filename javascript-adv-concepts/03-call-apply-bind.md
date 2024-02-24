@@ -75,4 +75,39 @@ greeting.call(john);
 greeting.call(jane);
 ```
 
-<ins> The call() Method with Arguments</ins>
+ #### <ins> The call() Method with Arguments</ins>
+
+ Example 1)
+
+```javascript
+
+const person = {
+  fullName: function(city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+
+const person1 = {
+  firstName:"John",
+  lastName: "Doe"
+}
+
+person.fullName.call(person1, "Oslo", "Norway"); // John Doe,Oslo,Norway
+```
+
+Example 2)
+
+```javascript
+
+function greet(greeting, punctuation) {
+    console.log(greeting + ', ' + this.name + punctuation);
+}
+
+const person = {
+    name: 'John'
+};
+
+greet.call(person, 'Hello', '!'); //Hello, John!
+
+
+```
