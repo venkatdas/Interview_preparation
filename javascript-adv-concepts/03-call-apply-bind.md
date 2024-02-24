@@ -30,7 +30,6 @@ console.log(add.apply(null, [1, 2])); // 3
 - Example 1)
 
   ```javascript
-
 const person = {
   fullName: function() {
     return this.firstName + " " + this.lastName;
@@ -47,12 +46,14 @@ const person2 = {
 
 // This will return "John Doe":
 person.fullName.call(person1);
-
 ```
+
+
 - In the provided example, the call method is used to borrow the fullName method from the person object and apply it to person1
 - When person.fullName.call(person1); is executed, the fullName function is called with its this context set to person1.
 - The call method allows person.fullName to be executed as if it were a method of person1. This is possible because call can set the this value to person1 for the duration of the fullName method's execution.
 - Within fullName, this.firstName refers to person1.firstName and this.lastName refers to person1.lastName. Therefore, the method returns "John Doe".
+
 
 Example 2)
 
@@ -74,4 +75,4 @@ greeting.call(john);
 greeting.call(jane);
 ```
 
-<u> The call() Method with Arguments</u>
+<ins> The call() Method with Arguments</ins>
