@@ -27,9 +27,9 @@ console.log(add.apply(null, [1, 2])); // 3
 - `arg1, arg2, ..., argN`: Arguments for the function.
 
   
-- Example 1)
+ Example 1)
 
-  ```javascript
+```javascript
 const person = {
   fullName: function() {
     return this.firstName + " " + this.lastName;
