@@ -111,3 +111,54 @@ greet.call(person, 'Hello', '!'); //Hello, John!
 
 
 ```
+
+
+#### Syntax for apply
+
+- The apply method is similar to call, but the main difference is that apply accepts an array of arguments instead of individual ones.
+
+`functionName.apply(thisArg, [argsArray]);`
+
+`functionName.apply(thisArg, [argsArray]);`
+
+Example 1)
+
+```javascript
+function greet(greeting, punctuation) {
+    console.log(greeting + ', ' + this.name + punctuation);
+}
+
+const person = {
+    name: 'John'
+};
+
+greet.apply(person, ['Hello', '!']); // Hello, John!
+```
+Example 2)
+
+```javasacript
+const person = {
+  fullName: function(city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+
+const person1 = {
+  firstName:"John",
+  lastName: "Doe"
+}
+
+person.fullName.apply(person1, ["Oslo", "Norway"]);
+```
+
+#### Syntax for Bind
+
+`const boundFunction = functionName.bind(thisArg, arg1, arg2, ..., argN);`
+
+`const newFunc = Function.bind(context, thisArg1, thisArg2, thisArg3);`
+
+- The bind method creates a copy of the function and sets the this keyword
+- while the call and apply methods sets the this keyword and calls the function immediately
+
+
+
