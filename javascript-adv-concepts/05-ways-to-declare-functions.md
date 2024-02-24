@@ -15,7 +15,7 @@ greet("Alice");
 
   Example
 
-```
+```js
 foo(); // 'FOOOOO'
 function foo() {
   console.log('FOOOOO');
