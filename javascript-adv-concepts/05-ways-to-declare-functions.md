@@ -46,15 +46,16 @@ var foo = function () {
 
 - Introduced in ES6, arrow functions provide a concise syntax for writing function expressions. They are anonymous and change the way this is handled.
 
-  ```js
+```js
   const greet = (name) => {
   console.log("Hello " + name + "!");
 };
 greet("Carol");
-
 ```
 - Hoisting: Arrow functions, like function expressions, are not hoisted.
 - this keyword: Arrow functions do not have their own this. They inherit this from the parent scope at the time they are defined, not when they are called.
+
+
 
 **4) IIFE**
 
@@ -70,7 +71,7 @@ greet("Carol");
 
 - Functions can also be defined as methods within an object.
 
-  ```js
+```js
   const obj = {
   greet: function(name) {
     console.log("Hello " + name + "!");
