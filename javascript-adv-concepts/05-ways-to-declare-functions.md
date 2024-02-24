@@ -22,3 +22,22 @@ function foo() {
 }
 ```
 
+**2) Function Expression**
+
+- A function expression involves defining a function and assigning it to a variable. Function expressions can be named or anonymous.
+
+```js
+const greet = function(name) {
+  console.log("Hello " + name + "!");
+};
+greet("Bob");
+```
+
+- Hoisting: Unlike function declarations, **function expressions are not hoisted** You cannot call them before you declare them.
+
+```js
+foo(); // Uncaught TypeError: foo is not a function
+var foo = function () {
+  console.log('FOOOOO');
+};
+```
