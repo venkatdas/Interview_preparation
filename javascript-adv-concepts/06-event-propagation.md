@@ -11,6 +11,12 @@
 
 #### Event Bubling
 
+- Event bubbling in JavaScript is a mechanism where an event triggered on a DOM element propagates up to its ancestors in the hierarchy, potentially triggering event handlers attached to these ancestor elements.
+- This means that if you click on a child element, the event will first be handled by the child (if an event handler is attached), and then the event will "bubble" up to its parent, and then to the parent's parent, and so on,
+
+
+- This is how event bubbling happens from the “bottom to top”.
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -59,5 +65,43 @@ button.addEventListener("click", function () {
   alert("button");
 });
 ```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5e231b46-ed8a-40e0-a07d-c5996f3a0ed0)
 
+### event.currentTarget vs  event.target vs this.target
 
+1) event.currentTarget
+
+```js
+const div = document.querySelector("div");
+const form = document.querySelector("form");
+const button = document.querySelector("button");
+
+div.addEventListener("click",func);
+form.addEventListener("click", func);
+button.addEventListener("click",func);
+
+function func(event){
+  alert("currentTarget =" + event.currentTarget.tagName);
+}
+```
+
+- Its keep on changing the currenTarget to from button, form, div
+
+2) even.target
+
+```js
+function func(event){
+  alert("currentTarget =" + event.currentTarget.tagName + ", target ="+ event.target.tagName);
+}
+```
+- This aims the only button because button is origin of bubbling
+
+3) this.target
+
+```js
+function func(event){
+  alert("currentTarget =" + event.currentTarget.tagName + ", target ="+ event.target.tagName +", this =" + this.tagName);
+}
+```
+
+This will aim from button, form, div
