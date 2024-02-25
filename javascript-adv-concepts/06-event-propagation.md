@@ -104,4 +104,115 @@ function func(event){
 }
 ```
 
-This will aim from button, form, div
+- This will aim from button, form, div
+
+#### Event Capturing/trickling
+
+-  It is the opposite of bubbling. The event handler is first on its parent component and then on the component where it was actually wanted to fire that event handler.
+-   In short, it means that the event is first captured by the outermost element and propagated to the inner elements. It is also called trickle down.
+
+```js
+const div = document.querySelector("div");
+const form = document.querySelector("form");
+const button = document.querySelector("button");
+
+div.addEventListener(
+  "click",
+  function () {
+    alert("div");
+  },
+  {
+    capture: true,
+  }
+);
+form.addEventListener(
+  "click",
+  function () {
+    alert("form");
+  },
+  {
+    capture: true,
+  }
+);
+button.addEventListener(
+  "click",
+  function () {
+    alert("button");
+  },
+  { capture: true }
+);
+```
+### How to stop Bubbling or Capturing
+
+- When you call e.stopPropagation() within an event handler, it prevents the event from propagating (traveling) further through the event phases for that specific event flow.
+-  This means it stops the event from either continuing down the tree during the capturing phase or bubbling up the tree during the bubbling phase, depending on where stopPropagation() is called.
+
+Example
+
+```js
+const div = document.querySelector("div");
+const form = document.querySelector("form");
+const button = document.querySelector("button");
+
+div.addEventListener(
+  "click",
+  function (e) {
+    alert("div");
+    e.stopPropagation();
+  },
+  {
+    capture: true,
+  }
+);
+form.addEventListener(
+  "click",
+  function (e) {
+    alert("form");
+  },
+  {
+    capture: true,
+  }
+);
+button.addEventListener(
+  "click",
+  function (e) {
+    alert("button");
+  },
+  { capture: true }
+);
+```
+
+- From above code it works for capturing 
+-  when e.stopPropagation() is used in the div's event handler with { capture: true }, it stops the event from propagating further down to children (in this case, form and button) during the capturing phase for that specific event instance. Other elements will not receive that event in their capturing or bubbling phase event handlers.
+
+### This is for Bubbling
+
+```js
+const div = document.querySelector("div");
+const form = document.querySelector("form");
+const button = document.querySelector("button");
+
+div.addEventListener(
+  "click",
+  function (e) {
+    alert("div");
+  }
+);
+form.addEventListener(
+  "click",
+  function (e) {
+    alert("form");
+    e.stopPropagation();
+
+  }
+);
+button.addEventListener(
+  "click",
+  function (e) {
+    alert("button");
+
+  }
+);
+```
+- It pops button->form
+- at form it sees the e.stopPropagation so, it wont't reach down.
