@@ -1,7 +1,7 @@
 ### Event Propagation Bubbling capturing and Delegation
 
 - Event propagation is a way of defining the element order when an event occurs.
--  If you have a <p> element inside a <div> element, and the user clicks on the <p> element, which element's "click" event should be handled first?
+-  If you have a `p` element inside a `div` element, and the user clicks on the `p` element, which element's "click" event should be handled first?
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/52f91f02-0dea-4d3d-af83-6d765e654b82)
 
