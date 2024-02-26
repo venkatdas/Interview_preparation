@@ -297,3 +297,40 @@ console.log("end"); //sync
   success
 ```
 </details>
+
+## 4.
+
+```js
+function job(){
+  return new Promise((resolve,reject)=>{
+    reject();
+  })
+}
+
+let promise = job();
+promise.then((res)=>{
+  console.log("success 1");
+}).then(()=>{
+  console.log("suc 2");
+}).then(()=>{
+  console.log("suc 3");
+}).catch(()=>{
+  console.log("error 1");
+}).catch(()=>{
+  console.log("error 2");
+}).then(()=>{
+  console.log("suc 4");
+}).then(()=>{
+  console.log("suc 5");
+})
+
+
+```
+<details>
+  <summary>Solution</summary>
+  ```js
+  error 1
+suc 4
+suc 5
+```
+</details>
