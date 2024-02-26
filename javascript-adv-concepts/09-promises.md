@@ -207,20 +207,4 @@ console.log("End");
 
 ###input/output
 
-```js
-{
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "using print\n",
-      "using sys.stdout.write"
-     ]
-    }
-```
-
-
-```output_stdout
-using print
-using sys.stdout.write
-```
 
