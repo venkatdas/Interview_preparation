@@ -203,5 +203,22 @@ console.log("End");
 - it does it only return first fullfilled promise and ignores all the rejected ones
 
 
+-----------------------------------------------------------------------------------------------------
 
+###input/output
+
+```js
+{
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "using print\n",
+      "using sys.stdout.write"
+     ]
+    }```
+
+```output_stdout
+using print
+using sys.stdout.write
+```
 
