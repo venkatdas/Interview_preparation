@@ -87,8 +87,29 @@ console.log("End");
 
 - we are rewriting this code from callbacks to promises but still it's looks like pyramid of doom
 - It's way better than call backs
-
+___________________________________________________
 - **To avoid that we can do Promise Chaining**
+
+  ```js
+  importantAction("codebydas")
+  .then((res) => {
+    console.log(res);
+    return likeTheVideo("Js questions");
+  })
+  .then((res) => {
+    console.log(res);
+    return shareTheVideo("js questions");
+  }).then((res)=>{
+    console.log(res);
+    return subscribeChannel("codebydas")
+  }).then((res)=>{
+    console.log(res);
+  }).catch((err)=>{
+    console.log(err);
+  })
+  ```
+- Why this is called promise chaining
+- we are returning promise and we are chianing another promise one ofter the other as we return value for the previous prmmise.
 
    
 
