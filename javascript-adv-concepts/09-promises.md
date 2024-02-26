@@ -207,4 +207,25 @@ console.log("End");
 
 ###input/output
 
+## 1.
 
+```js
+
+console.log("start")
+
+const promise1 = new Promise((resolve,reject)=>{
+  console.log(1); // synchrnous
+  resolve(2)
+}).then((res)=>{
+  console.log(res);
+})
+console.log("end"); //sync
+```
+
+<details>
+  <summary>
+    solution
+  </summary>
+  ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/aaf8209c-9d79-4a33-a610-301676abe13e)
+
+</details>
