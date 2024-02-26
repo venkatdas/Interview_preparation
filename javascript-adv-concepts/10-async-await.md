@@ -54,3 +54,5 @@ console.log("End");
 ```
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/dda77033-aab5-4b81-af3c-223aa8d1974b)
 
+// message1 returns a promise object we dont want that and we need result . for that we need
+// to write a await what it does is it will waits until promise resolved or rejected
