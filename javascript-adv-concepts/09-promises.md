@@ -205,8 +205,8 @@ console.log("End");
 
 -----------------------------------------------------------------------------------------------------
 
-###input/output
-zvzdvzdvzv
+### input/output
+
 ## 1.
 
 ```js
@@ -226,6 +226,7 @@ console.log("end"); //sync
   <summary>
     solution
   </summary>
+  
   ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/aaf8209c-9d79-4a33-a610-301676abe13e)
 
 </details>
