@@ -146,4 +146,62 @@ console.log("End");
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/1febb749-f4e9-47db-a8f4-95a9d8f2736b)
 
 
+2) **Promise.race();**
+
+- Promise.race() is another promise combinator similar to Promise.all(), but instead of waiting for all promises to be resolved or rejected, Promise.race() will resolve or reject as soon as one of the promises in the iterable resolves or rejects, with the value or reason from that promise.
+- Time can be a critical factor with Promise.race() because the first promise to settle (either resolve or reject) determines the outcome of the entire Promise.race() operation.
+- It retuns first promise of whether it is fullfilled or rejected.
+
+```js
+ Promise.race([
+   importantAction("codebydas"),
+   likeTheVideo("JS Questions"),
+   shareTheVideo("Js qustions"),
+   subscribeChannel("codebydas"),
+ ])
+   .then((res) => {
+     console.log(res);
+   })
+   .catch((err) => {
+     console.log("error", err);
+   });
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/24a0927f-fd0e-453c-9709-0bccf3d6df30)
+
+- Here **likeTheVideo** function has less time that's why it's logged
+
+- If reject/resolve  based on the time, promise.race will log that
+
+
+
+**3) promise.allSettled();**
+
+- This method returns a promise that resolves after all of the given promises have either resolved or rejected, with an array of objects that each describe the outcome of each promise.
+- Promise.allSettled() is particularly useful when you want to know the result of each promise, regardless of whether it was fulfilled or rejected.
+
+```js
+
+ Promise.allSettled([
+   importantAction("codebydas"),
+   likeTheVideo("JS Questions"),
+   shareTheVideo("Js qustions"),
+   subscribeChannel("codebydas"),
+ ])
+   .then((res) => {
+     console.log(res);
+   })
+   .catch((err) => {
+     console.log("error", err);
+   });
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/276c14f3-7eab-4750-803f-e5189fd320b5)
+
+
+**4) Promise.any();**
+
+- it does it only return first fullfilled promise and ignores all the rejected ones
+
+
+
 
