@@ -227,6 +227,9 @@ console.log("end"); //sync
     solution
   </summary>
   
-  ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/aaf8209c-9d79-4a33-a610-301676abe13e)
+ start
+ 1
+ end
+ 2
 
 </details>
