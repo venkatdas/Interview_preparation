@@ -328,9 +328,10 @@ promise.then((res)=>{
 ```
 <details>
   <summary>Solution</summary>
+  
   ```js
   error 1
-suc 4
-suc 5
+  suc 4
+  suc 5
 ```
 </details>
