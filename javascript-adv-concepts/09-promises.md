@@ -235,3 +235,32 @@ start
 ```
 
 </details>
+
+## 2.
+```js
+
+console.log("start")
+
+const promise1 = new Promise((resolve,reject)=>{
+  console.log(1); // synchrnous
+  resolve(2)
+console.log(3)
+}).then((res)=>{
+  console.log(res);
+})
+console.log("end"); //sync
+```
+<details>
+  <summary>
+    solution
+  </summary>
+
+  ```js
+
+start
+1
+3
+end
+2
+```
+</details>
