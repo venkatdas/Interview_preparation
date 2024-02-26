@@ -39,8 +39,8 @@ Example 3)
 ```js
 console.log("start");
 
-function importantAction(){
-  setTimeout(( username) => {
+function importantAction(username){
+  setTimeout(( ) => {
     return `Welcome to the ${username}`
     
   }, 2000);
@@ -58,6 +58,64 @@ undefined
 end
 ```
 
+- To make above code to be executed as asynchrnous we have to use callback functions
 
+```js
+
+console.log("start");
+
+function importantAction(username,cb) {
+  setTimeout(() => {
+    cb (`Welcome to the ${username}`);
+  }, 2000);
+}
+const result = importantAction("codebydas", function (result){
+
+  console.log(result);
+})
+
+console.log("End");
+```
+
+
+```js
+
+console.log("start");
+
+function importantAction(username, cb) {
+  setTimeout(() => {
+    cb(`Welcome to the ${username}`);
+  }, 2000);
+}
+function likeTheVideo(video, cb) {
+  setTimeout(() => {
+    cb(`Like the ${video} video`);
+  }, 1000);
+}
+function shareTheVideo(video, cb) {
+  setTimeout(() => {
+    cb(`Share the ${video} video`);
+  }, 1000);
+}
+function subscribeChannel(video, cb) {
+  setTimeout(() => {
+    cb(`Subscribe the ${video} video`);
+  }, 1000);
+}
+importantAction("codebydas", function (result) {
+  console.log(result);
+  likeTheVideo("Js Questions", function (action) {
+    console.log(action);
+    shareTheVideo("JS questions", function (action) {
+      console.log(action);
+      subscribeChannel("Js questions", (channel) => {
+        console.log(channel);
+      });
+    });
+  });
+});
+
+console.log("End");
+```
 
 
