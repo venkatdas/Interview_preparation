@@ -27,7 +27,6 @@ console.log("promise end");
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f8a136e4-94d3-45e1-b393-95e82865b30a)
 
 
-______________________________________________________________________
 
 ```js
 console.log("start");
