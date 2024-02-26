@@ -264,3 +264,36 @@ end
 2
 ```
 </details>
+
+## 3.
+
+```js
+console.log("start");
+
+const fn =()=>
+  new Promise((resolve,reject)=>{
+    console.log(1);
+    resolve("success")
+  })
+  console.log("middle");
+
+  fn().then((res)=>{
+    console.log(res);
+  })
+
+console.log("end"); //sync
+
+```
+<details>
+  <summary>
+    Solution
+  </summary>
+  
+  ```js
+  start
+  middle
+  1
+  end
+  success
+```
+</details>
