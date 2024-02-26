@@ -227,9 +227,11 @@ console.log("end"); //sync
     solution
   </summary>
   
- start
+ ```js
+start
  1
  end
  2
+```
 
 </details>
