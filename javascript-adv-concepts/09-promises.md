@@ -115,7 +115,35 @@ ___________________________________________________
 
 -----------------------------------------------------------------
 
-## Prmoise combinators
+#### Promise combinators
+
+1) promise.all();
+
+- If we provided multiple promises to promise.all() it's run all promises in parallel it will return array of fullfilled promises . if one of the promise failed , then it's fail complete promise.all();
+
+- Promise.all() is a method in JavaScript that takes an array of promises and returns a single Promise that resolves when all of the promises in the array have been resolved, or rejects with the reason of the first promise that rejects.
+- It's an efficient way to run multiple promises in parallel and wait for all of them to finish
+
+
+```js
+ Promise.all([
+   importantAction("codebydas"),
+   likeTheVideo("JS Questions"),
+   shareTheVideo("Js qustions"),
+   subscribeChannel("codebydas"),
+ ]).then((res)=>{
+  console.log(res);
+ }).catch((err)=>{
+  console.log("error",err);
+ })
+console.log("End");
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/fa2e0f20-118e-4417-9349-93140a48d134)
+
+- If promise.all() fails will get the error . and it won't run further
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/1febb749-f4e9-47db-a8f4-95a9d8f2736b)
 
 
 
