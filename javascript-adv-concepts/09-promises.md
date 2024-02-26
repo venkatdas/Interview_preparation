@@ -1,4 +1,6 @@
-![image](https://github.com/venkatdas/Interview_prep/assets/43024084/846de6a3-c102-4f4e-8c5b-50a86e75e63a)####Promises
+####Promises
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/846de6a3-c102-4f4e-8c5b-50a86e75e63a)
 
 
 ```js
@@ -27,7 +29,9 @@ console.log("promise end");
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f8a136e4-94d3-45e1-b393-95e82865b30a)
 
 
+_______________________________________________________________________________________
 
+#### callbacks to promises
 ```js
 console.log("start");
 
