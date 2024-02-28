@@ -67,4 +67,5 @@ console.log(cookies); // Outputs all cookies as a string
 document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 ```
 
-![Uploading image.png…]()
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/9c185f2c-3d0e-4393-95f1-150b25f7fce6)
+
