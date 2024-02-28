@@ -67,4 +67,4 @@ console.log(cookies); // Outputs all cookies as a string
 document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 ```
 
-https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40lancelyao%2Fbrowser-storage-local-storage-session-storage-cookie-indexeddb-and-websql-be6721ebe32a&psig=AOvVaw0IJDK8sOoTKsPP9gZZtdom&ust=1709199232807000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCLiVwrrdzYQDFQAAAAAdAAAAABAu
+![Uploading image.png…]()
