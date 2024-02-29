@@ -39,7 +39,7 @@ console.log(scoreArray(resultArray,28));
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f3fb7482-af2c-44ca-ac3a-86ac7b94d2e0)
 
-
+### Deep Copy
 - what if multiple nested objects are there the above two methods won't work
 
   ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/8f6ffca6-5600-493c-adcf-99507e1dcb19)
