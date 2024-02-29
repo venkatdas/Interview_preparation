@@ -14,7 +14,7 @@ console.log(y); //3
 - By adding 1 to the `y` we did not change the value of `x` so we pass the value.
 
 
-## Strcutural types uses reference
+### Strcutural types uses reference
 
 ```js
 let xArray = [1, 2, 3];
