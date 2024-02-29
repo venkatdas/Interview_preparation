@@ -81,5 +81,33 @@ or
 - 
 
 
+#### Definitions:
+
+## 1. Callback Queue (Task Queue) 
+
+- The Callback Queue is a queue that holds callbacks associated with asynchronous operations waiting to be moved to the call stack for execution.
+- These operations typically include events like click or load events, responses to HTTP requests, and the completion of I/O operations.
+- The event loop checks this queue only when the call stack is empty. The processing order is FIFO (First In, First Out), meaning the first callback added to the queue is the first to be executed.
+
+## 2. Event Loop
+
+- The Event Loop is a mechanism that allows JavaScript runtimes, such as browsers and Node.js, to perform non-blocking asynchronous operations despite JavaScript being single-threaded.
+- It constantly checks if the call stack is empty and if there are any pending callbacks in the callback queue.
+- If the stack is empty and there are pending callbacks, it moves the first available callback from the queue to the call stack for execution.
+- The event loop also interacts with the microtask queue, giving it a higher priority over the callback queue.
+
+## 3. Microtask Queue
+
+- The Microtask Queue is similar to the callback queue but specifically for microtasks, which are usually associated with operations that need to be executed more promptly than those in the callback queue.
+- Promises, process.nextTick (in Node.js), MutationObserver, and the queueMicrotask API add their callbacks to the microtask queue.
+-  The event loop processes all microtasks in the queue at the end of the current task and before moving on to the next task or rendering.
+-  This ensures that microtasks are executed as soon as possible, and before any tasks in the callback queue
+
+
+## 4. Starvation Of callback queue
+
+- Starvation of the callback queue occurs when the event loop gives priority to executing microtasks from the microtask queue over the macrotasks in the callback queue.
+- Since the event loop processes all microtasks in the microtask queue before moving to the callback queue, continuously adding microtasks (e.g., through chained promises) can delay or "starve" the execution of callbacks waiting in the callback queue.
+- This can lead to issues where longer tasks, UI rendering, or user input handling are delayed, affecting the performance and responsiveness of the application.
 
 
