@@ -60,7 +60,7 @@ clearInterval(intervalId);
 someResource = null; // Release the resource
 ```
 
-## 3. Out of DOM references (Event listeners)
+## 3. Out of DOM references
 
 **Cause of Leak:**
 Holding onto DOM elements that have been removed from the DOM.
@@ -71,61 +71,6 @@ document.body.innerHTML = ''; // Removes elements from the DOM
 
 // elements is still holding references to the removed DOM elements
 ```
-
-Let's dive into some examples to illustrate the causes of memory leaks in JavaScript and demonstrate how to prevent them:
-
-Example 1: Global Variables
-Cause of Leak:
-Creating an unintended global variable by not declaring it properly.
-
-javascript
-Copy code
-function createGlobalVariable() {
-  globalVar = "This is a global variable"; // Mistakenly creates a global variable
-}
-Prevention:
-Declare variables with let, const, or var to avoid them becoming global.
-
-javascript
-Copy code
-function createLocalVariable() {
-  let localVar = "This is a local variable"; // Properly declared local variable
-}
-Example 2: Timers and Callbacks
-
-
-Cause of Leak:
-Setting up an interval and forgetting to clear it can cause the callback function to hold onto variables unnecessarily.
-
-javascript
-Copy code
-let someResource = loadData();
-setInterval(() => {
-  console.log(someResource);
-}, 1000);
-Prevention:
-Clear the interval when it's no longer needed or before the containing component is destroyed.
-
-javascript
-Copy code
-let someResource = loadData();
-let intervalId = setInterval(() => {
-  console.log(someResource);
-}, 1000);
-
-// Later on
-clearInterval(intervalId);
-someResource = null; // Release the resource
-Example 3: DOM Elements References
-Cause of Leak:
-Holding onto DOM elements that have been removed from the DOM.
-
-javascript
-Copy code
-let elements = document.querySelectorAll('.some-class');
-document.body.innerHTML = ''; // Removes elements from the DOM
-
-// elements is still holding references to the removed DOM elements
 **Prevention:**
 Clear references to DOM elements once they are no longer needed.
 
@@ -136,5 +81,62 @@ document.body.innerHTML = ''; // Removes elements from the DOM
 elements = null; // Clears the reference
 ```
 
-## 4. Closures
-## 5 
+
+## 4. Event Listeners
+
+**Cause of Leak:**
+Adding an event listener to a DOM element and not removing it can prevent the element from being garbage collected.
+
+```js
+document.getElementById('myButton').addEventListener('click', () => {
+  console.log('Button clicked!');
+});
+```
+**Prevention:**
+Remove event listeners when they are no longer needed.
+
+```js
+function handleClick() {
+  console.log('Button clicked!');
+}
+
+let button = document.getElementById('myButton');
+button.addEventListener('click', handleClick);
+
+// When the button is no longer needed
+button.removeEventListener('click', handleClick);
+```
+## Example 5: Closures
+
+**Cause of Leak:**
+A closure captures a large object or other resources that are no longer needed
+```js
+function createClosure() {
+  let bigData = new Array(1000).fill(new Array(1000).fill(0));
+  return function() {
+    console.log(bigData[0][0]);
+  };
+}
+let closure = createClosure();
+```
+Prevention:
+Ensure closures only hold references to what is absolutely necessary and release resources when they are no longer needed.
+
+```js
+function createEfficientClosure() {
+  let bigData = new Array(1000).fill(new Array(1000).fill(0));
+  return {
+    logFirstItem: function() {
+      console.log(bigData[0][0]);
+    },
+    releaseData: function() {
+      bigData = null; // Release the memory
+    }
+  };
+}
+let closure = createEfficientClosure();
+closure.logFirstItem();
+closure.releaseData(); // Explicitly release resources when done
+```
+
+ 
