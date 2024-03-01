@@ -25,3 +25,12 @@ So , What is it?
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/bfc7bbb3-a5b0-4a95-931e-ec7f6952689b)
 
 - Prototype chain
+
+
+________________________________________________
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/355b8481-c5a8-46ae-b54b-2d48c8786183)
+
+
+object2 is inheriting the properties from object1 this is called prototypical inheritance
