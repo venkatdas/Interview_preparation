@@ -72,6 +72,86 @@ console.log(sum(3)(5)(2));
 
 ## 3. **Infinite currying** -> sum(1)(2)....(n)
 
+_ To implement this solution we have to call recursive function
+
+```js
+function sum(a) {
+  return function (b) {
+    if (b) {
+      return sum(a + b);
+    } else {
+      return a;
+    }
+  };
+}
+
+console.log(sum(3)(5)(2)(15)(4)()); //29
+```
+
+**OR**
+```js
+function sum(a) {
+  return function (b) {
+    if (b) return sum(a + b)
+    else return a;
+  };
+}
+
+console.log(sum(3)(5)(2)(15)(4)());
+```
+
+1️⃣ It will keep returning a function until arguments are provided.
+
+2️⃣ If there are no more arguments specified, we simply return the value of 'a' which is the added total result
+
+
+## 4. Currying vs Partial Application
+
+- This is Partial Function
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f26e0ff9-658c-4302-bc81-496f4030502c)
+
+- ✅ We concluded that the above function named sum expected 3 arguments and had 2 nested functions (Partial Application) unlike previous implementation where the function expected 3 arguments and had 3 nested functions.(currying)
+- Partial application transforms a function into another function with smaller arity.
+
+## 5. DOM Manipulation using currying
+
+
+
+## 6. Write a function curry() that converts f(a,b,c) into a curried function f(a)(b)(c) . 
+
+
+```js
+
+
+function curry(func) {
+  // func will take function that coverted to curyy
+  return function curriedFunc(...args) {
+    // this is curried Func
+    if (args.length >= func.length) {
+      return func(...args);
+    } else {
+      return function (...nexrArgs) {
+        return curriedFunc(...args, ...nexrArgs);
+      };
+    }
+  };
+}
+
+const sumResult = (a, b, c) => {
+  return a + b + c;
+};
+
+const resultVal = curry(sumResult);
+
+console.log(resultVal(2)(3)(4));
+
+```
+
+
+
+
+
 
 
 
