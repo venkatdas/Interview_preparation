@@ -34,3 +34,10 @@ ________________________________________________
 
 
 object2 is inheriting the properties from object1 this is called prototypical inheritance
+
+
+______________________________________________
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/379baf2f-8149-4a30-827f-dd65cda241e2)
+
+- If you try to access the getIntro from object2 it will get `Aditya from dehradun` because `this` points to the object2 and it will get the access, when coming to `city` , it is not there in object2 sothat accroding to prototype chain it will inherit from object1.
