@@ -27,3 +27,53 @@ Following are the reasons why currying is good :
 
 ✅ It divides one function into multiple functions so that one handles one set of responsibility.
 
+
+Examples
+
+1) Convert sum(2,6,1) to sum(2)(6)(1)
+
+```js
+function sum(a) {
+    return (b) => {
+        return (c) => {
+            return a + b + c
+        }
+    }
+}
+/* you can call it in two ways*/
+1️⃣ console.log(sum(1)(2)(3)); //6
+
+2️⃣ const sum1 = sum(1);
+const sum2 = sum1(2);
+const result = sum2(3);
+console.log(result); // 6
+
+// Answer
+
+function sum(a) {
+  return function (b) {
+    return function (c) {
+       return ` Sum is ${a + b+c}`;
+    }
+   
+  };
+}
+
+console.log(sum(3)(5)(2));
+
+```
+
+## 2.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/c9930cda-37b3-469e-9d34-a99d00b78385)
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/cda60e62-c89f-4323-987c-3456e0281a84)
+
+## 3. **Infinite currying** -> sum(1)(2)....(n)
+
+
+
+
+
+
