@@ -95,5 +95,11 @@ function printName(name) {
 ```
 
 
+Explanation
+
+- logMessage is impure because it produces a side effect: it prints a message to the console.
+- Even though it might seem to always do the same thing for the same input, the essence of being "pure" isn't just about consistency;
+- it's also about not affecting the world outside the function. Printing to the console is an external interaction.
+
 
     
