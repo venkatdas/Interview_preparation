@@ -12,7 +12,7 @@ const person = {
 };
 ```
 
-**2) Constructor Functions**
+**2) Constructor Functions or ES6**
 
 ```js
 function Person(firstName, lastName, age) {
