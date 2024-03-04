@@ -53,7 +53,9 @@ set.forEach((value, valueAgain, set) => {
 });
 ```
 
-#### Iteration with set
+
+
+#### Iteration with Map
 
 
 -Iteration over Map
