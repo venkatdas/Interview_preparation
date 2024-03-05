@@ -6,6 +6,17 @@ Syntax
 `arr.join([separator])`
 _________________________________
 
+
+Approach 
+________________
+
+- by default the param separator is comma (ex: separator = ',')
+- maintain an result which returns in the String format
+- By default we are storing result with the first element in an array. Ex: String(this[0])
+- perform a basic for loop starting with i=1 and i<this.length
+- core logic is : result = result + String(separator) + String(this[i])
+- at the end return result post exit from for loop
+_____________________________
 ```js
 
 Array.prototype.myJoin = function (separator = ",") {
