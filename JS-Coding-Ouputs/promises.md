@@ -100,6 +100,48 @@ Promise.resolve(1)
 - .then(console.log) logs the result to the console.
 - 
 
-
-  
 </details>
+
+## 4)
+
+```js
+Promise.resolve(1)
+.then((val) => {
+  console.log(val)
+  return val + 1
+}).then((val) => {
+  console.log(val)
+}).then((val) => {
+  console.log(val)
+  return Promise.resolve(3)
+    .then((val) => {
+      console.log(val)
+    })
+}).then((val) => {
+  console.log(val)
+  return Promise.reject(4)
+}).catch((val) => {
+  console.log(val)
+}).finally((val) => {
+  console.log(val)
+  return 10
+}).then((val) => {
+  console.log(val)
+})
+```
+
+
+<details>
+  <summary>
+    Solution
+  </summary>
+  ```js
+  1
+2
+3
+undefined
+4
+undefined
+```
+</details>
+
