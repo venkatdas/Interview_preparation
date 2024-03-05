@@ -22,7 +22,14 @@ console.log(combinedArray);
 // Output: ["a", "b", "c", "d", "e", "f", 1, 2, 3]
 
 ```
+Approach
 
+- we are passing empty parameters because we will perform operations with arguments
+- maintain an result arr so that we will return this at last
+- 1st basic for loop will be based on the this.length and result.push(this[i])
+- 2nd basic for loop will be based on the arguments.length and arguments[i] can have array formatted values or primitives also
+- So, inside the for loop write a if condition to handle Array.isArray(arguments[i]), if yes then perform another for loop based on the arguments[i] variable.length. and push the value in the result final array
+- in the else condition directly push the arguments[i]
 ______________________________________
 
 ```js
