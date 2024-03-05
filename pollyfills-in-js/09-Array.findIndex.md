@@ -50,6 +50,9 @@ const strings = ["apple", "banana", "grapefruit", "blueberry"];
 const containsBerryIndex = strings.myFindIndex((res)=>res==="apple")
 console.log(containsBerryIndex); // Output: 0
 
+_________________________________________________________________________________________
+
+
 
 //Example 1
 const array23 = [5, 12, 8, 130, 44];
