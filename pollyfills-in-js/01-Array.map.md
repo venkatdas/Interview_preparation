@@ -2,11 +2,15 @@
 ___________________________
 
 
-Syntax of Pollyfill
+Syntax of Pollyfill it is common for everthing.. 
 
 ```js
-if (!Array.prototype.map) {
+if (!Array.prototype.map) { 
   Array.prototype.map = function(callback, thisArg) {
+
+ if (typeof callback !== "function") {
+       throw new TypeError("Callback must be a function");
+     }
     // Implementation here
   };
 }
@@ -14,8 +18,12 @@ if (!Array.prototype.map) {
 
 
 
-```js
 
+
+
+
+
+```js
 const arr = [2, 3, 4];
 
 const mappeddarr = arr.map((num) => {
@@ -23,7 +31,12 @@ const mappeddarr = arr.map((num) => {
 });
 
 console.log(mappeddarr);
+```
 
+- Above code is for just executing the map built in function
+
+
+```js
 if (!Array.prototype.map) {
   Array.prototype.myMapFunc = function (callback, thisArg) {
      if (typeof callback !== "function") {
@@ -46,6 +59,11 @@ console.log(result);
 
 ```
 
+
+
+- MAP pollyfil
+
+  ``
 
 
 
