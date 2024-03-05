@@ -32,6 +32,22 @@ Approach
 - in the else condition directly push the arguments[i]
 ______________________________________
 
+modifyed approach
+
+- Check if Array.prototype.customConcat is not already defined.
+- Define Array.prototype.customConcat function.
+- Initialize an empty array newArr for the result.
+- Iterate over the original array (this) and push each element to newArr.
+- Iterate over arguments provided to customConcat.
+- For each argument (currentArg):
+  - Check if currentArg is an array using Array.isArray(currentArg).
+  - If currentArg is an array, iterate over it and push each element to newArr.
+- If currentArg is not an array, push currentArg directly to newArr.
+- Return newArr.
+
+
+
+
 ```js
 
 Array.prototype.myConcat = function () {
