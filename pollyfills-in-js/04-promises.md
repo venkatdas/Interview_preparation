@@ -74,3 +74,22 @@ setTimeout(() => {
 })
 ```
 
+
+
+______________
+resolve and reject polyfil
+
+
+```js
+PromisePolyfill.resolve =(val)=>{
+  return new PromisePolyfill(function executor(resolve,reject){
+    resolve(val)
+  })
+}
+
+PromisePolyfill.reject = (val) => {
+  return new PromisePolyfill(function executor(resolve, reject) {
+    reject(val);
+  });
+};
+```
