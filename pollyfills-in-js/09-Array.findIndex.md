@@ -13,6 +13,21 @@ const index = array.findIndex(callback(element[, index[, array]])[, thisArg])
 _________________________
 
 
+**Approach**
+
+- 
+
+- const findIndexArr = Object(this)
+- const findIndexLength = Number(findIndexArr.length) || 0
+- Initialize the let index = 0
+- perform a loop using while (ex: while(index < findIndexLength))
+- if(callbackFunctionParam.call(thisArg, findIndexArr[index], index, findIndexArr )) is true then return index
+- outside the while loop return -1
+
+
+
+
+
 ```js
 
 
@@ -42,6 +57,11 @@ Array.prototype.myFindIndex = function (callback, thisArg) {
 
 _____________________
 
+
+
+
+
+
 Examples
 
 ```js
@@ -49,10 +69,6 @@ Examples
 const strings = ["apple", "banana", "grapefruit", "blueberry"];
 const containsBerryIndex = strings.myFindIndex((res)=>res==="apple")
 console.log(containsBerryIndex); // Output: 0
-
-_________________________________________________________________________________________
-
-
 
 //Example 1
 const array23 = [5, 12, 8, 130, 44];
