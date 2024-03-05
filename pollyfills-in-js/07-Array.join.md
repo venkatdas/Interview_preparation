@@ -43,3 +43,30 @@ let text = fruits.myJoin();
 console.log(text); //Banana,Orange,Apple,Mango
 
 ```
+**OR**
+
+```js
+
+if (!Array.prototype.join) {
+  Array.prototype.join = function(separator = ',') {
+    let str = '';
+
+    for (let i = 0; i < this.length; i++) {
+      // If the element is undefined or null, it is converted to an empty string.
+      if (this[i] == null) {
+        str += '';
+      } else {
+        str += this[i];
+      }
+      
+      // Add the separator between elements, but not after the last element
+      if (i < this.length - 1) {
+        str += separator;
+      }
+    }
+
+    return str;
+  };
+}
+
+```
