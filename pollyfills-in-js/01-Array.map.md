@@ -83,7 +83,7 @@ console.log(result);
     let resultArr = [];
 
     for (let i = 0; i < this.length; i++) {
-      resultArr.push(callback(this[i], i, this));
+      resultArr.push(callback(this[i], i, this)); // this is parent array
     }
     return resultArr;
   };
