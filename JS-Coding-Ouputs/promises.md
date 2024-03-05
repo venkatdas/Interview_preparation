@@ -90,11 +90,11 @@ Promise.resolve(1)
   <summary>
     Solution
   </summary>
-  1. Promise.resolve(1) immediately resolves with the value `1`.
-  2. .then(() => 2) executes, returning 2, which becomes the value for the next .then.
-  3. .then(3) doesn't alter the promise chain because 3 is not a function. .then expects a function as its argument; passing anything else (like 3) will result in the argument being ignored, and the previous promise's resolved value (2) is passed through unchanged.
-  4. .then((value) => value * 3) takes the passed-through value (2) and multiplies it by 3, resulting in 6.
-  5. .then(Promise.resolve(4)) also doesn't alter the chain because Promise.resolve(4) is not a function. Similar to the previous non-function argument, this results in the previous value (6) being passed through.
-  6. .then(console.log) logs the result to the console.
+- Promise.resolve(1) immediately resolves with the value `1`.
+- .then(() => 2) executes, returning 2, which becomes the value for the next .then.
+- .then(3) doesn't alter the promise chain because 3 is not a function. .then expects a function as its argument; passing anything else (like 3) will result in the argument being ignored, and the previous promise's resolved value (2) is passed through unchanged.
+-  .then((value) => value * 3) takes the passed-through value (2) and multiplies it by 3, resulting in 6.
+- .then(Promise.resolve(4)) also doesn't alter the chain because Promise.resolve(4) is not a function. Similar to the previous non-function argument, this results in the previous value (6) being passed through.
+- .then(console.log) logs the result to the console.
   
 </details>
