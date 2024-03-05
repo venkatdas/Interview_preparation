@@ -49,4 +49,28 @@ Synchronous code is executed first, so console.log(1), console.log(2), console.l
 
 
 
+## 2)
+
+```js
+new Promise((resolve, reject) => {
+  resolve(1)
+  resolve(2)
+  reject('error')
+}).then((value) => {
+  console.log(value)
+}, (error) => {
+  console.log('error')
+})
+```
+
+<details>
+  <summary>
+    Solution
+  </summary>
+
+- In a Promise, once it is resolved or rejected, any subsequent calls to resolve or reject are ignored. Therefore, in the given code, the promise is resolved with the value 1 on the first resolve call, and the subsequent resolve(2) and reject('error') calls are ignored.
+- The .then method is attached to the promise, which takes two arguments: the first is a callback function for the success case (when the promise is resolved), and the second is a callback function for the failure case (when the promise is rejected). Since the promise is resolved with the value 1, the success callback is executed, and 1 is logged to the console.
+</details>
+
+
 
