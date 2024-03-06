@@ -4,6 +4,15 @@
 ___________
 
 
+**Approach**
+
+- one condition for primitives and null (ex: typeof value!==object || value === null)
+- one condition for Array.isArray(value)
+- another condition for typeof value === 'object'
+- for primitives & null (I mean for condition 1), simply return the param that you have passed (ex: value)
+- for Array condition, write a basic for loop based on the value.length. Maintain an array for recursion (ex: arrCopy[i] = customCloneDeep(value[i])). Post for loop ends, return that stored/created arrCopy.
+- for object condition, maintain an empty object and perform a for-in-loop and pass recursively (ex: objCopy[key] = customCloneDeep(value[key])). Post for loop ends, return the finalObj
+
 ```js
 
 function customCloneDeep(value) {
