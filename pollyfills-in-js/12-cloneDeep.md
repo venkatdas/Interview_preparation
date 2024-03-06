@@ -49,3 +49,59 @@ function customCloneDeep(value) {
   throw new Error("Unable to clone value! Its type is not supported.");
 }
 ```
+
+
+
+Example
+
+
+```js
+const object1 = {
+  name: "Alice",
+  address: {
+    age: 30,
+    city: "Wonderland",
+  },
+  hobbies: ["reading", "coding"],
+};
+
+// Assigning object1 to object2 - this creates a reference, not a clone.
+const object2 = object1;
+
+// Modifying object2
+object2.name = 'Bob';
+
+console.log(object1.name);
+
+console.log(object2)// {name: 'Bob', address: {…}, hobbies: Array(2)}
+console.log(object1); //{name: 'Bob', address: {…}, hobbies: Array(2)}
+```
+- Before deep clone object1 was assigned to object2
+- If i'm trying to change the object2.name it will reflect to the object1 also
+- - To avoid this we have to perform DeepClone
+
+```js
+const object1 = {
+  name: "Alice",
+  address: {
+    age: 30,
+    city: "Wonderland",
+  },
+  hobbies: ["reading", "coding"],
+};
+
+// Assigning object1 to object2 - this creates a reference, not a clone.
+const object2 = customCloneDeep(object1);
+
+// Modifying object2
+object2.name = 'Bob';
+
+console.log(object1.name);
+
+console.log(object2)// {name: 'Bob', address: {…}, hobbies: Array(2)}
+
+console.log(object1); {name: 'Alice', address: {…}, hobbies: Array(2)}
+```
+
+
+
