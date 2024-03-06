@@ -100,7 +100,7 @@ console.log(object1.name);
 
 console.log(object2)// {name: 'Bob', address: {…}, hobbies: Array(2)}
 
-console.log(object1); {name: 'Alice', address: {…}, hobbies: Array(2)}
+console.log(object1); //{name: 'Alice', address: {…}, hobbies: Array(2)}
 ```
 
 
