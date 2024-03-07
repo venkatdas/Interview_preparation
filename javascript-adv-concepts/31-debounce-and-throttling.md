@@ -105,6 +105,45 @@ btn.addEventListener("click", function () {
 
 ### Throttle Implementation.
 
+**Question**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/84b6cb29-78f0-4143-a52a-057dc73d590d)
+
+
+- Everything is same in html code and slight change in js as shown here,
+
+```js
+const btn = document.querySelector(".increment_btn");
+const btnPress = document.querySelector(".increment_pressed");
+const count = document.querySelector(".increment_count");
+
+var pressedCount = 0;
+var triggerCount = 0;
+
+const throttledCount =_.throttle(()=>{
+  count.innerHTML=++triggerCount
+
+},800)
+
+
+btn.addEventListener("click", function () {
+ btnPress.innerHTML= ++pressedCount;
+ throttledCount();
+});
+```
+
+output
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/95bc11d9-0e90-41b4-8fa0-5d068d8a5d7b)
+
+- From above image we can notice that it can trigger every 800 ms without pause.. that user clicks.
+
+
+
+
+
+
 
 
 
