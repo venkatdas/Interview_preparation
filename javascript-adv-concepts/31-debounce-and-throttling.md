@@ -119,8 +119,10 @@ const count = document.querySelector(".increment_count");
 
 var pressedCount = 0;
 var triggerCount = 0;
-
+const start = new Date().getTime();
 const throttledCount =_.throttle(()=>{
+  const now = new Date().getTime()
+  console.log(now-start);
   count.innerHTML=++triggerCount
 
 },800)
@@ -130,15 +132,17 @@ btn.addEventListener("click", function () {
  btnPress.innerHTML= ++pressedCount;
  throttledCount();
 });
+
 ```
 
 output
 
 
-![image](https://github.com/venkatdas/Interview_prep/assets/43024084/95bc11d9-0e90-41b4-8fa0-5d068d8a5d7b)
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/799d3653-e399-43db-a9dd-653bbe912b01)
+
 
 - From above image we can notice that it can trigger every 800 ms without pause.. that user clicks.
-
+- We can notice the time difference also between them which has 800 ms or more
 
 
 
