@@ -79,7 +79,8 @@ var pressedCount = 0;
 var triggerCount = 0;
 
 const debouncedCount =  _.debounce(()=>{
- count.innerHTML = ++triggerCount;
+ count.innerHTML = ++triggerCount; // we're gonna increment the pressed count and
+//add it to the innerHtml of increment_pressed class
 
 },800)
 
@@ -144,6 +145,29 @@ output
 - From above image we can notice that it can trigger every 800 ms without pause.. that user clicks.
 - We can notice the time difference also between them which has 800 ms or more
 
+_____________________
+
+## Debounce polyfill
+
+```js
+
+const myDebounce = (cb,delay) => {
+let timer; // measure the time for every single key storke or button press
+return function (...args) { //return function of debounce 
+if(timer) clearTimeout(timer)
+  timer= setTimeout(() => {
+    cb(...args)
+    
+  }, delay);
+  
+}
+
+};
+```
+
+___________________________
+
+## Throttile polyfill
 
 
 
