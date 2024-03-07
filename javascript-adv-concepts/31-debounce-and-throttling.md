@@ -36,6 +36,77 @@ ___________________________
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/4a91590b-c454-45c7-8314-0b6fe8754aff)
  
 
+------------------------------
+
+## Implementation of debounce using lodash as follows
+
+**Question**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5aae2be7-f218-4770-94f8-a9ae4c73cea0)
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>this keyword</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Debounce</h1>
+    </div>
+
+    <button class="increment_btn">Increment</button>
+    <p>Button Pressed <span class="increment_pressed">0</span> Times</p>
+    <p>Triggered<span class="increment_count"> 0 </span> Times</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
+
+```
+
+```js
+
+const btn = document.querySelector(".increment_btn");
+const btnPress = document.querySelector(".increment_pressed");
+const count = document.querySelector(".increment_count");
+
+var pressedCount = 0;
+var triggerCount = 0;
+
+const debouncedCount =  _.debounce(()=>{
+ count.innerHTML = ++triggerCount;
+
+},800)
+
+
+btn.addEventListener("click", function () {
+ btnPress.innerHTML= ++pressedCount;
+ debouncedCount()
+});
+
+```
+
+**Output**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/6f0baee3-e774-4ae4-b0dd-d7a016f0bfb0)
+
+
+- From abbove image we implemeted a deobounce technique
+- when you're continuosly pressing it's not going to increment , It will only when give a pause or it will pass 800ms then only it will trigger.
+
+
+
+  ________________________________
+
+### Throttle Implementation.
+
+
+
 
 
 
