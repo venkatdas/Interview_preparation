@@ -1,4 +1,4 @@
-## DOM Manipulation in js
+`## DOM Manipulation in js
 
 
 
@@ -75,5 +75,21 @@ ___________________________________________
 
 - we can acheive that by `div.textContent ="hello world"`
 
-- Then what is the difference between innerText vs textContent
+- Then what is the difference between innerText vs textContent.
+
+- **Here is the Example**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5849489d-ed3c-44a7-a36c-c917ce7b35f9)
+
+
+This is the difference
+- innerText displays the content only if it is visible otherwise it won't.
+- textContent will display entire text even spaces and all things. All of the content inside the `div`
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f36c49d1-369f-4b17-a252-805755116997)
+
+
+
+
+
 
