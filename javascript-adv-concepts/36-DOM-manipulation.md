@@ -292,6 +292,11 @@ spanHi.classList.toggle('hi2', true); //toggle
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/243e7bd5-bd7d-4d91-bd1b-d4a1fc062513)
 
+________________________
+
+## Modifying element style
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5a478e33-98d6-4270-8c81-927720a98001)
 
 _______________________
 
