@@ -103,6 +103,49 @@ ___________________________
   ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/784b03d7-e740-4c06-9153-0ef1deb3e8e2)
 
 
+_____________________________________________
+
+## Removing elements from dom
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <span id="hi">Hello</span>
+      <span id="bye">Bye</span>
+    </div>
+  </body>
+</html>
+```
+
+- script.js
+
+```js
+//script.js
+const body = document.body;
+const div = document.querySelector('div');
+const spanHi = document.queerySelector('#hi');
+const spanBye = document.queerySelector('#bye');
+
+spanBye.remove(); // removes the element
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/76d4c3ef-474f-46a1-a1b7-702dc06965c4)
+
+- removes `Bye` text from dom.
+- - to append again use `div.append(spanBye)` // Hello Bye
+
+
+
+
 
 
 
