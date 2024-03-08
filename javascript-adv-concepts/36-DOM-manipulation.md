@@ -73,4 +73,7 @@ ___________________________________________
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/fe94ea3e-bb72-41e3-a28a-d90f2eada9b0)
 
 
+- we can acheive that by `div.textContent ="hello world"`
+
+- Then what is the difference between innerText vs textContent
 
