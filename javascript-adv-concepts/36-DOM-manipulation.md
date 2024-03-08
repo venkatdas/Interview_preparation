@@ -89,6 +89,21 @@ This is the difference
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f36c49d1-369f-4b17-a252-805755116997)
 
 
+___________________________
+
+## Render html inside div or any element (Modifying element html)
+
+- using innerHTML
+- this example returns bold type of `Hello World2`
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/a4a42716-1074-4ddd-9e0c-05c1eca282aa)
+
+- using that innerHTML it could be malicious instead of tht we can use like this.
+
+  ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/784b03d7-e740-4c06-9153-0ef1deb3e8e2)
+
+
+
 
 
 
