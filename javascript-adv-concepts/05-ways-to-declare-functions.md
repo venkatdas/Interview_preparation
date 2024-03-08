@@ -128,4 +128,12 @@ setTimeout(function() {
 }, 1000);
 ```
 
+9) **Named Functin Expression**
+
+```js
+const greet = function result(name) {
+  console.log("Hello " + name + "!");
+};
+greet("Bob");
+```
 
