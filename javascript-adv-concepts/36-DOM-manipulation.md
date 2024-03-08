@@ -142,6 +142,77 @@ spanBye.remove(); // removes the element
 
 - removes `Bye` text from dom.
 - - to append again use `div.append(spanBye)` // Hello Bye
+ 
+
+## 2) Another way of removing element
+
+```js
+
+div.removeChild(spanHi) //Bye
+
+//or
+
+spanHi.remove()
+```
+
+______________________________________________________________________
+
+## Modifying Element Attributes.
+
+- **Adding titile Attribure and how o access that in JS**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <span title="hello" id="hi">Hello</span>
+      <span id="bye">Bye</span>
+    </div>
+  </body>
+</html>
+```
+
+- script.js
+
+```js
+//script.js
+const body = document.body;
+const div = document.querySelector('div');
+const spanHi = document.querySelector('#hi');
+const spanBye = document.querySelector('#bye');
+
+console.log(spanHi.getAttribute('id')); // prints out the id which is "hi"
+console.log(spanHi.getAttribute('title')); // prints out the tile which is "hello"
+
+// We can also use below instead of getAttribute()
+console.log(spanHi.id);
+console.log(spanHi.title);
+
+// Similary we can setAttribute
+spanHi.setAttribute('id', 'sdfsdfsd');
+
+// We can also use below instead of setAttribute()
+spanHi.id = 'sdfsdfsd';
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/cf890356-11b9-4497-a9e2-a308f90f7d42)
+
+- To remove attribute use this code
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/15885561-f8f9-4365-a7ee-f890749e41bd)
+
+
+
+
+
+
 
 
 
