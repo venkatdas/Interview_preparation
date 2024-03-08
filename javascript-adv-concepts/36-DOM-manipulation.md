@@ -62,5 +62,15 @@ _____________________________________
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/13692d66-2ad5-4b1d-b4cf-0f7f61f41f47)
 
 - From the above image we just created `div` element and we haven't used that `div` element to the page , that is the reason we didn't get div tag in script section.
+- - To get that we have to append to the page
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/0f4d2ce5-d62e-4843-acb6-364968eff62d)
+
+
+___________________________________________
+## Adding text to div element
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/fe94ea3e-bb72-41e3-a28a-d90f2eada9b0)
+
 
 
