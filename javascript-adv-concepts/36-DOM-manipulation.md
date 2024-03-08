@@ -211,14 +211,93 @@ spanHi.id = 'sdfsdfsd';
 
 
 
+_________________________________________________
+
+## Manipulating elements with Data Attributes.
+
+- just like normal attributes
+- To create a data attribute in HTML we just need to add a custom attribute to our HTML element that starts with **data-**.
+
+- We are adding two attributes and those are
+  - data-test="this is test"
+  - data-longer-name="sdffsdfsd"
+ 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/7f399b64-27f5-429f-948f-703f0700fbd7)
 
 
 
 
+- To access the individual Data attributte
+
+```js
+// longerName access from the DOM
+console.log(spanHi.dataset.longerName); //sdfsdf
+
+```
+
+- To set a new Property
+
+```js
+
+spanHi.dataset.newName= 'hi' //hi
+```
+like below picture
 
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/ca61a4dc-7b06-4883-9b86-caa80e996521)
+
+____________________________________________________
+
+## Modifying class elements
+
+```js
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <span title="hello" id="hi" class="hi1 hi2">Hello</span>
+      <span id="bye">Bye</span>
+    </div>
+  </body>
+</html>
+```
+
+```js
+//script.js
+const body = document.body;
+const div = document.querySelector('div');
+const spanHi = document.querySelector('#hi');
+const spanBye = document.querySelector('#bye');
+
+spanHi.classList.add('new-class'); //add
+spanHi.classList.remove('hi1'); //remove
+
+// removes hi2 if it is there, otherwise it adds hi2
+spanHi.classList.toggle('hi2'); //toggle
+
+// automatically removes if false is passed
+spanHi.classList.toggle('hi2', false); //toggle
+
+// automatically add the class if true is passed
+spanHi.classList.toggle('hi2', true); //toggle
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/243e7bd5-bd7d-4d91-bd1b-d4a1fc062513)
 
 
+_______________________
+
+- To know more aboout data attributes
+- blog is here
+- https://blog.webdevsimplified.com/2020-10/javascript-data-attributes/
 
 
 
