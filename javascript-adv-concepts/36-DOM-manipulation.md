@@ -16,3 +16,5 @@
 
 
 - DOM manipulation in JavaScript refers to the process of dynamically changing the structure, style, or content of a web page.
+
+
