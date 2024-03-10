@@ -125,6 +125,47 @@ _____________________________________
 5) Selecting Children
 
 
+- `grandparent` is the main class
+- we have nested child classes inside the parent class
+
+```js
+const grandParent = document.querySelector('.grandparent');
+const parents = Array.from(grandParent.children); // To get the children classes
+
+parents.forEach(changeColor);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/368af5ed-4b13-4053-ad82-0bb7eae8501a)
+
+output
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/9cfe77dc-2371-4a0e-a151-9bd0c08b5f84)
+
+
+- What if I want to change the specific children color
+
+```js
+const grandParent = document.querySelector('.grandparent');
+const parents = Array.from(grandParent.children);
+const parentOne = parents[0];
+const children = parentOne.children;
+
+changeColor(children[0]);
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/44082bcb-aa01-4284-ae16-72954eb89804)
+
+
 
 
 
