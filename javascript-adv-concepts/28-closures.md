@@ -91,9 +91,10 @@ console.log(count);
 let count =0;
 (function printCount(){
 if(count===0){
-  let count=1;
+  let count=1; //by shadowing 
   console.log(count); //1
 }
+//outside block still count =0;
 console.log(count); //0
 })()
 
