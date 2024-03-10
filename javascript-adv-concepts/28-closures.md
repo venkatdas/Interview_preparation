@@ -141,9 +141,30 @@ addSix(21); // returns 27
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f2ddc714-d2ab-46b3-b660-be6f597182ed)
 
-
 </details>
 
+## 4. Block scope and setTimeout
 
+
+```js
+
+for (var i = 0; i < 3; i++) {
+setTimeout(() => {
+  console.log(i);
+}, 1000);  
+}
+```
+
+<details>
+  <summary>Solution</summary>
+
+```js
+
+for (var i = 0; i < 3; i++) {
+setTimeout(() => {
+  console.log(i); //3, 3, 3
+}, 1000);  
+}
+</details>
 
 
