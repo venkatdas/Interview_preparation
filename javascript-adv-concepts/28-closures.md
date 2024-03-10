@@ -158,13 +158,9 @@ setTimeout(() => {
 <details>
   <summary>Solution</summary>
 
-```js
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/11577b61-9bbd-4b86-94bf-9d67abb38670)
 
-for (var i = 0; i < 3; i++) {
-setTimeout(() => {
-  console.log(i); //3, 3, 3
-}, 1000);  
-}
+
 </details>
 
 
