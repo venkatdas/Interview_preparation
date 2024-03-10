@@ -85,8 +85,9 @@ console.log(count);
 ```
 <details>
   <summary>Solution</summary>
-```js
 
+  
+```js
 let count =0;
 (function printCount(){
 if(count===0){
@@ -95,6 +96,7 @@ if(count===0){
 }
 console.log(count); //0
 })()
+
 ```
   
 </details>
