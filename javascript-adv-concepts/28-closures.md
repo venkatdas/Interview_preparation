@@ -66,4 +66,37 @@ das.displayName(); // Calls the `displayName` function that logs "Mozilla"
 console.log(das.result); // Accesses the `result` value directly, should log 6
 
 ```
+_________________________________________
+
+**Output based questions**
+
+## 1.
+
+```js
+
+let count =0;
+(function printCount(){
+if(count===0){
+  let count=1;
+  console.log(count);
+}
+console.log(count);
+})()
+```
+<details>
+  <summary>Solution</summary>
+```js
+
+let count =0;
+(function printCount(){
+if(count===0){
+  let count=1;
+  console.log(count); //1
+}
+console.log(count); //0
+})()
+```
+  
+</details>
+
 
