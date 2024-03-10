@@ -163,4 +163,16 @@ setTimeout(() => {
 
 </details>
 
+## 5.
+- Acheive 0,1,2 with var ONly
+- Using Closure
 
+```js
+for (var i = 0; i < 3; i++) {
+  (function (i) {
+    setTimeout(() => {
+      console.log(i);
+    }, 1000);
+  })(i);
+}
+```
