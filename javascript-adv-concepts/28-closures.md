@@ -125,3 +125,25 @@ addSix(21); // returns 27
 //inner function returned
 ```
 </details>
+
+
+## 3.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/88361a9d-836e-4c21-a980-f6d9a4e467b6)
+- From above image if i try to run that it will take lot of time, so How do i optimize that using closure.
+
+<details>
+  <summary>Solution</summary>
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/28bf3c7e-b843-4932-bf5f-752b867660dd)
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f2ddc714-d2ab-46b3-b660-be6f597182ed)
+
+
+</details>
+
+
+
+
