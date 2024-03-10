@@ -43,3 +43,19 @@ console.log(role); // Output: Tech Lead
 console.log(city); // Output: Anytown
 console.log(address); // {street: 'Blogstreet', country: 'Germany'}
 ```
+
+
+----------
+
+```js
+const person = {
+  name: 'Paul Knulst',
+  role: 'Tech Lead'
+};
+
+const {name, role, address = 'Unknown'} = person;
+
+console.log(name); // Output: Paul Knulst
+console.log(role); // Output: Tech Lead
+console.log(address); // Output: Unknown
+```
