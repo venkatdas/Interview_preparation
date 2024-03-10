@@ -181,6 +181,67 @@ function changeColor(element) {
 ```
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/e3cd6b58-edbd-4382-83c8-29dc000ed3ec)
 
+_________________________________________
+
+7) Selecting Parents
+   1)
+
+- Let's traverse from child to parent to grandparent
+- For that let me add `id` to the child as follows.
+- To change that particular element
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/c6b07805-58cf-4615-8c9e-850605cc51b4)
+
+```js
+ const childOne =document.querySelector('#child-one')
+changeColor(childOne) //child
+
+function changeColor (element){
+element.style.backgroundColor ='#333'
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/eda11d95-e73d-448c-a375-57c9addea7ff)
+
+
+2) through parent element
+
+```js
+ const childOne =document.querySelector('#child-one')
+ const parent =childOne.parentElement;
+
+changeColor(parent) //parent
+
+function changeColor (element){
+element.style.backgroundColor ='#333'
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5f50cde2-a2aa-4c89-9cdf-ffba235fb6c7)
+
+3) Through grandparent element
+
+
+```js
+const childOne = document.querySelector('#child-one');
+const parent = childOne.parentElement;
+const grandParent = parent.parentElement;
+
+changeColor(grandParent); // grandParent-div
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/a279558f-5f3f-4fd0-98d5-8ace189e0116)
+
+
+________________________________________
+
+**8) Selecting Ancestors**
+
+
+
+
+
 
 
 
