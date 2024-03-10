@@ -32,4 +32,102 @@ ________________________________________
 - Since multiple elements can have classNames, it always returns a collection of elements (in our case two parent elements)
 
 
+```js
+//script.js
+
+const parents = Array.from(document.getElementsByClassName('parent'));
+parents.forEach(changeColor); // changes the backgroundColor for both of the parent classes
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333'; //grey color
+}
+```
+
+- IN out html file we have two classes with `parent' so, it will reflect both of these.
+
+
+Output
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/e7e5b671-437b-4e3c-a24c-58bc26b81e74)
+
+
+_________________________________
+
+3) querySelector
+
+- To select an single elment we have use
+  - ise # for id
+  - use . for class
+
+
+- **To retrieve ID**
+
+```js
+const grandParent = document.querySelector('#grandparent-id');
+changeColor(grandParent);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+- To get traverse for class
+
+```js
+const grandParent = document.querySelector('.grandparent');
+changeColor(grandParent);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+- The above code is only works for one class, What if there are multiple classes we nee to approach different one , thus came to picture of `querySelectorAll`.
+
+
+```js
+const parent = document.querySelector('.parent');
+changeColor(parent);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+ ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/966ac71e-fc3e-4a21-8a20-ab628d1273f7)
+
+- Below code is only applicalble for 1st parent class.
+- still that grey color not applied to the second parent class
+
+___________________________
+
+4) **querySelectorAll**
+
+
+- with multiple classes or div elements we can apply this querySelectorAll
+
+
+```js
+const parents = document.querySelectorAll('.parent');
+parents.forEach(changeColor);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f1ec6b6c-f195-4b44-8f15-94de359402fd)
+
+
+_____________________________________
+
+5) Selecting Children
+
+
+
+
+
+
+
 
