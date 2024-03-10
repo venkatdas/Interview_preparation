@@ -201,6 +201,5 @@ const closure = counter();
 closure.add(5);
 closure.add(14)
 
-
-console.log(closure.retrieve());
+console.log(closure.retrieve()); // Counter =19
 ```
