@@ -161,9 +161,28 @@ function changeColor(element) {
 }
 ```
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/7b88b4fb-b700-49a5-a56d-d384de404c3e)
+
+____________________________________
+
+6) Selecting Descendents
+
+- To select all child classes.
+
+```js
+const grandParent = document.querySelector('.grandparent');
+const children = grandParent.querySelectorAll('.child');
+
+children.forEach(changeColor);
+
+function changeColor(element) {
+  element.style.backgroundColor = '#333';
+}
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/e3cd6b58-edbd-4382-83c8-29dc000ed3ec)
 
 
-![image](https://github.com/venkatdas/Interview_prep/assets/43024084/44082bcb-aa01-4284-ae16-72954eb89804)
+
 
 
 
