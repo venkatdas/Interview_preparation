@@ -43,5 +43,27 @@ myFunc(); //return child function value
 - This setup allows myFunc (which is now a reference to displayName) to be called later, and when called,
 - it can still access and use the variables from makeFunc's scope, demonstrating the power and utility of closures in JavaScript.
 
+Example 2
 
+```js
+function makeFunc(a, b) {
+  const name = "Mozilla";
+  const result = a + b;
+
+  console.log("Hey Ravi kumar");
+  function displayName() {
+    console.log(name);
+  }
+  // Return an object that includes both the `displayName` function and the `result`
+  return { displayName, result };
+}
+
+const das = makeFunc(3, 3);
+console.log(das); // This will log the object with `displayName` function and `result` value
+
+// Now, you can call `displayName` as a method of the object returned by `makeFunc`
+das.displayName(); // Calls the `displayName` function that logs "Mozilla"
+console.log(das.result); // Accesses the `result` value directly, should log 6
+
+```
 
