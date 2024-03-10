@@ -102,4 +102,26 @@ console.log(count); //0
   
 </details>
 
+## 2.
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/64e9ce1e-dda1-444b-8bf3-e1099e7bfcf0)
+
+
+<details>
+  <summary>Solution</summary>
+
+```js
+function createBase(num) {
+  return function (innerNum) {
+    console.log(innerNum + num);
+  };
+}
+
+var addSix = createBase(6);
+addSix(10); // returns 16
+addSix(21); // returns 27
+
+//you can create the closure to keep the value passed to cretaeBase even after the 
+//inner function returned
+```
+</details>
