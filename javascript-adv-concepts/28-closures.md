@@ -33,7 +33,15 @@ console.log("Taylor Durden")
   return displayName;
 }
 
-const myFunc = makeFunc();
-myFunc();
+const myFunc = makeFunc(); // parent function closed and executed
+myFunc(); //return child function value
 ```
+
+- myFunc holds a reference to the displayName function returned by makeFunc.
+- displayName retains access to its lexical scope at the time of definition (including any variables defined in makeFunc) through closure, even after makeFunc has completed execution.
+
+- This setup allows myFunc (which is now a reference to displayName) to be called later, and when called,
+- it can still access and use the variables from makeFunc's scope, demonstrating the power and utility of closures in JavaScript.
+
+
 
