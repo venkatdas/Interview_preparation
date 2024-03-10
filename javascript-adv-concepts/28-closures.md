@@ -176,3 +176,31 @@ for (var i = 0; i < 3; i++) {
   })(i);
 }
 ```
+
+## 6. How would you use a closure to create a private variable?
+
+```js
+function counter() {
+  var _counter = 0;
+
+  function add(increment) {
+    _counter += increment; // to increment the counter
+  }
+
+  function retrieve() {
+    return "Counter = "  + _counter;
+  }
+  return {
+    add,
+    retrieve,
+  };
+}
+
+const closure = counter();
+
+closure.add(5);
+closure.add(14)
+
+
+console.log(closure.retrieve());
+```
