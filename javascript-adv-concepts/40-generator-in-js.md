@@ -1,4 +1,4 @@
-## Generator
+## Generators
 
 
 - Generators are functions that can be paused and resumed, making them very useful for scenarios such as managing asynchronous operations in a synchronous manner, processing large datasets,
@@ -57,5 +57,55 @@ console.log(generatorObject.next().value) //4
 console.log(generatorObject.next())
 // { value: undefined, done: true }
 ```
+
+
+```js
+function* simpleGenerator() {
+  console.log("Before 1")
+  yield 1
+  console.log("Before 2")
+  yield 2
+  console.log("End of Generator")
+}
+
+const generatorObject = simpleGenerator()
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+
+// OUTPUT IN ORDER:
+// Before 1
+// 1
+// Before 2
+// 2
+```
+
+______________
+
+- So now that we understand what a generator function is let’s talk about why it is useful.
+- One of the most obvious use cases is for an ID generator.
+
+```js
+
+function* generateId() {
+  let id = 1
+
+  while (true) {
+    yield id
+    id++
+  }
+}
+
+const gen = generateId()
+console.log(gen.next().value)
+// 1
+console.log(gen.next().value)
+// 2
+console.log(gen.next().value)
+// 3
+```
+
+- This generator is essentially an infinite loop that increments an id variable by one every time it is called and will yield the new id.
+
+
 
 
