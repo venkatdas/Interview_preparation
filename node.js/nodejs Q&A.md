@@ -80,3 +80,57 @@ server.listen(3000, () => {
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/163babdb-0bac-46d6-9e2d-c960de2202f4)
 
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/10e2c331-12ac-4d37-a525-a198cac01184)
+
+- Event-driven architecture is a powerful approach to software design that can improve scalability, flexibility, and performance.
+- In Node.js, event-driven architecture is implemented using the event loop and the event emitter module, which provide a powerful set of tools for managing asynchronous events.
+- If you're interested in building highly scalable and reliable systems, event-driven architecture is definitely worth considering.
+
+**Event**
+
+- An "event" in Node.js is a significant occurrence within the system or application. It can be anything from a user's action (like a mouse click or a key press), a system-generated event (like a timer expiring), or, most commonly in Node.js,
+- the completion of an asynchronous input/output operation. For example, when a file read operation completes, it emits an "event" to signal that it's done and the data is now available for processing.
+
+**EventEmitter**
+
+- The EventEmitter is a class in Node.js that is used to handle events and listeners. Any object that can emit events is an instance of the EventEmitter class.
+- These objects can emit named events that cause previously registered listeners (callbacks) to be called. So, an EventEmitter is basically an object that triggers an event and informs the event loop that something has happened.
+
+```js
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// Event listener
+myEmitter.on('event', () => {
+  console.log('an event occurred!');
+});
+
+// Emit an event
+myEmitter.emit('event');
+```
+- In this example, myEmitter is an instance of EventEmitter. It listens for an 'event' with myEmitter.on(), and emits the 'event' with myEmitter.emit().
+
+**Event Loop**
+
+- The event loop is what allows Node.js to perform non-blocking I/O operations — despite the fact that JavaScript is single-threaded
+- The event loop is the mechanism that takes events from the event queue and starts their corresponding event handlers.
+
+**Event Handler**
+
+- An event handler, or a listener, is a callback function that is called when an event is emitted. The handler is registered with an instance of an EventEmitter and is bound to a specific event by name.
+
+```js
+// Registering an event handler for the 'data' event
+myEmitter.on('data', (chunk) => {
+  console.log(`Received ${chunk.length} bytes of data.`);
+});
+
+```
+- When the data event is emitted by myEmitter, the registered event handler is called with the data that was emitted.
+- This allows different parts of your application to react as needed to new information or state changes.
+
+
+
+
+
+
