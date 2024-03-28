@@ -66,3 +66,11 @@ server.listen(3000, () => {
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/ed4b9f41-7f9f-4175-a41d-36d46d499469)
 
+## 8. If node js is single threaded,  if yes How?
+
+- Yes, the core of Node.js operates on a single thread, the main thread, but it's designed to perform non-blocking I/O operations, which allows it to handle multiple operations concurrently without the need for multiple threads in the traditional sense.
+- Here's a breakdown of how Node.js manages to be effectively single-threaded and still handle concurrency:
+
+- **Event Loop:** At the heart of Node.js is the event loop, which is single-threaded. The event loop handles all asynchronous callbacks. Operations like I/O operations (file, network, database) are executed asynchronously and their callbacks are queued to the event loop. The event loop continuously polls the queue and executes the callbacks when their non-blocking operations are complete.
+- **Non-Blocking I/O:** Node.js uses non-blocking I/O calls. This means that operations like reading from a file system or making a network request do not stop the execution of JavaScript code. Instead, these operations are executed in the background, and their outcomes trigger the execution of callback functions once the operation is completed, without blocking the main thread.
+- 
