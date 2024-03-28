@@ -251,3 +251,19 @@ Node.js server: Node.js server is a server-side platform that takes requests fro
 
 - Handling multiple concurrent client requests is fast and easy: With the use of Event Queue and Thread Pool, the Node.js server enables efficient handling of a large number of incoming requests.
 - No need for creating multiple threads: Event Loop handles all requests one-by-one, so there is no need to create multiple threads. Instead, a single thread is sufficient to handle a blocking incoming request.
+
+
+## 12. Phases of event loop
+
+- Timers Phase: This phase executes callbacks scheduled by setTimeout() and setInterval(). It checks for timers whose time thresholds have elapsed and executes their callback functions.
+- Pending Callbacks Phase: Some callbacks need to be delayed until the next loop iteration. This phase executes I/O callbacks deferred to the next loop cycle.
+- Idle, Prepare Phase: This is an internal phase used for setting up some internal operations. It is not something that can be interacted with from a Node.js program.
+- Poll Phase: The poll phase has two main functions:
+
+  1. Execute scripts for timers that are set to run and see if any other timers are due to be executed.
+  2. Process events in the poll queue. If there are no timers scheduled, it will wait for callbacks to be added to the queue, executing them as they are added. If scripts are not scheduled and there are no callbacks, it will continue to the next phase.
+
+
+- Check Phase: The check phase allows for immediate callbacks to be run after the poll phase. Callbacks registered with setImmediate() are executed in this phase.
+- Close Callbacks Phase: This phase executes callbacks for some system operations such as TCP stream errors. For example, if a TCP socket was closed abruptly ('close' event), the callback is executed in this phase.
+
