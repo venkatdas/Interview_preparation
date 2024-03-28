@@ -132,5 +132,61 @@ myEmitter.on('data', (chunk) => {
 
 
 
+## 10. how node js handle a multiple requests?
+
+- Node.js is indeed single-threaded when it comes to executing JavaScript code. The way it can handle multiple requests concurrently lies in its event-driven, non-blocking I/O model and its use of the event loop.
+
+- Node JS Platform does not follow Request/Response Multi-Threaded Stateless Model. It follows Single Threaded with Event Loop Model. Node JS Processing model mainly based on Javascript Event based model with Javascript callback mechanism.
+- As Node JS follows this architecture, it can handle more and more concurrent client requests very easily. Before discussing this model internals, first go through the diagram below
+- Node JS Platform does not follow Request/Response Multi-Threaded Stateless Model. It follows Single Threaded with Event Loop Model. Node JS Processing model mainly based on Javascript Event based model with Javascript callback mechanism.
+
+- **The main heart of Node JS Processing model is “Event Loop”.**
+
+- **Here are Single Threaded Event Loop Model Processing Steps:**
+    1. Clients Send request to Web Server.
+    2. Node JS Web Server internally maintains a Limited Thread pool to provide services to the Client Requests.
+    3. Node JS Web Server receives those requests and places them into a Queue. It is known as “Event Queue”.
+    4. Node JS Web Server internally has a Component, known as “Event Loop”. Why it got this name is that it uses indefinite loop to receive requests and process them. (See some Java Pseudo code to understand this below).
+    5. Event Loop uses Single Thread only. It is main heart of Node JS Platform Processing Model.
+    6. Even Loop checks any Client Request is placed in Event Queue. If no, then wait for incoming requests for indefinitely.
+    7. If yes, then pick up one Client Request from Event Queue ,Starts process that Client Request
+    8. If that Client Request Does Not requires any Blocking IO Operations, then process everything, prepare response and send it back to client.
+    9. If that Client Request requires some Blocking IO Operations like interacting  with Database, File System, External Services then it will follow different approach
+    10. Then Checks Threads availability from Internal Thread Pool
+    11. Picks up one Thread and assign this Client Request to that thread.
+    12. That Thread is responsible for taking that request, process it, perform Blocking IO operations, prepare response and send it back to the Event Loop
+    13. Event Loop in turn, sends that Response to the respective Client.
 
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/269c297b-c781-4612-bcd0-16afd75caac3)
+
+- Explanation
+
+- Here “n” number of Clients Send request to Web Server. Let us assume they are accessing our Web Application concurrently.
+- Let us assume, our Clients are Client-1, Client-2… and Client-n.
+- Web Server internally maintains a Limited Thread pool. Let us assume “m” number of Threads in Thread pool.
+- Node JS Web Server receives Client-1, Client-2… and Client-n Requests and places them in the Event Queue.
+- Node JS Even Loop Picks up those requests one by one.
+
+**1. Even Loop pickups Client-1 Request-1**
+
+- Checks whether Client-1 Request-1 does require any Blocking IO Operations or takes more time for complex computation tasks.
+- As this request is simple computation and Non-Blocking IO task, it does not require separate Thread to process it.
+- Event Loop process all steps provided in that Client-1 Request-1 Operation (Here Operations means Java Script’s functions) and prepares Response-1
+- Event Loop sends Response-1 to Client-1
+
+**2. Even Loop pickups Client-2 Request-2**
+
+- Checks whether Client-2 Request-2does require any Blocking IO Operations or takes more time for complex computation tasks.
+- As this request is simple computation and Non-Blocking IO task, it does not require separate Thread to process it.
+- Event Loop process all steps provided in that Client-2 Request-2 Operation and prepares Response-2
+- Event Loop sends Response-2 to Client-2
+
+**3. Even Loop pickups Client-n Request-n**
+
+- Checks whether Client-n Request-n does require any Blocking IO Operations or takes more time for complex computation tasks.
+- As this request is very complex computation or Blocking IO task, Even Loop does not process this request.
+- Event Loop picks up Thread T-1 from Internal Thread pool and assigns this Client-n Request-n to Thread T-1
+- Thread T-1 reads and process Request-n, perform necessary Blocking IO or Computation task, and finally prepares Response-n
+- Thread T-1 sends this Response-n to Event Loop
+- Event Loop in turn, sends this Response-n to Client-n
