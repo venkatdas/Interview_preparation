@@ -44,3 +44,13 @@ server.listen(3000, () => {
 - Real-time Capabilities: With features like WebSockets, which are part of the HTML5 standard, Node.js is well-suited for developing real-time applications, such as chat applications, live updates, and online gaming, offering low latency and high throughput.
 - Built-in Libraries: Node.js provides a rich set of built-in libraries to support applications' needs, including HTTP, file system (FS), path, and buffer modules, among others. These libraries facilitate the development of web servers and networking tools directly within Node.js without the need for external software.
 
+
+## 5. Synchrnous programming vs single threaded programming
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/0b35d415-5893-4c00-9e2c-ea57e0ed9753)
+
+- Synchronous: Refers to the execution of tasks in a sequential manner, where each task must complete before the next one begins. Synchronous operations can block the execution until they are finished, which can lead to inefficiency in handling I/O operations.
+
+- Single-Threaded: Refers to the execution model where one thread handles all the events and tasks. In Node.js, the main event loop that processes JavaScript callbacks is single-threaded. This model is efficient for I/O-bound operations because it avoids the overhead of context switching and synchronization between threads.
+
+
