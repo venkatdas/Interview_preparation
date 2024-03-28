@@ -54,3 +54,15 @@ server.listen(3000, () => {
 - Single-Threaded: Refers to the execution model where one thread handles all the events and tasks. In Node.js, the main event loop that processes JavaScript callbacks is single-threaded. This model is efficient for I/O-bound operations because it avoids the overhead of context switching and synchronization between threads.
 
 
+## 6. multi threading 
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/fa3f32d0-c12c-4a24-bcbc-3609ed69dac1)
+
+
+- multiple threads can create a deadlock problem, if not properly handled.
+
+
+## 7. Asynchronous programming
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/ed4b9f41-7f9f-4175-a41d-36d46d499469)
+
