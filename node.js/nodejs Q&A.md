@@ -190,3 +190,64 @@ myEmitter.on('data', (chunk) => {
 - Thread T-1 reads and process Request-n, perform necessary Blocking IO or Computation task, and finally prepares Response-n
 - Thread T-1 sends this Response-n to Event Loop
 - Event Loop in turn, sends this Response-n to Client-n
+
+
+## 11.Node.js Architecture
+
+- Node.js has its core part written in C and C++. Node js is based on a single-threaded event loop architecture which allows Node to handle multiple client requests. Node js uses the concept of an asynchronous model and non-blocking I/O.
+
+- Node.js is an extremely powerful JavaScript-based platform that’s built on Google Chrome’s JavaScript V8 Engine, used to develop I/O intensive web applications like video streaming sites, single-page applications, online chat applications, and other web apps.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/55fb5724-2c86-46f2-8c62-5c72667d10a3)
+
+
+- **Basic of web components**
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/b1b65b24-dad0-4acb-9531-4f7fe588cac5)
+
+
+- Client:
+
+The user interacts with the front-end part of a web application. The front-end is usually developed using languages like HTML and CSS styles, along with extensive usage of JavaScript-based frameworks like ReactJS and Angular, which help with application design.
+
+- Server:
+
+The server is responsible for taking the client requests, performing the required tasks, and sending responses back to the clients. It acts as a middleware between the front-end and stored data to enable operations on the data by a client. Node.js, PHP, and Java are the most popular technologies in use to develop and maintain a web server.
+
+- Database:
+
+The database stores the data for a web application. The data can be created, updated, and deleted whenever the client requests. MySQL and MongoDB are among the most popular databases used to store data for web applications.
+
+- **Architecture**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/dc4da4d9-4179-467c-b476-3fd472185f90)
+
+- Node.js uses the “Single Threaded Event Loop” architecture to handle multiple concurrent clients. Node.js Processing Model is based on the JavaScript event-based model along with the JavaScript callback mechanism.
+
+**Parts of Node js Architecture:**
+
+- Requests : Incoming requests can be blocking (complex) or non-blocking (simple), depending upon the tasks that a user wants to perform in a web application
+Node.js server: Node.js server is a server-side platform that takes requests from users, processes those requests, and returns responses to the corresponding users
+- Event Queue: Event Queue in a Node.js server stores incoming client requests and passes those requests one-by-one into the Event Loop
+- Thread pool: Thread pool consists of all the threads available for carrying out some tasks that might be required to fulfill client requests
+- Event loop: Event Loop indefinitely receives requests and processes them, and then returns the responses to corresponding clients.
+- External Resources: External resources are required to deal with blocking client requests. These resources can be for computation, data storage, etc.
+
+
+**Workflow of node js architecture**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/365c3791-81da-4615-9c37-aea720d03634)
+
+- A web server developed using Node.js typically has a workflow that is quite similar to the diagram illustrated below. Let’s explore this flow of operations in detail.
+
+- Clients send requests to the webserver to interact with the web application. Requests can be non-blocking or blocking e.g Querying the data , updating the data or deleting the data .
+- Node.js retrieves the incoming requests and adds those requests to the Event Queue.
+- The requests are then passed one-by-one through the Event Loop. It checks if the requests are simple enough to not require any external resources.
+- Event Loop processes simple requests (non-blocking operations), such as I/O Polling, and returns the responses to the corresponding clients.
+
+- A single thread from the Thread Pool is assigned to a single complex request. This thread is responsible for completing a particular blocking request by accessing the external resources, such as compute, database, file system, etc.
+
+
+**Advantages of node js architecure**
+
+- Handling multiple concurrent client requests is fast and easy: With the use of Event Queue and Thread Pool, the Node.js server enables efficient handling of a large number of incoming requests.
+- No need for creating multiple threads: Event Loop handles all requests one-by-one, so there is no need to create multiple threads. Instead, a single thread is sufficient to handle a blocking incoming request.
