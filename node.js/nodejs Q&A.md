@@ -73,4 +73,10 @@ server.listen(3000, () => {
 
 - **Event Loop:** At the heart of Node.js is the event loop, which is single-threaded. The event loop handles all asynchronous callbacks. Operations like I/O operations (file, network, database) are executed asynchronously and their callbacks are queued to the event loop. The event loop continuously polls the queue and executes the callbacks when their non-blocking operations are complete.
 - **Non-Blocking I/O:** Node.js uses non-blocking I/O calls. This means that operations like reading from a file system or making a network request do not stop the execution of JavaScript code. Instead, these operations are executed in the background, and their outcomes trigger the execution of callback functions once the operation is completed, without blocking the main thread.
-- 
+
+
+## 9. Event driven programming node.js?
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/163babdb-0bac-46d6-9e2d-c960de2202f4)
+
+
