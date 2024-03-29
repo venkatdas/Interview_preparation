@@ -323,4 +323,86 @@ _______________________________________
 
 ## Manipulating Files
 
-## 15) 
+## 15) Node.js File stats
+
+```js
+const { log } = require("console");
+const fs = require("fs");
+
+fs.stat("example.txt", (err, stats) => {
+  if (err) {
+    console.error(err);
+  }
+
+  // console.log(stats);
+
+  
+  console.log(`File Size: ${stats.size} bytes`);
+  console.log(`Is it a file? ${stats.isFile()}`);
+  console.log(`Is it a directory? ${stats.isDirectory()}`);
+  console.log(`Created At: ${stats.birthtime}`);
+  console.log(`Last Modified: ${stats.mtime}`);
+  console.log(`Size: ${stats.size}`);
+  console.log(`isSymbolicLink: ${stats.isSymbolicLink}`);
+
+
+  // we have access to the file stats in `stats`
+});
+
+
+console.log("End");
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/2997cb31-42eb-4704-b3a6-44c4e8ae1629)
+
+- The same code using promise based file
+
+## 16 ) Reading files with Node.js
+
+- The simplest way to read a file in Node.js is to use the fs.readFile() method, passing it the file path, encoding and a callback function that will be called with the file data (and the error):
+
+
+```js
+const fs = require("node:fs");
+
+fs.readFile("example.txt", "utf8", (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+
+```
+- It will log the data whatever the data that consists in example.txt
+
+- Alternatively, you can use the synchronous version fs.readFileSync():
+
+```js
+const fs = require("node:fs");
+
+try {
+  const data = fs.readFileSync("example.txt", "utf8");
+  console.log(data);
+} catch (err) {
+  console.error(err);
+}
+```
+
+
+
+```js
+const fs = require("node:fs/promises");
+
+async function example() {
+  try {
+    const data = await fs.readFile("example.txt", { encoding: "utf8" });
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+example();
+```
+
+- All three of fs.readFile(), fs.readFileSync() and fsPromises.readFile() read the full content of the file in memory before returning the data.
+
