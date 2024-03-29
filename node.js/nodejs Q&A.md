@@ -475,7 +475,7 @@ console.log(buf1);
 ```
 - Creating an buffer from an existing array
 
-``js
+```js
 const buf2 = Buffer.from([1, 2, 3, 4, 5]); // creates a buffer containing 1, 2, 3, 4, 5
 console.log(buf2); //<Buffer 01 02 03 04 05>
 ```
@@ -486,4 +486,20 @@ console.log(buf2); //<Buffer 01 02 03 04 05>
 const buf3 = Buffer.from('Hello World', 'utf-8'); // creates a buffer containing the string "Hello World" in utf-8 encoding
 console.log(buf3); //<Buffer 48 65 6c 6c 6f 20 57 6f 72 6c 64>
 ```
+
+- Manipulating Buffer Data
+
+```js
+const buf = Buffer.from([1, 2, 3, 4, 5]);
+const json = JSON.stringify(buf);
+console.log(json); // '{"type":"Buffer","data":[1,2,3,4,5]}'
+
+const copy = Buffer.from(JSON.parse(json).data);
+console.log(copy); // <Buffer 01 02 03 04 05>
+```
+
+- This code snippet demonstrates how to serialize a Node.js Buffer to a JSON string and then deserialize it back to a Buffer.
+- It's a practical example of converting binary data to a text-based format and then reversing the process,
+
+
 
