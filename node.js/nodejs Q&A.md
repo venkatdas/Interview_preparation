@@ -264,6 +264,58 @@ Node.js server: Node.js server is a server-side platform that takes requests fro
   2. Process events in the poll queue. If there are no timers scheduled, it will wait for callbacks to be added to the queue, executing them as they are added. If scripts are not scheduled and there are no callbacks, it will continue to the next phase.
 
 
+## 13 setImmediate() vs setTimeout()
+
+```js
+// Timeout vs. Immediate
+setTimeout(() => {
+  console.log('setTimeout: Hey there!');
+}, 0);
+
+setImmediate(() => {
+  console.log('setImmediate: Hello there!');
+});
+
+```
+
+
+```js
+setImmediate: Hello there!
+setTimeout: Hey there!
+```
+
 - Check Phase: The check phase allows for immediate callbacks to be run after the poll phase. Callbacks registered with setImmediate() are executed in this phase.
 - Close Callbacks Phase: This phase executes callbacks for some system operations such as TCP stream errors. For example, if a TCP socket was closed abruptly ('close' event), the callback is executed in this phase.
 
+## 14 Difference between process.nextTick(), setImmediate()
+
+1) Allow users to handle errors, cleanup any then unneeded resources, or perhaps try the request again before the event loop continues.
+
+2) At times it's necessary to allow a callback to run after the call stack has unwound but before the event loop continues.
+
+
+- **use process.nextTick() when you want to execute a callback function immediately after the current operation completes, but before other I/O events or timers. Use setImmediate() when you want to schedule a callback to be executed in the next event loop iteration, after any pending I/O events or process.nextTick() callbacks.**
+
+
+```js
+console.log('Hello => number 1');
+
+setImmediate(() => {
+  console.log('Running before the timeout => number 3');
+});
+
+setTimeout(() => {
+  console.log('The timeout running last => number 4');
+}, 0);
+
+process.nextTick(() => {
+  console.log('Running at next tick => number 2');
+});
+```
+
+```js
+Hello => number 1
+Running at next tick => number 2
+Running before the timeout => number 3
+The timeout running last => number 4
+```
