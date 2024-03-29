@@ -444,7 +444,7 @@ try {
 
 - You can also use the promise-based fsPromises.writeFile() method offered by the fs/promises module:
 
-  ```js
+```js
   const fs = require('node:fs/promises');
 
 async function example() {
@@ -458,3 +458,32 @@ async function example() {
 
 example();
 ```
+
+## 18. What is buffer in nodeJS
+
+- Buffer is a temporary memory, mainly used by the stream to hold some data until consumed.
+- Buffer is mainly used to store binary data while reading from a file or receiving packets over the network.
+- They are created with a specific size (in bytes) and can store any type of data in that allocated space.
+- Buffer sizes are fixed, meaning once a Buffer is allocated, its size cannot be changed.
+
+- To create a buffer and allocate the fixed size
+
+```js
+const buf1 = Buffer.alloc(10); // creates a buffer of 10 bytes
+console.log(buf1);
+ //<Buffer 00 00 00 00 00 00 00 00 00 00>
+```
+- Creating an buffer from an existing array
+
+``js
+const buf2 = Buffer.from([1, 2, 3, 4, 5]); // creates a buffer containing 1, 2, 3, 4, 5
+console.log(buf2); //<Buffer 01 02 03 04 05>
+```
+
+- Creating a Buffer from a string:
+
+```js
+const buf3 = Buffer.from('Hello World', 'utf-8'); // creates a buffer containing the string "Hello World" in utf-8 encoding
+console.log(buf3); //<Buffer 48 65 6c 6c 6f 20 57 6f 72 6c 64>
+```
+
