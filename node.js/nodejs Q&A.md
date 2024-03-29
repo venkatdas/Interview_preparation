@@ -406,3 +406,55 @@ example();
 
 - All three of fs.readFile(), fs.readFileSync() and fsPromises.readFile() read the full content of the file in memory before returning the data.
 
+
+## 17. Writing files with Node.js
+
+- The easiest way to write to files in Node.js is to use the fs.writeFile() API.
+
+```js
+const fs = require("node:fs");
+
+const content = "Some content!";
+
+fs.writeFile("example.txt ", content, (err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    // file written successfully
+  }
+});
+```
+
+- Writing a file synchronously
+
+
+```js
+const fs = require('node:fs');
+
+const content = 'Some content!';
+
+try {
+  fs.writeFileSync('example.txt', content);
+  // file written successfully
+} catch (err) {
+  console.error(err);
+}
+
+```
+
+- You can also use the promise-based fsPromises.writeFile() method offered by the fs/promises module:
+
+  ```js
+  const fs = require('node:fs/promises');
+
+async function example() {
+  try {
+    const content = 'Some content!';
+    await fs.writeFile('example.txt', content);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+example();
+```
