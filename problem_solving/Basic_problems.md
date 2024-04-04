@@ -16,12 +16,13 @@
   <summary>
     Solution
   </summary>
-
+```
   function reverseString(str) {
   // const str = "das";
   return str.split("").reverse().join("");
 }
 
 console.log(reverseString("hello")); //olleh
+```
 </details>
 
