@@ -85,6 +85,8 @@ console.log(findMax([1, 3, 5, 7, 9]));  // Outputs: 9
   <summary>
     solution
   </summary>
+
+  
   ```js
     function findMax(arr) {
     let max = arr[0];
@@ -97,6 +99,5 @@ console.log(findMax([1, 3, 5, 7, 9]));  // Outputs: 9
 }
 
 console.log(findMax([1, 3, 5, 7, 9])); // Outputs: 9
-
 ```
 </details>
