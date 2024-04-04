@@ -46,3 +46,22 @@ function reverseString(str) {
 console.log(reverseString("hello from india")); //aidni morf olleh
 ```
 </details>
+
+
+## 2. Check If string is palindrome or not
+
+<details>
+  <summary>Solution</summary>
+
+  ```js
+
+function isPalin(str) {
+  const reveredStr = str.split("").reverse().join("");
+
+  return reveredStr === str;
+}
+
+console.log(isPalin("madam")); //true
+console.log(isPalin("hello")); //false
+```
+</details>
