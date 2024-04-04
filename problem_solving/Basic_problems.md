@@ -1,7 +1,7 @@
 ## We have to know these problems mandatory
 
 
-## Reverse String
+## 1. Reverse String
 
 - Steps
 
