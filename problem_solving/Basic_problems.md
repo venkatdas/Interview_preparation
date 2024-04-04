@@ -16,7 +16,8 @@
   <summary>
     Solution
   </summary>
-```
+  
+```js
   function reverseString(str) {
   // const str = "das";
   return str.split("").reverse().join("");
