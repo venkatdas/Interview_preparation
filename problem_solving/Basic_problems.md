@@ -27,3 +27,22 @@ console.log(reverseString("hello")); //olleh
 ```
 </details>
 
+## Without using inbulit methods (using loops)
+
+
+<details>
+  <summary>solution</summary>
+
+  ```js
+function reverseString(str) {
+  let reversed = ""; // Step 1
+  for (let i = str.length - 1; i >= 0; i--) {
+    // Step 2
+    reversed += str[i]; // Step 3
+  }
+  return reversed;
+}
+
+console.log(reverseString("hello from india")); //aidni morf olleh
+```
+</details>
