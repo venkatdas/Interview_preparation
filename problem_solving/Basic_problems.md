@@ -104,6 +104,18 @@ console.log(findMax([1, 3, 5, 7, 9])); // Outputs: 9
 
 ## 4. Find unique elements in array without using inbuilt methods
 
+**Implementation**
+
+1) Initialize an Empty Array (unique): Start with an empty array to store unique elements.
+
+2) Iterate Over the Original Array (arr): Use a for loop to go through each element in the original array.
+
+3) Check for Uniqueness: For each element arr[i], use indexOf on the unique array to check if it already contains that element.
+
+4) Add Unique Elements: If arr[i] is not found in unique (indicated by indexOf returning -1), add arr[i] to unique using push.
+
+5) Return the Unique Array: After completing the iteration, return the unique array, which now contains only unique elements from arr.
+
 <details>
   <summary>
     solution
