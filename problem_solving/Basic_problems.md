@@ -101,3 +101,26 @@ console.log(findMax([1, 3, 5, 7, 9]));  // Outputs: 9
 console.log(findMax([1, 3, 5, 7, 9])); // Outputs: 9
 ```
 </details>
+
+## 4. Find unique elements in array without using inbuilt methods
+
+<details>
+  <summary>
+    solution
+  </summary>
+
+  
+  ```js
+  
+function uniqueElements(arr) {
+  let unique = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (unique.indexOf(arr[i]) === -1) {
+      unique.push(arr[i]);
+    }
+  }
+  return unique;
+}
+console.log(uniqueElements([1, 2, 3, 4, 1, 2])); //[1, 2, 3, 4]
+```
+</details>
