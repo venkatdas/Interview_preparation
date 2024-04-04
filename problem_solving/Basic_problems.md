@@ -65,3 +65,36 @@ console.log(isPalin("madam")); //true
 console.log(isPalin("hello")); //false
 ```
 </details>
+
+
+## 3. Find the MAX element in the array
+
+- USING math.max
+
+```js
+function findMax(arr) {
+    return Math.max(...arr);
+}
+console.log(findMax([1, 3, 5, 7, 9]));  // Outputs: 9
+
+```
+
+- without using inbuilt method
+
+<details>
+  <summary>
+    ```js
+    function findMax(arr) {
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+console.log(findMax([1, 3, 5, 7, 9])); // Outputs: 9
+```
+  </summary>
+</details>
