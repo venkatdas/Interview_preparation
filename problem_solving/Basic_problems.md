@@ -345,3 +345,18 @@ console.log(isEmpty({a: 1})); // false
 
 ```
 </details>
+
+
+## 12. How to empty an array in javascript
+
+a) Setting array length to 0
+
+<details>
+  <summary>Solution</summary>
+  
+```js
+let arr = [1, 2, 3, 4, 5];
+arr.length = 0;
+console.log(arr); // []
+```
+</details>
