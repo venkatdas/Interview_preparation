@@ -372,3 +372,30 @@ arr.splice(0, arr.length);
 console.log(arr); // []
 ```
 </details>
+
+c) By creating new array
+
+<details>
+  <summary>Solution</summary>
+  ```js
+let arr = [1, 2, 3, 4, 5];
+arr = [];
+console.log(arr); // []
+```
+</details>
+
+
+d) Using pop method
+
+<details>
+  <summary>Solution</summary>
+
+```js
+let arr = [1, 2, 3, 4, 5];
+while (arr.length > 0) {
+  arr.pop();
+}
+console.log(arr); // []
+
+```
+</details>
