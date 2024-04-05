@@ -524,6 +524,37 @@ console.log(isPalindrome(123456)); // false
 ```
 </details>
 
+- without using the inbuilt methods
+
+<details>
+  <summary>Solution</summary>
+
+```js
+function isPalindromeNumber(number) {
+  // Early return for negative numbers as they cannot be palindromes
+  if (number < 0) return false;
+
+  let originalNumber = number; // Keep the original number for comparison
+  let reversed = 0;
+
+  // Process to reverse the number, similar to the reverseNumber function
+  while (number > 0) {
+    let lastDigit = number % 10;
+    reversed = reversed * 10 + lastDigit;
+    number = Math.floor(number / 10);
+  }
+
+  // Compare the original number with the reversed number
+  return originalNumber === reversed;
+}
+
+// Example usage
+console.log(isPalindromeNumber(12321)); // true, because it reads the same backward as forward
+console.log(isPalindromeNumber(-12321)); // false, negative numbers are not considered palindromes
+console.log(isPalindromeNumber(12345)); // false, because it does not read the same backward as forward
+```
+</details>
+
 
 ## 17. Reverese the number
 
