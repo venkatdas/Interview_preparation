@@ -526,3 +526,30 @@ console.log(isPalindrome(123456)); // false
 
 
 ## 17. Reverese the number
+
+
+<details>
+  <summary>Solution</summary>
+
+```js
+function reverseNumber(number) {
+    let isNegative = number < 0; // Check if the number is negative
+    number = Math.abs(number); // Convert to absolute value
+
+    let reversed = 0;
+    while (number > 0) {
+        let lastDigit = number % 10;
+        reversed = (reversed * 10) + lastDigit;
+        number = Math.floor(number / 10); // Remove the last digit
+    }
+
+    if (isNegative) {
+        reversed = -reversed; // Reapply the negative sign if needed
+    }
+
+    return reversed;
+}
+
+console.log(reverseNumber(-123)); // Output: -321
+```
+</details>
