@@ -523,3 +523,6 @@ console.log(isPalindrome(123456)); // false
 
 ```
 </details>
+
+
+## 17. Reverese the number
