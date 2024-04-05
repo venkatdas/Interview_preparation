@@ -499,3 +499,27 @@ console.log(convertTo24HourFormat("1:00 PM")); // "13:00"
 console.log(convertTo24HourFormat("1:00 AM")); // "01:00"
 ```
 </details>
+
+## 16. palindrome number
+
+<details>
+  <summary>solution</summary>
+
+```js
+function isPalindrome(number) {
+    // Convert the number to a string
+    const numStr = number.toString();
+    
+    // Reverse the string
+    const reverseStr = numStr.split('').reverse().join('');
+    
+    // Compare the original string with the reversed string
+    return numStr === reverseStr;
+}
+
+// Example usage
+console.log(isPalindrome(12321)); // true
+console.log(isPalindrome(123456)); // false
+
+```
+</details>
