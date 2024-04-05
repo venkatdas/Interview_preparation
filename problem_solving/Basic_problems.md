@@ -160,3 +160,23 @@ for (let i = 1; i <= 100; i++) {
 }
 ```
 </details>
+
+
+
+## 6. Sort an float array
+
+<details>
+  <summary>solution</summary>
+
+```js
+function sortFloatArray(arr) {
+  return arr.sort((a, b) => a - b);
+}
+
+// Example usage:
+const floatArray = [3.01, 2.99, 5.55, 4.04, 1.22];
+const sortedArray = sortFloatArray(floatArray);
+console.log(sortedArray); // [1.22, 2.99, 3.01, 4.04, 5.55]
+
+```
+</details>
