@@ -331,4 +331,17 @@ function isEmpty(obj) {
 console.log(isEmpty({})); // true
 console.log(isEmpty({a: 1})); // false
 ```
+
+
+- Using Object.getOwnPropertyNames()
+
+```js
+function isEmpty(obj) {
+  return Object.getOwnPropertyNames(obj).length === 0;
+}
+
+console.log(isEmpty({})); // true
+console.log(isEmpty({a: 1})); // false
+
+```
 </details>
