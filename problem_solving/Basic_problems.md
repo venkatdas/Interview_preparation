@@ -231,3 +231,29 @@ function findMaxMin (arr){
 console.log(findMaxMin([3,5,623,2,1,232,43,]));
 ```
 </details>
+
+
+## 8. Follow the Instructions and give the result
+
+```js
+// Given two arrays, output should be c=[1,2,3,4,5,9,88]
+// merge a and b and remove duplicates
+// sort the array in ascending
+```
+
+<details>
+  <summary>Solution</summary>
+
+```js
+const arr1 = [1, 2, 3, 4, 5];
+const arr2 = [1, 2, 3, 4, 5, 88, 9, 3];
+
+const mergedArr = [...new Set([...arr1, ...arr2])];
+
+const overallResult = mergedArr.sort((x, y) => x - y);
+
+console.log(overallResult);
+```
+</details>
+
+
