@@ -180,3 +180,24 @@ console.log(sortedArray); // [1.22, 2.99, 3.01, 4.04, 5.55]
 
 ```
 </details>
+
+
+## 7. Find max and min in array
+
+
+<details>
+  <summary>Solution</summary>
+
+```js
+// Define the array of numbers
+const arrayItems = [10, 20, 11, 35, 12, 40, 13, 65, 14, 78, 16];
+
+// Find the maximum value in the array
+const max = Math.max(arrayItems);
+console.log(max); // Output: 78
+
+// Find the minimum value in the array
+const min = Math.min(...arrayItems);
+console.log(min); // Output: 10
+```
+</details>
