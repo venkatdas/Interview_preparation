@@ -293,3 +293,24 @@ let modifiedArray = a.map((item) => {
 console.log(modifiedArray);
 ```
 </details>
+
+## 10. 
+
+```js
+// Destructure nested city into a plain so that when I log city it should be logging Noida
+var obj = { name: "Raj", address: { city: "Noida" } };
+```
+
+<details>
+  <summary>
+    solution
+  </summary>
+
+```js
+const {
+  name,
+  address: { city },
+} = obj;
+console.log(city);
+```
+</details>
