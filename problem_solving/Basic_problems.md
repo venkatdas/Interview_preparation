@@ -399,3 +399,24 @@ console.log(arr); // []
 
 ```
 </details>
+
+
+## 13. Factorial
+
+a) Iterative approach
+
+<details>
+  <summary>solution</summary>
+
+```js
+function factorialFunc(n) {
+  let result = 1;
+  for (let i = 2; i < n; i++) {
+    result *= i;
+  }
+  return result;
+}
+
+console.log(factorialFunc(5));
+```
+</details>
