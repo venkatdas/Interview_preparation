@@ -257,3 +257,39 @@ console.log(overallResult);
 </details>
 
 
+## 9. follow the instructions and change the values
+
+```js
+
+// 1. Given the below array
+let a = [
+  { key: '1', name: 'AAA', field: 'Software', location: 'Bangalore' },
+  { key: '2', name: 'BBB', field: 'Hardware', location: 'Bangalore' },
+  { key: '3', name: 'CCC', field: 'SW&HW', location: 'Bangalore' },
+];
+
+// 2. key 2 should be modified into Software and Hyderabad
+
+```
+
+<details>
+  <summary>Solution</summary>
+
+```js
+// Use map to iterate and modify the array
+let modifiedArray = a.map((item) => {
+  if (item.key === "2") {
+    // If key is '2', return a modified object
+    return {
+      ...item, // Spread operator to copy properties from the original object
+      field: "Software", // Update the field
+      location: "Delhi", // Update the location
+    };
+  }
+  // For other items, return them unchanged
+  return item;
+});
+
+console.log(modifiedArray);
+```
+</details>
