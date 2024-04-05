@@ -314,3 +314,21 @@ const {
 console.log(city);
 ```
 </details>
+
+
+## 11. Check if an object is empty
+
+<details>
+  <summary>Solution</summary>
+
+```js
+Using Object.keys()//
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+console.log(isEmpty({})); // true
+console.log(isEmpty({a: 1})); // false
+```
+</details>
