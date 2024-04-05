@@ -420,3 +420,23 @@ function factorialFunc(n) {
 console.log(factorialFunc(5));
 ```
 </details>
+
+b) Recursive Approach
+
+- The recursive approach involves the function calling itself with a decremented value until it reaches the base case (n = 0).
+
+<details>
+  <summary>Solution</summary>
+
+```js
+function factorial(n) {
+  if (n === 0) {
+    return 1;
+  }
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(5)); // 120
+
+```
+</details>
