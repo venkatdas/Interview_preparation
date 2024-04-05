@@ -467,3 +467,35 @@ console.log(fibonacciSeries(1)); // Outputs: [0, 1, 1, 2, 3]
 console.log(fibonacciSeries(10));
 ```
 </details>
+
+
+
+## 15. Convert 12 hours time into 24 hours
+
+<details>
+  <summary>Solution</summary>
+
+  ```js
+function convertTo24HourFormat(time12h) {
+  const [time, modifier] = time12h.split(" ");
+
+  let [hours, minutes] = time.split(":");
+
+  if (hours === "12") {
+    hours = "00";
+  }
+
+  if (modifier === "PM") {
+    hours = parseInt(hours, 10) + 12;
+  }
+
+  return `${hours}:${minutes}`
+}
+
+// Example usage:
+console.log(convertTo24HourFormat("12:00 PM")); // "12:00"
+console.log(convertTo24HourFormat("2:00 PM")); // "00:00"
+console.log(convertTo24HourFormat("1:00 PM")); // "13:00"
+console.log(convertTo24HourFormat("1:00 AM")); // "01:00"
+```
+</details>
