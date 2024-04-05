@@ -527,6 +527,11 @@ console.log(isPalindrome(123456)); // false
 
 ## 17. Reverese the number
 
+- Loop until the number is greater than 0. Each iteration processes one digit:
+- Extract the last digit of the number using the modulo operation (number % 10).
+- Add this digit to the reversed number, correctly positioning it by first multiplying reversed by 10 (to shift existing digits left) and then adding the extracted digit.
+- Remove the processed (last) digit from number by dividing it by 10 and using Math.floor() to ensure the result is an integer, effectively shifting all digits right.
+
 
 <details>
   <summary>Solution</summary>
