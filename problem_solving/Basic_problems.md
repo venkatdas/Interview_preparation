@@ -360,3 +360,15 @@ arr.length = 0;
 console.log(arr); // []
 ```
 </details>
+
+b) Using the splice() Method
+
+<details><summary>Solution</summary>
+
+
+```js
+let arr = [1, 2, 3, 4, 5];
+arr.splice(0, arr.length);
+console.log(arr); // []
+```
+</details>
