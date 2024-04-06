@@ -122,5 +122,20 @@ _______________________
 
 ## PRECONNECT
 
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5bed2df9-091e-4869-a012-6b7211b008c5)
+
+```js
+<!-- PRECONNECT START-->
+<link rel="preconnect" href="https://api.my-app.com/" />
+<!-- PRECONNECT ENDS -->
+```
+
+- when you are actually loading some contents from other domain (let's say CDN).
+
+- So when you are making a new connection with a new domain (which usually takes time)
+
+- thereby preconnect helps to make this call beforehand between two different domains
+
+- handshake happens only once per domain, so if the handshake is done already then going forward it no need to do the handshake again
 
 
