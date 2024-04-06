@@ -91,3 +91,34 @@
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/55d67fe2-3b1e-4258-81a8-a13249f267ba)
 
 
+
+**Note**: If you preload something and don't consume it, then browser hints you a warning on the console
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/7df37f83-e9b2-475e-987d-76d2cbeefe38)
+
+_______________________
+
+**PREFETCH**
+
+- If you want to load some html or script before you have actually been into that html file
+- Loading index3.html file into index.html
+- When the user go to the index3.html it shows those file/scripts are catched
+
+```js
+    <!-- PREFETCH START-->
+    <link rel="prefetch" href="index3.html">
+    <link rel="prefetch" as="script" href="script3.js">
+    <!-- PREFETCH ENDS -->
+```
+
+- On Intial Load (index3.html is loaded before the user actually navigated to index3.html)
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/a16e5489-ece9-456e-ac35-f19ae16561a1)
+
+- index3.html shows the cache (once index3.html is opened)
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f1e1b6b4-2a43-4e37-83e1-3ddce4775edb)
+
+
+
+
