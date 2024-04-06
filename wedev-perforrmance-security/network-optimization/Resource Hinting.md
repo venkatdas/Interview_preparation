@@ -122,6 +122,8 @@ _______________________
 
 ## PRECONNECT
 
+- preconnect may not be available in the all browsers, it recently started.
+
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5bed2df9-091e-4869-a012-6b7211b008c5)
 
 ```js
@@ -137,5 +139,27 @@ _______________________
 - thereby preconnect helps to make this call beforehand between two different domains
 
 - handshake happens only once per domain, so if the handshake is done already then going forward it no need to do the handshake again
+
+## dns-prefetch
+- makes a handshake and it is basically supported on the old browser
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/9c8c4e6d-76fb-441c-9240-bcccf78a44d9)
+
+
+
+## pre-render
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/21817ec0-8675-44eb-ba44-fc5080afa8c2)
+
+- certain pages you are going to load next and you know that users are going to highly visiting.
+- In that particular case you don't want user to click navigate, then start requesting then downloading
+- This will create hidden tab content, it will load your page including your JS execution and it will throw the hidden tab away after a certain time Ex: Login page to dashboard page navigation
+
+
+
+## module- preload
+
+- going to load your ES module and it is going to download cache and it is going to compile your JS module code as soon as possible.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/8d83395f-0a69-4e29-ba78-a0c8629ac40d)
 
 
