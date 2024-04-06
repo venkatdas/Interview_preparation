@@ -88,8 +88,7 @@ _______________
 - media type "print" says that this is not critical, load this once your web page is loaded, your JS is ready to execute just on load in that particular case.
 - **all** means available for everyone or for all the use cases in the CSS, it is going to download and make it available for your next rendering and next set of things which are available below the fold
 
-`// 
-<link rel="stylesheet" href="full.css" media='print' onload="this.media='all'"/>`
+`<link rel="stylesheet" href="full.css" media='print' onload="this.media='all'"/>`
 
 
 
