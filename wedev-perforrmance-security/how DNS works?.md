@@ -43,6 +43,12 @@ Here, How it works..
 - Google's server sends the webpage data back to your browser.
 - Your browser displays the Google search page.
 
+If you want to learn DNS interactively, try this:
+
+https://messwithdns.net/
+
+https://howdns.works/ep1/
+
 
 
 
