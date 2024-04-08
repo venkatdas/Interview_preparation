@@ -155,9 +155,39 @@ if (request.cookie["csrf_token"] === request.body["csrf_token"]) {
   - Lax: The cookie is withheld on cross-site subrequests but sent when the user navigates to the URL from an external site, like from their email client.
 
 
+```js
+Set-Cookie: session=unique_session_id; SameSite=Strict; Secure; HttpOnly;
+```
 
 
+**3. Check the Referer Header:**
+
+- Verify the Referer header of incoming requests to ensure that they originate from the same domain. While this header can be spoofed by attackers in some cases, it still provides an additional layer of security.
+- Note that not all browsers consistently send the Referer header, so it should be considered an extra measure rather than the primary defense.
+
+**4. Use HTTP-Only Cookies:**
+
+- This prevents JavaScript from accessing these cookies, reducing the risk of cookie theft in case of a successful CSRF attack.
+- When a user logs into a web application, the server may send an authentication cookie as part of its response. To set this cookie as HttpOnly, the server would include the HttpOnly attribute in the Set-Cookie HTTP header:
+
+```js
+HTTP/1.1 200 OK
+Set-Cookie: session_id=12345abcdef; HttpOnly; Path=/; Secure
+
+HttpOnly means the cookie cannot be accessed by JavaScript.
+Path=/ restricts the cookie to the root path.
+Secure ensures the cookie is only sent over HTTPS.
+```
+
+**5. Require Authentication for Sensitive Actions:** Ensure that sensitive actions or endpoints require user authentication. Unauthorized users should not be able to perform these actions even if a CSRF attack occurs.
+
+**6. Session Timeout:** Set session timeouts to automatically log users out after a period of inactivity to reduce the risk of an active session being exploited
 
 
+**Example 2: Social Media Post**
+
+1. Scenario: Bob is logged into a social media platform.
+2. Attack: He clicks on a link that leads him to a malicious site. This site contains a script that makes a request to the social media platform to post a message or send a message to all his contacts.
+3. Result: If the social media platform doesn’t verify the authenticity of the request, it could result in spam or malicious messages being sent from Bob’s account.
 
 
