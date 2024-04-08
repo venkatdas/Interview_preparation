@@ -1,5 +1,8 @@
 ## responsive images
 
+- Responsive images are used in web design to ensure that images look good on all devices, regardless of their screen size or resolution.
+- They adapt to the size of the viewing environment, offering an optimized balance between image quality and file size
+
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5cce7c8d-3513-45b3-80db-3b9e69e20e08)
 
 
@@ -45,7 +48,6 @@ img {
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/eb4753d5-1ca8-4196-959d-2a1a3b5a0219)
 
 
-- Responsive images are used in web design to ensure that images look good on all devices, regardless of their screen size or resolution.
-- They adapt to the size of the viewing environment, offering an optimized balance between image quality and file size
+
 
 
