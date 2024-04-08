@@ -27,8 +27,21 @@ Here, How it works..
 7) **Connection:** Your browser can now use the IP address to establish a connection to the web server hosting the website and request the webpage.
 8) **Website Display:** The server sends the webpage data back to your browser, which processes and displays it.
 
-9) 
 
+
+**Example**
+
+
+- You enter www.google.com into your browser.
+- Your browser checks its cache; if the IP is not there, it asks the DNS resolver.
+- The DNS resolver queries a root name server for the .com TLD.
+- The root server directs to a .com TLD server.
+- The TLD server points to Google's authoritative name servers.
+- The authoritative server provides the IP address for www.google.com.
+- The DNS resolver sends the IP address back to your browser.
+- Your browser connects to Google's server using the IP address.
+- Google's server sends the webpage data back to your browser.
+- Your browser displays the Google search page.
 
 
 
