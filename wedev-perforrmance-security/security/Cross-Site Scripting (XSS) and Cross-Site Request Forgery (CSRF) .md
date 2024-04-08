@@ -97,3 +97,67 @@
 
 
 ```
+
+
+**How to Prevent CSRF:**
+
+1. Use Anti-CSRF Tokens: The server sends a unique, unpredictable token to the client with every session. For any state-changing request, the client must send back this token. If the token is missing or incorrect, the server refuses the request. Attackers won’t have access to this token.
+
+```js
+/**
+
+Step1
+When a user logs in or requests a form, the server generates a random token:
+Random Token = "ABC123"
+
+
+Step2
+The server sets this token as a cookie and also includes it within the 
+form as a hidden field.
+
+Set-Cookie: csrf_token=ABC123; Path=/; Secure; HttpOnly
+
+<!-- Form Data -->
+<form action="/submit" method="post">
+    <input type="hidden" name="csrf_token" value="ABC123">
+    ...
+</form>
+
+Step3
+When the user submits the form, 
+the browser will automatically send the cookie 
+(because that's how cookies work) and the token in the form data
+
+POST /submit HTTP/1.1
+Host: www.example.com
+Cookie: csrf_token=ABC123
+
+csrf_token=ABC123&...other_form_data...
+
+
+Step4
+The server then checks if the token from the cookie matches the 
+token sent in the form data.
+
+if (request.cookie["csrf_token"] === request.body["csrf_token"]) {
+    // Tokens match, process the request
+} else {
+    // Possible CSRF attack! Deny the request.
+}
+
+**/
+```
+
+**2. SameSite Cookie Attribute:**
+
+- Modern browsers support setting the SameSite attribute on cookies. This attribute can have two values:
+  - Strict: The cookie will only be sent in a first-party context, i.e., it will be sent to the site from which it originates during navigation.
+  - Lax: The cookie is withheld on cross-site subrequests but sent when the user navigates to the URL from an external site, like from their email client.
+
+
+
+
+
+
+
+
