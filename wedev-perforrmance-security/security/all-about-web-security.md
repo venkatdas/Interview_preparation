@@ -64,6 +64,7 @@
 3. This malicious website contains a link, button, or some JavaScript that causes the user’s browser to make a request to www.example.com without the user's knowledge. Because the user is still authenticated with www.example.com (for instance, their session cookie is still valid), the browser also includes authentication credentials with this request.
 4. www.example.com receives this request and assumes it's legitimate because the request comes with valid session credentials. It then performs whatever action the request dictates—like changing the email or password.
 
+```js
 
 --------------------------------------------------------------
 1. User Login to Example Site:
@@ -95,3 +96,4 @@
 --------------------------------------------------------------
 
 
+```
