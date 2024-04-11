@@ -4,6 +4,8 @@
 
 - **Serialization with JSON.stringify()**
 
+- Use Case: When you want to send data from your JavaScript code to a server, you need to convert your objects into a format that can be - easily transmitted over the network. JSON (JavaScript Object Notation) is a popular format for such data,
+- **JSON.stringify() helps convert your JavaScript objects into JSON strings.**
 ```js
 const person = {
     name: "Alice",
