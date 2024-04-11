@@ -28,3 +28,46 @@ function simpleMemoization(fn) {
   };
 }
 ```
+
+
+```js
+function fib(num) {
+  if (num <= 1) return num;
+  else return fib(num - 1) + fib(num - 2);
+}
+```
+
+const calculateFib = simpleMemoization(fib);
+
+console.log(calculateFib(10)); // 55 , calculate the result
+console.log(calculateFib(10)); //55 return from cache
+console.log(calculateFib(10)); // 55 return from cache
+console.log(calculateFib(11)); // 89 calucalte the result
+console.log(calculateFib(11)); // 89 return from cache
+
+
+
+
+
+
+
+________________
+
+```js
+
+function factorialFunc(n) {
+  if (n <= 1) return 1;
+  else return n * factorialFunc(n - 1);
+}
+
+
+const factorialResult = simpleMemoization(factorialFunc);
+
+console.log(factorialResult(5)); // 120 calculte result
+console.log(factorialResult(5)); // 120 fetched from cache
+
+
+```
+
+
+
