@@ -26,3 +26,41 @@ function isAnagram(str1, str2) {
 console.log(isAnagram("modi", "monu")); //false
 ```
 
+- different way to solve the problem
+
+```js
+
+function validAnagram(s,t){
+
+  if(s.length!==t.length) return false
+
+  const charCount = new Map();
+//incr3ementing the count
+  for(let char of s){
+    if(charCount.has(char)){
+      charCount.set(char, charCount.get(char)+1)
+    }else{
+      charCount.set(char,1)
+    }
+  }
+ 
+  //decementing the count
+
+  for(let char of t){
+   if (!charCount.has(char)) {
+     return false; // Found a char in t not present in s, or excess count
+   } else{
+    charCount.set(char, charCount.get(char)-1 )
+   }
+   if(charCount.get(char)===0) {
+    charCount.delete(char)
+   }
+  }
+  return charCount.size===0
+
+}
+
+
+console.log(validAnagram('anagram', 'nagaram'));  // Output: true
+console.log(validAnagram('rat', 'car'));  // Output: false
+```
