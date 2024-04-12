@@ -79,12 +79,18 @@ _________________________
 ```js
  const increaseCount = () => {
 
-    const newCount = count+1;
-    setCount(newCount);
+    const newCount = count+1; // Calculate the new count
+    setCount(newCount); //// Update the state
 
-    console.log("insidebutton count",newCount);
+    console.log("insidebutton count",newCount); // Log the new count immediately
   };
 ```
 
+- Compute Before Setting State: In the handleIncrement function, we first calculate the new value for count and store it in a local variable newCount. This allows us to use the incremented value immediately within the same function—e.g., for logging or further calculations.
+
+- Use the Local Variable: After computing the newCount, we then set the state with setCount(newCount) and use the newCount variable for immediate needs, such as logging.
 
 
+___________________
+
+**Understanding Batching and State Updates**
