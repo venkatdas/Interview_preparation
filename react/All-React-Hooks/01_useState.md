@@ -94,3 +94,75 @@ _________________________
 ___________________
 
 **Understanding Batching and State Updates**
+
+```js
+import React from "react";
+
+import { useState } from "react";
+
+const AllHooks = () => {
+  const [count, setCount] = useState(0);
+  console.log("General count", count);
+  const increaseCount = () => {
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+
+    console.log("insidebutton count", count);
+  };
+  const resetCount = () => {
+    setCount(0);
+  };
+
+  return (
+    <div>
+      <h1>{count}</h1>
+
+      <button onClick={increaseCount}>Increment 3 Times </button>
+      <button onClick={resetCount}>Reset</button>
+    </div>
+  );
+};
+
+export default AllHooks;
+```
+
+- The above code still gives the same values
+- **React does not apply each state update independently and immediately in the function incrementMultipleTimes. Instead, it batches the three updates together. Since each update is based on the same original value of count, which is 0, all three calls to setCount attempt to set the count to 1. Hence, the count only increments by 1 instead of 3.**
+
+______________________________________________________
+
+
+- Batching Behavior: React batches state updates that occur in event handlers like increaseCount. This means all the setCount calls are processed in a single batch and the component re-renders only once per click of the button.
+
+- Closure Over State Value: Each call to setCount inside increaseCount is based on the same original state value of count. Since count was initially 0, each setCount(count + 1) effectively attempts to set the state to 1, regardless of how many times it's called.
+
+- Resulting State Update: Since all these updates are batched together and they all compute the new state based on the same initial state, the final result after clicking the button is that count is increased only by 1 instead of 3.
+
+**Illustration of Execution**
+
+
+- setCount(count + 1) is called three times in a row.
+- Each call calculates the new state value as 0 + 1 (assuming count starts at 0).
+- React batches these updates, so despite three calls, only the last call's effect is applied, setting count to 1.
+- The count state is updated only once per click, increasing by 1 instead of 3.
+
+## Correct Approach to Increment by 3
+
+
+```js
+
+const increaseCount = () => {
+    setCount(prevCount => prevCount + 1);
+    setCount(prevCount => prevCount + 1);
+    setCount(prevCount => prevCount + 1);
+};
+
+```
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/79e44989-48b7-44b1-b69d-40949b399414)
+
+
+- If you intend to increase count by 3 with each button click, you should use the functional update form of the setCount method, which ensures that each update is based on the most recent
+- The first call updates count from 0 to 1.
+- The second call sees the updated count from the first call (1) and increases it to 2.
+- The third call then takes the result from the second (2) and increments it to 3.
