@@ -1,5 +1,8 @@
 ## useMemo 
 
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f217c17d-bfc1-4cb5-b45f-a372f1d3a67e)
+
 - This is the custom hook in react.
 - useMemo is a React hook that memoizes the result of a function. It's part of React's Hooks API, introduced in React 16.8,
 - which allows you to use state and other React features without writing a class.
