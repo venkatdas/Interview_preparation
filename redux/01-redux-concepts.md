@@ -4,4 +4,5 @@
 
 - Redux is a popular library for managing state in JavaScript applications, particularly useful with React, though it can be used with other frameworks too.
 
-![Uploading image.png…]()
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/7885fbe1-ea7f-4beb-92b7-dde14b66e44b)
+
