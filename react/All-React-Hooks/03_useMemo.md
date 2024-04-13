@@ -132,21 +132,25 @@ export default Usememo;
 
 - The useMemo hook in your code is used to compute the square of the counter state variable. This computation would normally occur every time the component re-renders for any reason. However, with useMemo, the square of counter is only computed when counter itself changes. Here's a step-by-step explanation of what happens:
 
-First Render:
+**First Render:**
 
 - When the component mounts for the first time, useMemo runs the provided function, computes the square of counter, and the result is memoized (stored).
-Subsequent Renders (Unrelated to counter Changes):
+
+**Subsequent Renders (Unrelated to counter Changes):**
 
 - If the component re-renders for reasons not related to counter (for example, if counter2 changes), useMemo does not recompute the square of counter. Instead, it provides the previously memoized (cached) value.
-This is efficient because if the computation were expensive, you would save resources by not running it again.
-Subsequent Renders (Related to counter Changes):
+- This is efficient because if the computation were expensive, you would save resources by not running it again.
+
+**Subsequent Renders (Related to counter Changes):**
 
 - If counter is incremented, useMemo recognizes that its dependency has changed. It then recomputes the square of counter because the dependency array [counter] provided to useMemo has a different value.
 The new result is memoized, replacing the previous one.
-**Using the Memoized Value:**
+
+
+- **Using the Memoized Value:**
 
 - The variable memoisedResult holds the memoized value and is used in the component's render output. You can use this value just like any other variable in your JSX or JavaScript logic within the component.
-In essence, useMemo is optimizing performance by ensuring that the computation of counter * counter only occurs when absolutely necessary (i.e., when counter changes). It does not eliminate the computation but rather minimizes its frequency, reducing the overall computational cost across re-renders. This optimization is especially useful when dealing with more complex and resource-intensive calculations.
+- In essence, useMemo is optimizing performance by ensuring that the computation of counter * counter only occurs when absolutely necessary (i.e., when counter changes). It does not eliminate the computation but rather minimizes its frequency, reducing the overall computational cost across re-renders. This optimization is especially useful when dealing with more complex and resource-intensive calculations.
 
 
 
