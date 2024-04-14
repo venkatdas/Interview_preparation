@@ -8,19 +8,27 @@
 
 **Core Concepts of Redux**
 
-- **Actions**
+1) **Actions**
 
 - Actions are JavaScript objects that describe what happened in the application. They must have a type property that indicates the type of action being performed. They can also have additional data fields, called the payload.
-Example Action: { type: 'ADD_TODO', text: 'Learn Redux' }
+- In other words action test the reducer, what to do and how to manipulate the state.
 
-**Reducers**
+- **Example Action: { type: 'ADD_TODO', text: 'Learn Redux' }**
 
+2) **Reducers**
+- Reducers are resposible for directly changing the state of aotr app, its basically a function that takes action and current state as arguments and returns new state reuslts.
 - Reducers are pure functions that take the current state of the application and an action, and return a new state. They describe how the state changes in response to actions.
 - Reducers must be pure functions—functions that return the exact same output for given inputs. They should not have side effects like API calls or routing transitions.
 - Example Reducer: A reducer that handles the above action by adding a new todo to the state.
 
 
-**Store**
+ 3) **Store**
 
 - The store is the object that brings actions and reducers together. The store holds the application state and provides a few helper methods to access the state, dispatch actions, and register listeners.
 - The entire state of a Redux application is stored in a single store.
+
+
+**How the flow works**
+
+- Application(UI)->Actions->Reducers->Store-> Application(useSelector)
+
