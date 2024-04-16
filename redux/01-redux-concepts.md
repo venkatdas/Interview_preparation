@@ -32,3 +32,13 @@
 
 - Application(UI)->Actions->Reducers->Store-> Application(useSelector)
 
+## What are the core principles of Redux?
+
+- Redux is a predictable state container for JavaScript apps, commonly used with React but compatible with other frameworks as well. It helps manage the state of applications in a predictable way by following three core principles:
+
+1. **Single source of truth**: The state of your whole application is stored in an object tree within a single store. Moreover, having a single state tree makes it easier to debug or inspect an application at any point in time.
+2. **State is Read-Only**: The only way to change the state is to emit(dispatch) an action, an object describing what happened.
+3. **Changes are Made with Pure Functions**: o specify how the state tree is transformed by actions, you write pure reducers. Reducers are just pure functions that take the previous state and an action, and return the next state. They are called "reducers".
+
+
+
