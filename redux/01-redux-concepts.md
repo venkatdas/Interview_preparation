@@ -40,5 +40,74 @@
 2. **State is Read-Only**: The only way to change the state is to emit(dispatch) an action, an object describing what happened.
 3. **Changes are Made with Pure Functions**: o specify how the state tree is transformed by actions, you write pure reducers. Reducers are just pure functions that take the previous state and an action, and return the next state. They are called "reducers".
 
+## 3) Key features of Redux Toolkit
+
+- **configureStore():** Simplifies the setup of the store with good defaults, which automatically sets up the Redux DevTools extension and redux-thunk middleware.
+- **createSlice():** Simplifies creating reducers and generating action creators and action types simultaneously. It allows you to define a slice of the Redux state along with the reducers and actions.
+- **createAsyncThunk:** A function that helps to handle asynchronous logic in a Redux-friendly way. It abstracts the usual task of dispatching actions and handling loading, success, and error states.
+- **createSelector**: Redux Toolkit re-exports createSelector from the Reselect library, which you can use to write memoized selectors that can compute derived data, allowing Redux to store the minimal possible state.
+- **createEntityAdapter:** Provides prebuilt reducers and selectors for performing CRUD operations on normalized state that is stored as collections of entities.
+- **RTK Query:** An advanced tool built into Redux Toolkit that provides a powerful data fetching and caching capability. It is intended to simplify managing remote data in your Redux store.
+
+## 4) Simple example of redux toolkit works
+
+- **Setting up the store with configureStore:**
 
 
+```js
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from '../features/counter/counterSlice'; // createSlice and then imported here.
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer
+  }
+});
+```
+- **Creating a slice with createSlice:**
+
+```js
+import { createSlice } from '@reduxjs/toolkit';
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0,
+  },
+  reducers: {
+    incremented: state => {
+      state.value += 1;
+    },
+    decremented: state => {
+      state.value -= 1;
+    }
+  }
+});
+
+export const { incremented, decremented } = counterSlice.actions;
+export default counterSlice.reducer;
+```
+
+- **Using the slice in a React component:**
+
+```js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { incremented, decremented } from './counterSlice';
+
+function Counter() {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <button onClick={() => dispatch(decremented())}>-</button>
+      <span>{count}</span>
+      <button onClick={() => dispatch(incremented())}>+</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+```
