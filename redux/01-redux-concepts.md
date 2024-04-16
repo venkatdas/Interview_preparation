@@ -180,3 +180,26 @@ console.log(store.getState()); // { count: 0 }
 **Popular redux middleware**
 - Redux Thunk: Allows you to write action creators that return a function instead of an action. This is useful for handling side effects such as asynchronous operations.
 - Redux Saga: A library that aims to make side effects (i.e., asynchronous things like data fetching and impure things like accessing the browser cache) in Redux applications easier and better.
+
+**Example of Creating Middleware**
+
+```js
+const loggerMiddleware = store => next => action => {
+    console.log('dispatching', action);
+    let result = next(action);
+    console.log('next state', store.getState());
+    return result;
+};
+```
+**Applying Middleware to Redux Store**
+- Redux provides applyMiddleware() function, which can be used with createStore() to apply the middleware to the store. Here’s how you might apply the above loggerMiddleware to a Redux store:
+
+```js
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from './reducers';
+
+const store = createStore(
+    rootReducer,
+    applyMiddleware(loggerMiddleware)
+);
+```
