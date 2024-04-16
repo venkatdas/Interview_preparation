@@ -111,3 +111,52 @@ function Counter() {
 export default Counter;
 
 ```
+
+
+## 5. What is the difference between a store and a state in Redux? with example
+
+- The store is an object that holds the application state
+- The store in Redux is an object that brings together the state, reducers, and actions of your application. It has several key responsibilities:
+
+
+  - Holding the application state: The store is the central place where all the application's state is stored.
+- Allowing access to the state: The store provides methods to access the state, such as getState().
+- Allowing state to be updated: The store dispatches actions to the reducer functions which handle how the state should be updated based on those actions.
+
+- Example of creating store (Redux)
+
+```js
+import { createStore } from 'redux';
+
+function rootReducer(state = { count: 0 }, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(rootReducer);
+
+```
+**State**
+
+- The state in Redux refers to the application data at a given point in time. This is what your application displays and manipulates. The state in a Redux application is typically structured as a single, immutable object tree.
+- Immutable: The state in Redux should never be modified directly. Instead, changes are made via functions called reducers that take the previous state and an action, and return a new state.
+- Single Source of Truth: The entire state of the application is stored in one place, the store, which makes it easier to debug or inspect an application.
+
+***Example of Accessing and Updating State
+
+```js
+console.log(store.getState()); // { count: 0 }
+
+store.dispatch({ type: 'INCREMENT' });
+console.log(store.getState()); // { count: 1 }
+
+store.dispatch({ type: 'DECREMENT' });
+console.log(store.getState()); // { count: 0 }
+
+```
