@@ -5,6 +5,15 @@
 - It's especially useful when the next state depends on the previous one or when the state logic is complex.
 
 
+
+
+**MORE**
+
+- React Hook that is used for managing more complex state logic in functional components.
+- It is an alternative to the useState Hook when the state logic becomes more involved and involves multiple actions.
+- The useReducer function takes two arguments: a reducer function and an initial state.
+- The reducer function is responsible for updating the state based on the type of action dispatched. It receives the current state and an action object, and it returns the new state.
+
 - syntax
 
 ```js
