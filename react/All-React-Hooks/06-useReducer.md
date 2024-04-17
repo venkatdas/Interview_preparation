@@ -1,5 +1,10 @@
 ## useReducer
 
+
+- The useReducer hook in React is a powerful alternative to useState for managing complex state logic in functional components.
+- It's especially useful when the next state depends on the previous one or when the state logic is complex.
+
+
 - syntax
 
 ```js
