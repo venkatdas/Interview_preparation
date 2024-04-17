@@ -203,3 +203,122 @@ const store = createStore(
     applyMiddleware(loggerMiddleware)
 );
 ```
+
+
+## 7. Fetch data in redux toolkit using **createAsyncThunk**
+
+1.
+```js
+npm install @reduxjs/toolkit react-redux
+```
+**Store setup**
+
+```js
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from './features/cart/cartSlice'
+import modalReducer from './features/modal/modalSlice'
+import productsReducer from './features/products/productSlice'
+const store = configureStore({
+  reducer: {
+    cart: cartReducer,
+    modal: modalReducer,
+    products:productsReducer
+  },
+});
+
+export default store
+```
+
+**Provide the Redux Store to Your Application**
+```js
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App';
+import store from './store';
+import { Provider } from 'react-redux';
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+    <App />
+    </Provider>
+  </React.StrictMode>
+);
+```
+
+**Create an Async Thunk for Data Fetching**
+
+```js
+import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+
+
+
+export const fetchproducts =createAsyncThunk('products/fetchProducts', async()=>{
+    const response = await fetch("https://www.course-api.com/react-useReducer-cart-project");
+    const data = await response.json();
+    console.log('data',data);
+    return data
+})
+export const productSlice = createSlice({
+
+    name:"product",
+    initialState:{
+        items:[],
+        status:null
+    },
+    reducers:{},
+
+    extraReducers:(builder)=>{
+        builder.addCase(fetchproducts.pending,(state)=>{
+            state.status='loading'
+        })
+        .addCase(fetchproducts.fulfilled,(state,action)=>{
+            state.items = action.payload;
+            state.status='success'
+
+        })
+        .addCase(fetchproducts.rejected,(state,action)=>{
+            state.status='failed'
+        })
+    }
+
+})
+export default  productSlice.reducer
+```
+
+**Dispatch the Thunk from a Component**
+
+```js
+import { fetchproducts } from "../features/products/productSlice"
+import { useDispatch,useSelector } from "react-redux"
+import { useEffect } from "react"
+const ProductList = () => {
+    const dispatch = useDispatch();
+    const products = useSelector((state)=>{ return state.products.items;})
+    const status = useSelector((state)=>state.products.status)
+
+    useEffect(()=>{
+        dispatch(fetchproducts())
+    },[dispatch])
+
+    if (status === "loading") return <p>Loading...</p>;
+    if (status === "failed") return <p>Error fetching products.</p>;
+
+  return (
+    <div>
+      <ul>
+        {products.map((item) => (
+          <li key={item.id}>
+            {item.title} - ${item.price}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default ProductList
+```
