@@ -322,3 +322,6 @@ const ProductList = () => {
 
 export default ProductList
 ```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5d1896f6-457d-4c81-a3e7-33f449d8dda2)
+
