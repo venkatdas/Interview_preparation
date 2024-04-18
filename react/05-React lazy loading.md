@@ -53,3 +53,55 @@ function App() {
 
 export default App;
 ```
+## 2. Route-based Lazy Loading
+
+- For applications using React Router, you can integrate lazy loading with routing. This is very effective as it loads components only when the route is accessed:
+
+```js
+
+const Home = () => {
+  return (
+    <div>Home</div>
+  )
+}
+
+export default Home
+
+//About.js
+
+const About = () => {
+  return (
+    <div>About</div>
+  )
+}
+
+export default About
+```
+
+```js
+import React, {  Suspense } from "react";
+import "./App.css";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+
+const Home = React.lazy(() => import("./components/Home"));
+const About = React.lazy(() => import("./components/About"));
+
+
+function App() {
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+}
+
+export default App;
+```
+
