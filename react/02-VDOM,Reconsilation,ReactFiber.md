@@ -48,3 +48,49 @@
   - The Virtual DOM abstracts away browser-specific quirks, providing a consistent development environment regardless of the user’s browser.
 - Easier Debugging:
   - Working with the Virtual DOM can simplify debugging, as developers can inspect the state of the Virtual DOM at different points in time, making it easier to identify issues.
+
+
+## Reconsilation
+
+
+
+- Reconciliation is the process through which React updates the Browser DOM.
+- React compares the Virtual DOM with Real DOM. It finds out the changed nodes and updates only the changed nodes in Real DOM leaving the rest nodes as it is. This process is called Reconciliation.
+- Important concepts behind the working of the Reconciliation process are: Virtual DOM and Diffing Algorithm
+
+**Virutal DOM**
+
+
+- Virtual DOM in React is a “virtual” representation of the actual DOM. It is nothing but an object created to replicate the actual DOM.
+- When we make changes or add data, React creates a new Virtual DOM and compares it with the previous one.
+- Comparison is done by Diffing Algorithm
+- Then it updates the Browser DOM with the least number of changes possible without rendering the entire DOM again.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
