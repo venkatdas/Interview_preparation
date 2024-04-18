@@ -58,7 +58,7 @@
 - React compares the Virtual DOM with Real DOM. It finds out the changed nodes and updates only the changed nodes in Real DOM leaving the rest nodes as it is. This process is called Reconciliation.
 - Important concepts behind the working of the Reconciliation process are: Virtual DOM and Diffing Algorithm
 
-**Virutal DOM**
+1. **Virutal DOM**
 
 
 - Virtual DOM in React is a “virtual” representation of the actual DOM. It is nothing but an object created to replicate the actual DOM.
@@ -68,11 +68,15 @@
 
 
 
+2. **The Diffing Algo**
+
+- React uses a heuristic algorithm called the Diffing algorithm for reconciliation based on these assumptions:
+- React checks the root elements for changes and the updates depend on the types of the root elements,
+- Two elements of different types will produce different trees and comparing two elements of the same type, keep the underlying node as same and only update changes in attributes or styles.
+- The developer can hint at which child elements may be stable across different renders with a key prop.
 
 
-
-
-
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/1c00ac89-144a-43d6-bfae-379ff1d9b198)
 
 
 
