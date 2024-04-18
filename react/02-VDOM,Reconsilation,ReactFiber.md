@@ -81,17 +81,60 @@
 
 
 
+## React Fiber
+
+
+- React Fiber is an internal, reimplementation of the core algorithm used by React to perform the process of reconciliation.
+- React Fiber is an internal architecture within React that enhances the efficiency, responsiveness, and control of the rendering process.
+- It achieves this by introducing incremental rendering, prioritization of tasks, and a concurrency model, making React better equipped to handle complex user interfaces and dynamic updates.
+
+**The Structure of a Fiber**
 
 
 
+- A fiber is a JavaScript object, a unit of work. It represents a node of the DOM tree, or a React element, and contains data about a component, its I/P and O/P.
+- A fiber is both an instance of a component as well as frame in the call stack.
+- Fibers have both types and keys, just like React elements. When a fiber is created from an element, these two fields are copied over directly.
+- React, uses internal objects called “fibers” to hold additional information about the component tree.
 
 
 
+— The type of a fiber describes the component that it corresponds to. For composite components, the type is the function or class component itself. For host components (div, span, etc.), the type is a string.
+
+— The key is used during reconciliation to determine whether the fiber can be reused
 
 
 
+ - A fiber created from a React element inherits that element’s type and key. The main use for types and keys in a fiber is for reconciliation to determine whether or not it’s possible for the fiber to be reused.
 
 
+
+**Key benefits and features of React Fiber:**
+
+**1. incremental Rendering**
+
+- **Old Behavior**: Prior to Fiber, React’s reconciliation process could be blocking, meaning it would recursively process components and changes all at once, potentially leading to performance issues for large updates.
+- **With Fiber**: React can now split the work into smaller chunks and spread it out over multiple frames, allowing for smoother animations and interactions.
+
+**2. Concurrency**
+
+- Fiber allows React to perform multiple tasks at the same time (concurrent mode), such as rendering multiple component trees independently.
+
+
+**3. Task Prioritization:**
+
+- With Fiber, React can prioritize certain updates over others. For example, user interactions (like clicks or key presses) are given higher priority than less critical updates.
+- This leads to a more responsive user interface, as high-priority updates can interrupt and preempt low-priority ones.
+
+
+**Time Slicing:**
+
+- Time slicing is a technique where React, with the help of Fiber, can break down work into small time slices and yield control back to the browser event loop intermittently.
+- This ensures that the UI remains responsive even while heavy computations are being done in the background.
+**5. Error Boundaries**
+
+- Fiber introduced a more robust mechanism for handling errors in the application. Error boundaries are components that can catch JavaScript errors anywhere in a component tree and log those errors, display a fallback UI, or take other actions.
+- Prior to Fiber, unhandled errors could corrupt the internal state of React and cause the entire application to crash.
 
 
 
