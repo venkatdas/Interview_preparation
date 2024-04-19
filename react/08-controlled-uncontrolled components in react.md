@@ -81,3 +81,43 @@ const ControlledComponent = ({value,onChange}) => {
 export default ControlledComponent
 
 ```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/533323b8-9873-4b34-af41-f6d71e32f5f6)
+
+
+
+
+
+**Uncontrolled Components**
+
+- Uncontrolled components are those that do not use React state to track their value. Instead, they maintain their own internal state. Uncontrolled components are typically used when you do not need to track the state of the component or when you want to allow the user to interact with the component in a way that is not controlled by React.
+- To create an uncontrolled component, you do not need to pass any props to the component. The component will maintain its own internal state, and you can access the value of the component using a ref.
+
+
+```js
+import React from 'react'
+import { useRef } from 'react';
+
+const UncontrolledComponent = () => {
+  const nameRef = useRef();
+  const emailRef = useRef();
+
+  const onSubmit = (e) => {
+    console.log("Name: " + nameRef.current.value);
+    console.log("Email: " + emailRef.current.value);
+    e.preventDefault()
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" name="name" ref={nameRef} required placeholder='Name' />
+      <input type="email" name="email" ref={emailRef} required  placeholder='Email'/>
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+
+export default UncontrolledComponent
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/4579b048-9094-43a6-9441-3631c5efb561)
