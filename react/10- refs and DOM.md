@@ -14,3 +14,24 @@
 - Triggering imperative animations.
 
 - Integrating with third-party DOM libraries.
+
+
+```js
+import React, { useRef } from 'react';
+
+function MyComponent() {
+  const myRef = useRef(null);
+
+  const focusTextInput = () => {
+    myRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input ref={myRef} type="text" />
+      <button onClick={focusTextInput}>Focus the input</button>
+    </div>
+  );
+}
+
+```
