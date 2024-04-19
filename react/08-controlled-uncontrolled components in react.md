@@ -121,3 +121,6 @@ export default UncontrolledComponent
 ```
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/4579b048-9094-43a6-9441-3631c5efb561)
+
+
+- useRef: The useRef hook is used to create a ref (inputRef) that provides direct access to the DOM element, in this case, an input element. This is not stateful and does not cause re-renders when the input changes.
