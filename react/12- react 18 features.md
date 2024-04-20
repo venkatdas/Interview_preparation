@@ -82,11 +82,45 @@ function myComponent() {
 - React 18 introduces a new root API which makes it easier to opt into concurrent features. The new root API (createRoot) replaces the old
 
 
-**New Suspense Features**
+4.**New Suspense Features**
+
+- Code splitting on the server with suspense
+- Streaming rendering on the server
+
+**Client rendering vs server rendering**
+
+- In a client-rendered app, you load the HTML of your page from the server along with all the JavaScript that is needed to run the page, and make it interactive.
+- If, however, your JavaScript bundle is huge, or you have a slow connection, this process can take a long time and the user will be waiting for the page to become interactive, or to see meaningful content.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/a4312925-3ee0-4366-9315-a6e4b72349b9)
+
+- Fig: In a client rendering flow, a user has to wait a long time before the page becomes interactive
+
+- **For optimizing the user experience and avoiding the user having to sit on a blank screen, we can use server rendering.**
+- **Server rendering** is a technique where you render the HTML output of your React components on the server and send HTML from the server. This lets the user view some UI while JS bundles are loading and before the app becomes interactive.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/e8f9064e-abaf-4d37-872e-ab8fafacd3f4)
+- fig: In a server rendering flow, we can display meaningful data to the user much faster by sending HTML from the server. 
 
 
+- Server rendering further enhances the user experience of loading the page and reducing time to interactive.
 
-**New Feature: Transitions**
+- Now what if most of your app is fast except for one part? **Maybe this part loads data slowly,** or maybe it needs to download a lot of JS before it gets interactive.
+- Now what if most of your app is fast except for one part? Maybe this part loads data slowly, or maybe it needs to download a lot of JS before it gets interactive.
+- One slow component can slow down the entire page. This is because server rendering was all or nothing – you couldn’t tell React to defer loading of a slow component and couldn’t tell React to send HTML for other components.
+- **Now React comes with suspense**
+
+- React 18 adds support for Suspense on server. With the help of suspense, you can wrap a slow part of your app within the Suspense component, telling React to delay the loading of the slow component.
+- This can also be used to specify a loading state that can be shown while it's loading.
+- In React 18, one slow component doesn’t have to slow the render of your entire app. With Suspense, you can tell React to send HTML for other components first along with the HTML for the placeholder, like a loading spinner.
+- Then when the slow component is ready and has fetched its data, the server renderer will pop in its HTML in the same stream.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/257d579d-2e39-4317-b4ab-26a11d82e3c0)
+
+- This way the user can see the skeleton of the page as early as possible and see it gradually reveal more content as more pieces of HTML Arrive.
+- All of this happens before any JS or React loads on the page, which significantly improves the user experience and user-perceived latency.
+
+5.**New Feature: Transitions**
 
 
 - Transitions can be used to mark UI updates that do not need urgent resources for updating.
@@ -161,7 +195,33 @@ export default App;
 - Before search
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/ce6149e9-816b-4d2a-a5f3-3360fcf5a686)
 
+
+
+
 - After search
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/92caf4b2-048d-4620-bed5-3d3f7fb5422e)
 
 
+
+
+**6. new Hooks**
+
+
+- React 18 introduces new hooks, such as
+
+- useId()
+- useTransition()
+- useDeferredValue()
+- useSyncExternalStore()
+- useInsertionEffect()
+
+
+**7. Strict mode**
+
+- Strict mode in React 18 will simulate mounting, unmounting, and re-mounting the component with a previous state.
+- What does this mean? For example, when a user tabs away from a screen and back, the previous screen should be immediately seen. I’ll explain the process:
+  - When the user gets to the screen at first, React mounts the component
+  - When the user tabs away from the screen, React dismounts the component
+  - When the user goes back to the screen, React mounts the component again.
+
+- This is done over and over again. Strict mode will make sure that components are not affected by being mounted and unmounted over and over again.
