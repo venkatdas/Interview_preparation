@@ -1,7 +1,7 @@
 ##  React 18 features
 
 
-- Concept	  Concurrent React
+- Concept --	  Concurrent React
 - Features	Automatic Batching, Transitions, Suspense on the server
 - APIs	    createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream
 - Hooks	    useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect
