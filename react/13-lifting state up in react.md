@@ -68,3 +68,64 @@ function ComponentB({ count, setCount }) {
 export default ParentComponent;
 ```
  
+
+
+
+                        **OR**
+
+
+```js
+import React, { Suspense, useState } from "react";
+import { startTransition } from "react";
+import { useTransition } from "react";
+import "./App.css";
+
+
+function App() {
+   const [count, setCount] = useState(0);
+
+     const handleIncrement = () => {
+       setCount((prevCount) => prevCount + 1);
+     };
+
+     // Function to decrement the counter
+     const handleDecrement = () => {
+       setCount((prevCount) => prevCount - 1);
+     };
+
+   return (
+     <div>
+       <h1>Counter: {count}</h1>
+       <ComponentA onIncrement={handleIncrement} />
+       <ComponentB onDecrement={handleDecrement} />
+     </div>
+   );
+}
+
+function ComponentA({  onIncrement }) {
+  return (
+    <div>
+      <h2>Component A</h2>
+      {/* <p>Count: {count}</p> */}
+      <button onClick={onIncrement}>Increment</button>
+    </div>
+  );
+}
+
+// ComponentB allows decrementing the counter
+function ComponentB({ onDecrement }) {
+  return (
+    <div>
+      <h2>Component B</h2>
+      {/* <p>Count: {count}</p> */}
+      <button onClick={onDecrement}>Decrement</button>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+
+
