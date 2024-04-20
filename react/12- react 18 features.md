@@ -4,7 +4,7 @@
 | CATEGORY           | FEATURE | 
 |----------------|---------------|---------------|----------------|-----------|
 | Concept        |Concurrent React |  
-| Features   | Automatic Batching, Transitions, Suspense on the server  |  
+| Features   | Automatic Batching, Transitions, Suspense on the server  |  |
 | APIs   | createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream  |  
 |  Hooks   | useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect  | 
 | Updates | Strict mode|
