@@ -2,11 +2,11 @@
 
 
 - Concept --	  Concurrent React
-- Features	Automatic Batching, Transitions, Suspense on the server
-- APIs	    createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream
-- Hooks	    useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect
-- Updates	  Strict mode
-- Deprecated/discouraged	ReactDOM.render, renderToString
+- Features --	Automatic Batching, Transitions, Suspense on the server
+- APIs	  --  createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream
+- Hooks	  --  useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect
+- Updates	 -- Strict mode
+- Deprecated/discouraged --	ReactDOM.render, renderToString
 
 
 **1. Automatic Batching**
