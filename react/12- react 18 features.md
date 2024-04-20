@@ -1,14 +1,14 @@
 ##  React 18 features
 
 
-| CATEGORY           | FEATURE | 
-|----------------|---------------|---------------|----------------|-----------|
-| Concept        |Concurrent React |  
-| Features   | Automatic Batching, Transitions, Suspense on the server  |  |
-| APIs   | createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream  |  
-|  Hooks   | useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect  | 
-| Updates | Strict mode|
-|Deprecated|ReactDOM.render, renderToString|
+- Concept	  Concurrent React
+- Features	Automatic Batching, Transitions, Suspense on the server
+- APIs	    createRoot, hydrateRoot, renderToPipeableStream, renderToReadableStream
+- Hooks	    useId, useTransition, useDeferredValue, useSyncExternalStore, useInsertionEffect
+- Updates	  Strict mode
+- Deprecated/discouraged	ReactDOM.render, renderToString
+
+
 **1. Automatic Batching**
 
 - Batching is when React groups multiple state updates into a single re-render for better performance.
