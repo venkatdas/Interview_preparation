@@ -21,3 +21,37 @@ class ClassBasedComponent  extends Component{
 
 export default ClassBasedComponent
 ```
+
+
+**2. State Management**
+
+- Class components can have a local state to store data that affects the rendering of the component. The state is initialized in the constructor or as a class field, and can be modified using the setState method.
+
+
+```js
+import { Component } from "react";
+
+class ClassBasedComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
+
+  increment = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.increment}>Increment</button>
+      </div>
+    );
+  }
+}
+
+export default ClassBasedComponent;
+
+```
