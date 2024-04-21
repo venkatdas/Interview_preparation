@@ -175,3 +175,24 @@ ________________
 
 **Note:** Remember that for functional components, hooks such as useState and useEffect do not fall under the scenarios where error boundaries catch errors.
 - Errors thrown inside these hooks need to be caught and handled using traditional error handling methods like try/catch blocks or error handling in promises and async functions.
+
+
+
+
+
+
+
+- **Why this.props.children**
+```js
+<ErrorBoundaries>
+  <ErrorCounter />
+</ErrorBoundaries>
+```
+
+-  In my code, return this.props.children; within the ErrorBoundaries component serves a very specific purpose.
+
+
+- No Error State: When there's no error, this.props.children refers to <ErrorCounter />. So, return this.props.children; effectively means "render the ErrorCounter component normally".
+- Error Handling: If an error occurs within ErrorCounter during the rendering phase or in any lifecycle methods (if ErrorCounter was a class component), the ErrorBoundaries component will set its state to indicate an error has happened (this.state.hasError becomes true).
+- Fallback UI: After an error is captured by the ErrorBoundaries component's getDerivedStateFromError or componentDidCatch method, the render method will check the this.state.hasError flag. If it's true, instead of returning this.props.children, it will return the fallback UI, which in your case is a styled div with an error message.
+
