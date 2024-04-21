@@ -215,3 +215,61 @@ class LifeCycleMethods extends Component {
 
 export default LifeCycleMethods
 ```
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/cb13324b-6f59-4e24-88b0-fa095e4f371c)
+
+
+
+
+- 1. Initial render:
+
+· constructor is called.
+
+· getDerivedStateFromProps is called.
+
+· render is called.
+
+. ComponentDidMount called
+
+- 2. Update:
+
+· When the “Change Name” button is clicked, changeName is called, updating the state with a new name.
+
+· getDerivedStateFromProps is called again (if there are prop changes).
+
+· shouldComponentUpdate is called again.
+
+· render is called again to re-render the updated UI.
+
+. getSnapshotBeforeUpdate called
+
+· componentDidUpdate is called, as the component has been updated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
