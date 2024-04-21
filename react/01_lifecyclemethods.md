@@ -117,5 +117,101 @@ export default LifeCycleMethods
 
 
 
+## Updating phase
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/8d42f237-3bf8-4379-81bb-9b142b9c9634)
+
+- The updating phase is when the component has any updates or it re-renders. This phase is triggered when the props or state are updated.
+- It can also be triggered when a component consists of the following methods:
+- static getDerivedStateFromProps(), shouldComponentUpdate(), render(), getSnapshotBeforeUpdate(), and componentDidUpdate().
+- Since getDerivedStateFromProps() and render() they’ve been covered previously, this section focuses on the other three methods.
+- 
+
+**The shouldComponentUpdate method**
 
 
+- This is also another rarely used lifecycle method. It’s specifically used for performance optimization.
+- This method gives you control over whether or not a component should update due to a change in its props or state.
+- By default, a component will always re-render when the state or prop is updated. This method can either return a true or false to determine if the component should be updated or not.
+- Also, this method receives nextProps and nextState as arguments so you can always compare it with the component’s current prop and state values.
+
+**The getSnapshotBeforeUpdate method**
+
+- The getSnapshotBeforeUpdate() method is called right before the changes from the current update are applied to the DOM.
+- The value you return from this method will be passed as the third parameter to the componentDidUpdate() method.
+- This method is called after the render method, and before componentDidUpdate.This is also one of those methods that are rarely used.
+
+**The componentDidUpdate Method**
+
+- This method is the last one invoked in this phase. Like the previous method, it also receives the older props and state values as arguments but it also receives the return value getSnapshotBeforeUpdate() as a third argument (if present).
+- It is typically used to make more fetch requests based on the condition of comparing the previous and current props and state values. Therefore, you may call setState but it should be within the conditional statement.
+
+
+**Example**
+- Let’s see a combined example of Updating phase. In this example, we will simply change the name of the Person from ‘India ’ to ‘USA’.
+
+
+```js
+import { Component } from "react";
+
+
+class LifeCycleMethods extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "India",
+      changed: false,
+    };
+    console.log("Constructor called");
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("getDerivedStateFromProps called");
+    return null;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("shouldComponentUpdate called");
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(nextProps, nextState) {
+    console.log("getSnapshotBeforeUpdate called");
+    return null;
+  }
+  componentDidMount(){
+    console.log("ComponentDidMount called");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate called");
+  }
+
+  changeName = () => {
+    this.setState({
+      name: "USA",
+      changed: true,
+    });
+  };
+
+  render() {
+    console.log("render called");
+    return (
+      <div>
+        <h1>Updating Example</h1>
+        <div>
+          Name{" "}
+          {this.state.changed ? (
+            <h3>{this.state.name}</h3>
+          ) : (
+            <p>{this.state.name}</p>
+          )}
+        </div>
+        <button onClick={this.changeName}>Change Name</button>
+      </div>
+    );
+  }
+}
+
+export default LifeCycleMethods
+```
