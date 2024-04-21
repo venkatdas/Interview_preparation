@@ -247,14 +247,96 @@ export default LifeCycleMethods
 · componentDidUpdate is called, as the component has been updated.
 
 
+## Unmounting phase
+
+
+- The unmounting phase is the last stage in the lifecycle of a React component. This phase refers to when a component is removed from the DOM and is no longer rendered or accessible.
+- During this phase, React performs a series of cleanup operations to ensure that the component and its associated resources are properly cleared of the DOM tree.
+- This can happen for various reasons, such as when the component is no longer needed, the parent component is re-rendered without including the child component, or when the application is navigating to a different page or view. It has only one method.
+
+
+**The componentWillUnmount() lifecycle method**
+
+- componentWillUnmount() method is called just before the component is removed from the DOM.
+- It allows you to perform any necessary cleanup, such as canceling timers, removing event listeners, or clearing any data structures that were set up during the mounting phase. All of the component’s state and props are destroyed.
+
+**Example**
+
+- We will simply show and hide a component on a button click.
+
+```js
+import { Component } from "react";
+import React from "react";
+class Child extends React.Component {
+  componentDidMount() {
+    console.log("Component mounted");
+  }
+
+  componentWillUnmount() {
+    console.log("Component unmounted");
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Child Component content</p>
+      </div>
+    );
+  }
+}
+  
+
+class LifeCycleMethods extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showComponent: true,
+    };
+  }
+
+  toggleComponent = () => {
+    this.setState((prevState) => ({
+      showComponent: !prevState.showComponent,
+    }));
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Main Component</h1>
+        {this.state.showComponent && <Child />}
+        <button onClick={this.toggleComponent}>
+          {this.state.showComponent ? "Unmount" : "Mount"}
+        </button>
+      </div>
+    );
+  }
+}
+
+export default LifeCycleMethods
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/306af956-494e-4a60-b76b-e2c66dc3ed71)
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/b6151bc8-8ca9-444f-a9d2-d46554a81187)
 
 
 
 
+- The Child component represents a component that will be unmounted. It includes the componentDidMount and componentWillUnmount lifecycle methods. Both Contain the messages that are logged to console.
 
 
+- The LifeCycleMethods component is a parent component that renders the Child component conditionally based on the showComponent state. Clicking the “Mount” button will toggle the showComponent state, causing the Child component to be rendered or unmounted.
 
 
+- When you run the above code, you will see the following behavior:
+
+
+1. Initially, the Child component is rendered, and the message “Component mounted” is logged to the console.
+
+2. If you click the “Unmount” button, the Child component will be unmounted, and the message “Component unmounted” will be logged to the console.
+
+3. If you click the “Mount” button again, the Child component will be re-rendered, and the message “Component mounted” will be logged to the console.
 
 
 
