@@ -325,3 +325,6 @@ export default ProductList
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/5d1896f6-457d-4c81-a3e7-33f449d8dda2)
 
+## 8. How do u setup the redux toolkit
+
+https://chat.openai.com/share/adaf0a56-fcd9-491c-812f-2cb2f57597bb
