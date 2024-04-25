@@ -49,3 +49,45 @@ class App extends React.Component {
 export default App;
 
 ```
+
+**Functional component with react.memo**
+
+```js
+import React, { useState, useEffect } from 'react';
+
+const UserProfile = React.memo(({ name, age }) => {
+  console.log("Rendering UserProfile");
+  return (
+    <div>
+      <h1>User Profile</h1>
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
+    </div>
+  );
+});
+
+function App() {
+  const [name, setName] = useState('John');
+  const [age, setAge] = useState(30);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAge(30); // This will not cause UserProfile to re-render
+    }, 2000);
+  }, []);
+
+  const changeName = () => {
+    setName('Jane');
+  };
+
+  return (
+    <div>
+      <UserProfile name={name} age={age} />
+      <button onClick={changeName}>Change Name</button>
+    </div>
+  );
+}
+
+export default App;
+
+```
