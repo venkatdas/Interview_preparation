@@ -1,0 +1,4 @@
+- In React, a "pure component" is a specific type of component that optimizes performance by minimizing re-renders
+- A React pure component only re-renders if the state or props have changed. This is determined by a shallow comparison of both props and state, making them more efficient in some scenarios.
+- PureComponent is similar to Component but it skips re-renders for same props and state.
+- Class components are still supported by React, but we don’t recommend using them in new code.
