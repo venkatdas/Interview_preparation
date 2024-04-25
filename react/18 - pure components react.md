@@ -3,7 +3,7 @@
 - PureComponent is similar to Component but it skips re-renders for same props and state.
 - Class components are still supported by React, but we don’t recommend using them in new code.
 
-
+- PureComponent is a subclass of Component and supports all the Component APIs. Extending PureComponent is equivalent to defining a custom shouldComponentUpdate method that shallowly compares props and state.
 - Example
 
 ```js
