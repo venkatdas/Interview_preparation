@@ -52,6 +52,8 @@ export default App;
 
 **Functional component with react.memo**
 
+- For functional components, React provides React.memo for a similar optimization. React.memo is a higher-order component that wraps a functional component, enabling it to only re-render when its props change.
+
 ```js
 import React, { useState, useEffect } from 'react';
 
