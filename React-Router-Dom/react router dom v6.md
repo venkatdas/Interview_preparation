@@ -65,7 +65,19 @@ function Navbar() {
 
 
 
+**useParams**
 
+- Description: Returns an object of key/value pairs of URL parameters. Use it to access match.params of the current <Route>.
+
+```js
+import { useParams } from 'react-router-dom';
+
+function Profile() {
+  let { userId } = useParams();
+  return <div>User ID: {userId}</div>;
+}
+
+```
 
 
 
