@@ -1,7 +1,7 @@
 ## Top interview questions based on react memoization and which scenarios we can use them
 
 
-**React.Memo**
+## 1. **React.Memo**
 
 
 - "React.memo is a higher order component (HOC) in React for memoizing functional components. It serves to optimize performance by preventing unnecessary re-renders of components when their props do not change."
@@ -159,3 +159,7 @@ export default ReactMemo;
 ```
 
 - From this code we can observe that, Click the "Increment Counter" button without changing name or email. Since ReactMemo does not depend on counter, there should be no console log from ReactMemo if everything is working correctly. This confirms that React.memo is preventing re-renders effectively when the props it cares about (name and email) do not change.
+
+
+## 2. useCallback 
+
