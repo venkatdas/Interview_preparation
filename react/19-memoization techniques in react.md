@@ -8,9 +8,78 @@
 
 - React.Memo is a Higher Order Component in React which gives a memoized version of the Component. React will then not re-render the memoized component unless its props have changed, even if its parent is being re-rendered.
 
-**Hoe it Works**
+**How it Works**
 
 - "React.memo wraps a functional component. When a component is wrapped in React.memo, React renders the component and memorizes the result. 
 - Before the next render, if the new props are the same as the previous props, React reuses the memorized result, skipping the next rendering. 
 - This comparison is shallow, meaning that it only checks one level deep. If you use complex objects as props, you should ensure they are the same object, or use a custom comparison function if deeper comparison is needed."
+
+**Syntax**
+
+`const MemoizedComponent = memo(SomeComponent, arePropsEqual?);`
+
+- Pure components are the components which render the same output for the same state and props. In function components, you can achieve these pure components through memoized React.memo() API wrapping around the component. This API prevents unnecessary re-renders by comparing the previous props and new props using shallow comparison. So it will be helpful for performance optimizations.
+- But at the same time, it won't compare the previous state with the current state because function component itself prevents the unnecessary rendering by default when you set the same state again.
+
+
+**Example**
+
+- Below is the example of how child component(i.e., ReactMemo) prevents re-renders for the same props passed by parent component(i.e.,App).
+
+```js
+//Child Component to prevent re-renders for same props using react.memo
+
+import React from 'react'
+import { memo } from 'react'
+const ReactMemo = memo(function ReactMemo ({name,email}) {
+   console.log("Rendering CountDisplay, name:", name);
+
+  return (
+    <div>
+      <h1>react.memo</h1>
+      <p>Name:{name}</p>
+      <p>Email: {email}</p>
+    </div>
+  );
+});
+
+export default ReactMemo
+```
+
+
+```js
+import React from "react";
+import ReactMemo from "./components/ReactMemo";
+import "./App.css";
+import { useState } from "react";
+function App() {
+  const [name,setName]= useState("");
+  const [email,setEmail]= useState('');
+  return (
+    <div>
+      <h1>App Component</h1>
+      <label>
+        Name: <input value={name} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <br />
+      <br />
+      <br />
+      <label>
+        Email:{" "}
+        <input value={email} onChange={(e) => setEmail(e.target.value)} />
+      </label>
+
+      <ReactMemo name={name} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/6bad56db-5185-485e-870c-607b3e7e7c49)
+
+
 
