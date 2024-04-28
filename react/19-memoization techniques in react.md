@@ -82,4 +82,23 @@ export default App;
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/6bad56db-5185-485e-870c-607b3e7e7c49)
 
 
+**Custom comparision second argument(arePropsEqual)**
 
+
+```js
+(prevProps, nextProps) => {
+  return prevProps.name === nextProps.name && prevProps.email === nextProps.email;
+}
+
+            //OR
+
+ const isNameSame = prevProps.name === nextProps.name;
+  const isEmailSame = prevProps.email === nextProps.email;
+
+  console.log(`Name same: ${isNameSame}, Email same: ${isEmailSame}`);
+
+  return isNameSame && isEmailSame;
+```
+
+- Custom Comparison Function: If you need more control over the re-rendering process, you can provide a custom comparison function as the second argument to React.memo. This function takes the previous and next props as arguments and returns true if the props are equal (to prevent a re-render) or false if they are not equal (to allow a re-render).
+- 
