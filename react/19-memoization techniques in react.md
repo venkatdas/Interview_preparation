@@ -240,4 +240,51 @@ function App() {
 export default App;
 
 ```
+_____________________
+
+- **To demonstrate how useCallback memoizes a function and only updates the function when its dependencies change, I'll create a simple example. In this example, we will use a button to increment a counter and log how the callback function changes based on its dependencies.**
+
+```js
+import React, { useCallback } from "react";
+import "./App.css";
+import { useState } from "react";
+import UseCallback from "./hooks/UseCallback";
+function App() {
+  const [count, setCount] = useState(0);
+  const [dependency, setDependency] = useState(0);
+
+  // Memoized incrementCount function that depends on 'count'
+  const incrementCount = useCallback(() => {
+    setCount((c) => c + 1);
+    console.log("Function called with count:", count);
+    console.log("Current dependency value:", dependency);
+  }, [count]); // Depends on 'count', so it doesn't update when 'dependency' changes
+
+  // Function to increment dependency
+  const incrementDependency = () => {
+    setDependency((d) => d + 1);
+    console.log("Dependency incremented to:", dependency + 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Dependency: {dependency}</p>
+      <button onClick={incrementCount}>Increment Count</button>
+      <button onClick={incrementDependency}>Increment Dependency</button>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/299642ce-b13b-4925-b71f-dbe9e8254962)
+
+
+_____________
+
+## 3. useMemo
+
 
