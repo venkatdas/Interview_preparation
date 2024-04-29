@@ -162,4 +162,16 @@ export default ReactMemo;
 
 
 ## 2. useCallback 
+- useCallback is a hook that is part of React's API. It returns a memoized callback function. This means that the function passed to useCallback will not be recreated unless one of its dependencies has changed.
 
+- Without useCallback it was
+
+- When you define a function inside a component, it is recreated on every render, even if the component’s state or props have not changed. This can lead to unnecessary re-renders, which can slow down your application’s performance. The useCallback hook helps you avoid this problem by memoizing the function and only recreating it when necessary.
+
+`useCallback(function, dependencies)`
+
+- This hook follows a very simple pattern for utilization. It takes two arguments: the function you want to memoize, and the dependencies array.
+- The first argument is the function you want to memoize.
+The second argument is an array of dependencies. The elements in this array are the values on which the function to be memoized depends. - If any of these values change, the function will be recreated.
+- **Note, if you omit the dependencies array, the function will be re-defined on every render.**
+- 
