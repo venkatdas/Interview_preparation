@@ -175,3 +175,69 @@ export default ReactMemo;
 The second argument is an array of dependencies. The elements in this array are the values on which the function to be memoized depends. - If any of these values change, the function will be recreated.
 - **Note, if you omit the dependencies array, the function will be re-defined on every render.**
 - 
+```js
+import React, { memo, useCallback, useState } from "react";
+
+const UseCallback = memo(
+  ({ label, onClick }) => {
+    console.log(`${label} button renders`);
+    return (
+      <div>
+        <h1>..</h1>
+        <button onClick={onClick}>{label}</button>
+      </div>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Log the previous and next props to understand what is being compared
+    console.log("Comparing props:", prevProps, nextProps);
+
+    // Check if 'label' props are the same
+    const isLabelEqual = prevProps.label === nextProps.label;
+    console.log(
+      `Label comparison: ${prevProps.label} === ${nextProps.label} => ${isLabelEqual}`
+    );
+
+    // Check if 'onClick' function references are the same
+    const isOnClickEqual = prevProps.onClick === nextProps.onClick;
+    console.log(
+      `onClick comparison: prevProps.onClick === nextProps.onClick => ${isOnClickEqual}`
+    );
+
+    // Return true if both 'label' and 'onClick' are equal (no re-render needed)
+    return isLabelEqual && isOnClickEqual;
+  }
+);
+
+export default UseCallback;
+```
+
+
+```js
+import React, { useCallback } from "react";
+import "./App.css";
+import { useState } from "react";
+import UseCallback from "./hooks/UseCallback";
+function App() {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []);
+  const decrementCount = useCallback(() => {
+    setCount((c) => c - 1);
+  }, []);
+  return (
+    <div>
+      <p>useCallback Example</p>
+      <h1>Count: {count}</h1>
+      <UseCallback label="increment" onClick={incrementCount} />
+      <UseCallback label="decrement" onClick={decrementCount} />
+    </div>
+  );
+}
+
+export default App;
+
+```
+
