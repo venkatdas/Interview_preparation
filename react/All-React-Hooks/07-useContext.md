@@ -65,3 +65,118 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+
+
+- Example for theme Changing when clicking on button
+
+1) Creating the context
+
+```js
+import { createContext } from "react";
+const ThemeContext = createContext("");
+
+export default ThemeContext;
+
+```
+2) Creating provider
+
+```js
+import React, { useState } from "react";
+
+import ThemeContext from "./ThemeContext";
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? "dark" : "light"));
+  };
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export default ThemeProvider;
+```
+
+3) 
+
+```js
+import React, { useContext } from 'react'
+import ThemeContext from '../context/ThemeContext'
+const ThemeButton = () => {
+    const {theme,toggleTheme} = useContext(ThemeContext)
+  return (
+    <div>
+      <button
+        onClick={toggleTheme}
+        style={{
+          backgroundColor: theme === "light" ? "#FFF" : "#333",
+          color: theme === "light" ? "#333" : "#FFF",
+        }}
+      >
+        Toggle Theme
+      </button>
+    </div>
+  );
+}
+
+export default ThemeButton
+```
+
+
+```js
+
+import React, { useCallback, useContext } from "react";
+import "./App.css";
+import { useState } from "react";
+import UseCallback from "./hooks/UseCallback";
+import Usememo from "./hooks/Usememo";
+import AnotherUseMemo from "./hooks/AnotherUseMemo";
+import ThemeButton from "./components/ThemeButton";
+import ThemeContext from "./context/ThemeContext";
+function App() {
+
+  const {theme }= useContext(ThemeContext)
+  
+
+   const appStyle = {
+     backgroundColor: theme === "light" ? "#FFF" : "#333",
+     color: theme === "light" ? "#333" : "#FFF",
+     minHeight: "100vh", // Makes sure the div takes at least the whole height of the viewport
+     display: "flex",
+     flexDirection: "column",
+     alignItems: "center",
+     justifyContent: "center",
+   };
+  return (
+    <div style={appStyle}>
+      <ThemeButton />
+    </div>
+  );
+}
+
+export default App;
+```
+
+
+```js
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import ThemeProvider from "./context/ThemeProvider.jsx";
+ReactDOM.createRoot(document.getElementById("root")).render(
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>,
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
+);
+
+```
