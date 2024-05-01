@@ -3,6 +3,8 @@
 - In React, the terms "ref" and "forward ref" refer to techniques used to directly access DOM nodes or React components from within the component tree.
 - They're often used when you need to manage focus, select text, or perform animations
 
+- ref is used to get a reference to a DOM element or a class component in React. You create a ref using React.createRef() in class components or useRef() in functional components. Once created, you can attach this ref to a React element via the ref attribute. The element can then be accessed directly through the ref’s current property.
+
 
 ```js
 import React, { useEffect } from "react";
