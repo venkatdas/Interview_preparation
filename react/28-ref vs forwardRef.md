@@ -50,3 +50,12 @@ const UseRef = () => {
 export default UseRef;
 ``` 
 
+
+- **When to use ForwardRef**
+
+- Ref forwarding is a feature that lets some components take a ref they receive, and pass it further down to a child.
+
+- You should use forwardRefs when you need to pass a ref through a component to one of its children. This is typically necessary when you are creating reusable components that need access to the DOM element, or when you are integrating with external APIs that require a ref.
+
+- 
+
