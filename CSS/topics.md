@@ -187,3 +187,138 @@ p {
 
 ```
 
+## 7. CSS selectors
+
+- CSS selectors are patterns used to select HTML elements in order to apply styles to them.
+
+    **Types of selectors**
+
+```js
+/* Selects all paragraphs */
+p {
+    color: blue;
+}
+
+/* Selects elements with class 'highlight' */
+.highlight {
+    background-color: yellow;
+}
+
+/* Selects elements with id 'header' */
+#header {
+    font-size: 24px;
+}
+```
+
+
+- Type Selectors: These target elements based on their HTML tag (e.g., div, p).
+- Class Selectors: These target elements based on their class attribute (e.g., .class-name).
+- ID Selectors: These target elements based on their ID attribute (e.g., #id-name).
+
+- Attribute Selectors: These target elements based on the presence or value of an attribute (e.g., [type="text"]).This group of selectors gives you different ways to select elements based on the presence of a certain attribute on an element:
+
+- Pseudo-class Selectors: These target elements based on their state (e.g., :hover, :checked).
+- Pseudo-element Selectors: These target specific parts of an element (e.g., ::before, ::after).
+- Universal Selector: This targets any element (e.g., *).
+- Combinators and Descendant Selectors: These define relationships between elements (e.g., >, +, ~, and whitespace).
+
+**Pseudo Class Example**
+
+
+- Pseudo-classes are keywords that can be added to selectors in CSS to target specific states or elements.
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Styling the list items */
+    li {
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    /* Styling the even list items using :nth-child(even) pseudo-class */
+    li:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Styling the first list item using :first-child pseudo-class */
+    li:first-child {
+      font-weight: bold;
+    }
+
+    /* Styling the last list item using :last-child pseudo-class */
+    li:last-child {
+      border-bottom: 2px solid #333;
+    }
+
+    /* Styling the hovered list item using :hover pseudo-class */
+    li:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+    <li>Item 5</li>
+  </ul>
+
+</body>
+</html>
+```
+
+
+- **Pseudo Element Example**
+Pseudo-elements in CSS allow you to style a specific part of an element.
+
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Styling the first line of each list item */
+    li::first-line {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Styling the first letter of each list item */
+    li::first-letter {
+      font-size: 150%;
+      color: #900;
+    }
+
+    /* Styling the marker of the list item (e.g., the bullet or number) */
+    li::marker {
+      content: "•"; /* Custom marker content */
+      color: #ff4500; /* Custom marker color */
+      margin-right: 5px; /* Add some spacing between the marker and the text */
+    }
+  </style>
+</head>
+<body>
+
+  <ul>
+    <li>Item 1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+    <li>Item 2 - Fusce tincidunt, justo eget ultrices rhoncus, ligula quam congue lacus.</li>
+    <li>Item 3 - Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</li>
+  </ul>
+
+</body>
+</html>
+```
+
+
+
