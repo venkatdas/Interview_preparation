@@ -135,3 +135,55 @@
 }
 ```
 
+
+## 6. How do you include CSS in your HTML document?
+
+**1. Inline CSS**
+- Inline CSS involves adding style directly within an HTML element using the style attribute.
+- This method is useful for quick, one-off styling of individual elements but is generally not recommended for larger projects because it mixes content with presentation and can be hard to maintain.
+```js
+<p style="color: red;">This text will be red.</p>
+
+```
+
+**2.Internal (Embedded) CSS**
+
+- Internal CSS is written within a <style> tag in the <head> section of the HTML document. This method is suitable for styles that are specific to a single document and allows you to style elements without altering the HTML structure.
+
+
+```js
+<head>
+  <style>
+    p {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <p>This text will be blue.</p>
+</body>
+
+```
+
+**3. External CSS**
+
+- External CSS is the most common and recommended method for including CSS, especially in larger projects. Styles are maintained in separate CSS files which are linked to the HTML document using the <link> tag in the <head> section.
+- This method keeps content and presentation separate, making the HTML and CSS easier to read and maintain.
+
+```js
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <p>This text will be styled according to the styles.css file.</p>
+</body>
+
+
+//style.css
+
+p {
+  color: green;
+}
+
+```
+
