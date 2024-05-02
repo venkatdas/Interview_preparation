@@ -452,3 +452,150 @@ ___________________
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/42b3a1ef-1d8a-4f32-8e74-09a9ba21f274)
 
+
+
+**3.Absolute**
+
+- Absolutely! When an element is set to position: absolute; in CSS, it is removed from the normal document flow, and instead positioned relative to its nearest positioned ancestor. If no such ancestor exists, it positions itself relative to the initial containing block (usually the <html> element).
+
+
+- **Removed from Normal Flow:** The element does not affect the positioning of other elements nor is it affected by them. This means it doesn't take up space where it would normally be in the document flow.
+- **Positioned Relative to Nearest Positioned Ancestor:** If an ancestor element has a position property set to anything other than static (e.g., relative, absolute, fixed), the absolutely positioned element will position itself based on the top, right, bottom, and left properties relative to this ancestor.
+
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Absolute Positioning Example</title>
+<style>
+  .relative-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background-color: lightblue;
+    border: 2px solid black;
+  }
+  .absolute-box {
+    position: absolute;
+    top: 50px;
+    left: 70px;
+    width: 100px;
+    height: 100px;
+    background-color: lightcoral;
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+<div class="relative-container">
+  This is a relatively positioned container.
+  <div class="absolute-box">Absolutely positioned box</div>
+</div>
+</body>
+</html>
+```
+
+- In this example
+
+- The .relative-container is a <div> with position: relative;. This doesn’t change its position in the document flow, but it becomes a reference point for any absolutely positioned child elements.
+- The .absolute-box is a <div> with position: absolute; and positioned 50px from the top and 70px from the left of its parent .relative-container.
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/7b5b0812-8e35-4315-96f1-d5f0455a866c)
+
+
+**4.fixed** 
+
+- Positioned relative to the viewport, which means it always stays in the same place even if the page is scrolled.
+- Ignores the normal flow of the document.
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fixed Positioning Example</title>
+<style>
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: navy;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid yellow;
+  }
+  .content {
+    margin-top: 100px; /* Give enough space to see content below fixed header */
+    height: 2000px; /* To demonstrate scrolling */
+    background-color: lightgrey;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+  <div class="fixed-header">Fixed Header - Always Visible</div>
+  <div class="content">
+    Scroll down to see the effect of the fixed header.
+  </div>
+</body>
+</html>
+```
+- The .fixed-header div has position: fixed;, which keeps it at the top of the viewport at all times. This div acts as a header that remains visible as you scroll through the page.
+- The .content div has enough margin-top to ensure it starts below the header and extends far enough to allow for scrolling. This setup illustrates how the fixed header stays in place while the content moves beneath it.
+
+
+
+**5.sticky**
+
+
+- Sticky positioning in CSS is a powerful feature that combines aspects of both relative and fixed positioning. An element with position: sticky; behaves like a relatively positioned element until it reaches a certain point during scrolling, at which point it becomes fixed.
+- This is typically used for headers, navigation bars, or any component you want to remain visible as you scroll past a certain point.
+
+**How It Works:**
+- Relatively Positioned: Initially, the element behaves like it's relatively positioned.
+- Becomes Fixed: As you scroll and the element reaches a specified threshold (defined by top, right, bottom, or left), it "sticks" in place and behaves like it's fixed positioned.
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sticky Positioning Example</title>
+<style>
+  body, html {
+    height: 2000px; /* Ensures there's enough room to scroll */
+    margin: 0;
+    padding: 0;
+  }
+  .sticky-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px; /* Distance from the top of the viewport */
+    background-color: yellow;
+    padding: 10px;
+    width: 200px;
+    height: 300px;
+    border: 3px solid green;
+  }
+  .content {
+    width: 300px;
+    float: right;
+    padding: 10px;
+    background-color: lightblue;
+  }
+</style>
+</head>
+<body>
+  <div class="sticky-sidebar">I stick as you scroll!</div>
+  <div class="content">Lots of content here to scroll through. Keep scrolling to see the sticky element in action. This content is here to make sure there's enough to scroll through. Scroll down and notice how the yellow sidebar sticks to the top after you scroll 20px down.</div>
+</body>
+</html>
+```
+
+- The .sticky-sidebar is styled with position: sticky; and top: 20px;, which means it will scroll with the content until the viewport’s top edge reaches 20 pixels above the sidebar, at which point it will stick and remain visible as you continue to scroll.
+- The .content div is just regular content that makes the page tall enough to scroll. It’s floated to the right to allow the sticky sidebar to show clearly on the left.
+
