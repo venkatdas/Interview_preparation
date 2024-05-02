@@ -89,3 +89,49 @@
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/d7c1fda8-63f9-4ca7-ba97-ca96e410f83e)
 
 ## 3. CSS Position
+
+
+## 4. Flexbox:
+
+- Flexbox is a layout model that allows design in a more efficient and predictable way.
+
+
+## 5. How to center a div using flexbox
+
+- To center a <div> element using CSS Flexbox, you can follow these steps:
+
+
+- **Set the Container to Display Flex:** Apply display: flex; to the container element that holds the <div> you want to center. This makes it a flex container and allows you to use the flex properties on its children.
+- **Align Items Vertically:** Use align-items: center; on the flex container. This aligns the flex items (including your <div>) in the center of the container along the cross axis, which is vertical by default.
+- **Justify Content Horizontally:** Apply justify-content: center; on the flex container to center the flex items along the main axis, which is horizontal by default.
+
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      Centered content
+  </div>
+
+  </body>
+</html>
+
+
+//CSS
+
+.container {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  height: 100vh; /* Optional: takes full viewport height */
+}
+```
+
