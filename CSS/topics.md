@@ -599,3 +599,51 @@ ___________________
 - The .sticky-sidebar is styled with position: sticky; and top: 20px;, which means it will scroll with the content until the viewport’s top edge reaches 20 pixels above the sidebar, at which point it will stick and remain visible as you continue to scroll.
 - The .content div is just regular content that makes the page tall enough to scroll. It’s floated to the right to allow the sticky sidebar to show clearly on the left.
 
+            **OR**
+
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sticky Positioning Example</title>
+<style>
+  body, html {
+    height: 100%; /* Makes sure the HTML and Body are full height */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  div.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0; /* Set the sticky element to stay at the top of the viewport */
+    padding: 5px;
+    background-color: #cae8ca; /* Light green background */
+    border: 2px solid #4CAF50; /* Green border */
+  }
+  .content {
+    padding-bottom: 2000px; /* Provides enough height to scroll */
+    padding: 10px;
+    background-color: #fff; /* White background for content */
+    border: 1px solid #ddd; /* Light grey border */
+  }
+</style>
+</head>
+<body>
+
+<p>Try to <b>scroll</b> inside this frame to understand how sticky positioning works.</p>
+
+<div class="sticky">I am sticky!</div>
+
+<div class="content">
+  <p>In this example, the sticky element sticks to the top of the page (top: 0), when you reach its scroll position.</p>
+  <p>Scroll back up to remove the stickyness.</p>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <p>Some more text to ensure there's ample scrolling space. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+</body>
+</html>
+```
