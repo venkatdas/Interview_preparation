@@ -227,6 +227,24 @@ p {
 
 - Pseudo-classes are keywords that can be added to selectors in CSS to target specific states or elements.
 
+
+- A pseudo-class is a selector that selects elements that are in a specific state, e.g. they are the first element of their type, or they are being hovered over by the mouse pointer.
+
+  **Example**
+
+- Let's look at a simple example. If we wanted to make the first paragraph in an article larger and bold, we could add a class to that paragraph and then add CSS to that class, as shown in the first example below:
+
+  ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/b1a5b34b-bc91-459b-9d0a-0f2df4bdc0c1)
+
+- As per above Image we have applied a simple class then we have applied styles to that. This is working fine but if we have aneother extra para that need to be added top of the document then, We'd need to move the class over to the new paragraph. Instead of adding the class,
+- we could use the :first-child pseudo-class selector — this will always target the first child element in the article, and we will no longer need to edit the HTML
+
+```jsarticle p:first-child {
+  font-size: 120%;
+  font-weight: bold;
+}
+```
+
 ```js
 <!DOCTYPE html>
 <html lang="en">
