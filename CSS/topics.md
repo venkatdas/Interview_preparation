@@ -298,7 +298,22 @@ p {
 - **Pseudo Element Example**
 Pseudo-elements in CSS allow you to style a specific part of an element.
 
+- Pseudo-elements behave in a similar way.
+- However, they act as if you had added a whole new HTML element into the markup, rather than applying a class to existing elements.
 
+- Pseudo-elements start with a double colon ::. ::before is an example of a pseudo-element.
+
+
+**Use-case scenario**
+
+- For example, if you wanted to select the first line of a paragraph you could wrap it in a <span> element and use an element selector; however, that would fail if the number of words you had wrapped were longer or shorter than the parent element's width. As we tend not to know how many words will fit on a line — as that will change if the screen width or font-size changes — it is impossible to robustly do this by adding HTML.
+
+- **That is the reason we have to use  The ::first-line pseudo-element selector will do this for you reliably — if the number of words increases or decreases it will still only select the first line.**
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/c0ba8755-9cc7-4575-b835-e41f35c458f7)
+
+___________________
+**Example 2**
 ```js
 <!DOCTYPE html>
 <html lang="en">
@@ -337,6 +352,7 @@ Pseudo-elements in CSS allow you to style a specific part of an element.
 </body>
 </html>
 ```
+
 
 
 
