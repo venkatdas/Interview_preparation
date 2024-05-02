@@ -29,6 +29,8 @@
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/d8b2aefc-3064-489f-85d6-f62d56804928)
 
+- Applying a different color directly to the margin in CSS is not possible because margins are always transparent and do not take a background color. 
+
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/3089a252-3bd4-467a-a459-35e301d92a6b)
 
