@@ -651,6 +651,13 @@ ___________________
 
 ## 8. CSS Specificity
 
+
+
+
+
+**If there are two or more CSS rules that point to the same element, the selector with the highest specificity value will "win", and its style declaration will be applied to that HTML element.
+Think of specificity as a score/rank that determines which style declaration is ultimately applied to an element.**
+
 - CSS specificity is a crucial concept when working with CSS as it determines which styles are applied to elements based on the rules defined. Here’s a breakdown of how it works and how to calculate it:
 
 **What is CSS Specificity?**
@@ -681,3 +688,97 @@ ___________________
 - c = 2 (two class selectors: .menu, .active)
 - d = 2 (two type selectors: li, a)
 - The specificity would be calculated as 0,1,2,2.
+
+
+**Example**
+
+- In this example, we have used the "p" element as selector, and specified a red color for this element. **The text will be red:**
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <p>Hello World!</p>
+  </body>
+</html>
+
+//css
+p {
+  color: red;
+}
+```
+**Example 2**
+- In this example, we have added a class selector (named "test"), and specified a green color for this class. The text will now be green (even though we have specified a red color for the element selector "p"). This is because the class selector is given higher priority:
+
+```js
+ <body>
+    <p class="test">Hello World!</p>
+  </body>
+
+.test {
+  color: green;
+}
+p {
+  color: red;
+}
+```
+
+**Example 3**
+
+- In this example, we have added the id selector (named "demo"). The text will now be blue, because the id selector is given higher priority:
+
+```js
+<html>
+<head>
+  <style>
+    #demo {color: blue;}
+    .test {color: green;}
+    p {color: red;}
+  </style>
+</head>
+<body>
+
+<p id="demo" class="test">Hello World!</p>
+
+</body>
+</html>
+```
+
+**Example 4**
+
+- In this example, we have added an inline style for the "p" element. The text will now be pink, because the inline style is given the highest priority:
+
+```js
+<html>
+<head>
+  <style>
+    #demo {color: blue;}
+    .test {color: green;}
+    p {color: red;}
+  </style>
+</head>
+<body>
+
+<p id="demo" class="test" style="color: pink;">Hello World!</p>
+
+</body>
+</html>
+```
+
+**Specificity Hierarchy**
+
+- Every CSS selector has its place in the specificity hierarchy.
+
+- There are four categories which define the specificity level of a selector:
+
+- `Inline styles - Example: <h1 style="color: pink;">`
+- IDs - Example: #navbar
+- Classes, pseudo-classes, attribute selectors - Example: .test, :hover, [href]
+- Elements and pseudo-elements - Example: h1, ::before
