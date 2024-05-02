@@ -7,20 +7,28 @@
 
 ```js
   <body >
-
-      <div class="box">Box 1</div>
-     
-  
+    <div class="box">
+      <div class="content">This is some content!</div>
+    </div>
   </body>
 
 .box {
   width: 300px;
-  padding: 60px; /* Space between content and border */
+  padding: 20px; /* Space between content and border */
   border: 5px solid black; /* Border around the padding and content */
-  margin: 20px; /* Space outside the border */
-  background-color: lightblue;
+  margin: 30px; /* Space outside the border */
+  background-color: lightblue; /* This sets the padding color */
 }
+
+.content {
+  background-color: white; /* Background color of the content */
+  height: 100%; /* Ensure it covers the content area */
+}
+
 ```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/d8b2aefc-3064-489f-85d6-f62d56804928)
+
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/3089a252-3bd4-467a-a459-35e301d92a6b)
 
