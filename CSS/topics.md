@@ -647,3 +647,37 @@ ___________________
 </body>
 </html>
 ```
+
+
+## 8. CSS Specificity
+
+- CSS specificity is a crucial concept when working with CSS as it determines which styles are applied to elements based on the rules defined. Here’s a breakdown of how it works and how to calculate it:
+
+**What is CSS Specificity?**
+- CSS specificity is a system that browsers use to decide which CSS property values are the most relevant to an element and, therefore, will be applied. Specificity is calculated when multiple CSS rules could apply to an element and there is a need to determine which rule takes precedence.
+
+**How Does CSS Specificity Work?**
+- When multiple rules point to the same element, the browser follows these steps to determine which one applies:
+
+- Importance: The !important rule takes highest precedence.
+- Specificity: If no rule has the !important declaration, the browser looks at specificity.
+- Source Order: If two competing rules have the same specificity, the later rule in the CSS file will be used.
+
+
+**Calculating Specificity:**
+- Specificity is calculated on a per-selector basis and results in a comma-separated list of values, typically viewed as a set of four numbers (a, b, c, d). Here’s how these values are determined:
+
+- a: This value is 1 if the style is inline, 0 otherwise.
+- b: This is the count of ID selectors in the selector.
+- c: This is the count of class selectors, pseudo-classes, and attribute selectors.
+- d: This is the count of type selectors and pseudo-elements.
+- The universal selector (*), combinators (+, >, ~, , etc.), and negation pseudo-class (:not()) do not affect specificity.
+
+
+`#header .menu li.active a { color: blue; }`
+
+- a = 0 (no inline style)
+- b = 1 (one ID selector: #header)
+- c = 2 (two class selectors: .menu, .active)
+- d = 2 (two type selectors: li, a)
+- The specificity would be calculated as 0,1,2,2.
