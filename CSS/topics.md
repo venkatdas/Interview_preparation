@@ -354,5 +354,101 @@ ___________________
 ```
 
 
+## 8. CSS Position
 
+- In CSS, the position property is used to control the positioning of an element within its containing element. The position property can take several values, each affecting the positioning of the element in different ways.
+- CSS positioning is a fundamental concept that allows **you to control the layout of elements on your web page**.
+
+
+
+**Static Position**
+
+- It's default position does means,
+- Elements are positioned according to the normal flow of the document.
+- top, right, bottom, and left properties have no effect.
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+   <p class="positioned">Static Element </p>
+   <!-- <div class="normal">Normal Box</div> -->
+<!-- <div class="relative">Relatively Positioned Box</div> -->
+
+  </body>
+</html>
+
+//styles.css
+
+.positioned {
+  width: 300px;
+  height: 50px;
+  background-color: yellow;
+  border: 1px solid black;
+  top: 20px;
+  left: 20px;
+  position: static;
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/e5ceadf3-e4ab-4fd1-83d0-5b1e5da9b8c4)
+
+
+
+**2.relative position**
+
+- Positioned relative to its normal(static) position.
+- When you use top, right, bottom, or left, it will be adjusted from its normal position.
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+   <p class="positioned">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only. </p>
+
+   <p></p>
+<div class="relative">he standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form.</div>
+
+  </body>
+</html>
+
+//style
+
+.positioned {
+  width: 90%;
+  height: auto;
+  background-color: yellow;
+  border: 1px solid black;
+  top: 20px;
+  left: 20px;
+  position: static;
+}
+
+.relative {
+  position: relative;
+  top: 40px;
+  left: 70px;
+  width: 200px;
+  height: auto;
+  background-color: lightcoral;
+  border: 1px solid black;
+}
+
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/42b3a1ef-1d8a-4f32-8e74-09a9ba21f274)
 
