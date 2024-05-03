@@ -861,6 +861,5 @@ button {
   height: 80px;
 }
 ```
-
-- ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/eca64bba-4ec0-4306-94ae-3cf05680a56d)
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/eca64bba-4ec0-4306-94ae-3cf05680a56d)
 
