@@ -836,8 +836,10 @@ button {
 <div id="div2"> This is last Div</div>
   </body>
 </html>
+```
 
-//css
+```js
+
 #div1 {
   display: block;
   background-color: red;
@@ -861,5 +863,6 @@ button {
   height: 80px;
 }
 ```
+
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/eca64bba-4ec0-4306-94ae-3cf05680a56d)
 
