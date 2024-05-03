@@ -801,3 +801,15 @@ p {
 <a>
 <img>
 `
+
+**3.inline-block**
+
+- Description: Combines the layout properties of both inline and block elements. The element does not break onto a new line but can have a width and height.
+- Example: Custom button styling.
+
+```js
+button {
+  display: inline-block;
+}
+```
+
