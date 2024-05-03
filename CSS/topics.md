@@ -796,6 +796,7 @@ p {
 **2. display:inline**
 
 - Description: This value makes the element behave like an inline element, meaning it does not start on a new line and only occupies as much width as necessary.
+- Inline elements cant have width and height
 
 `<span>
 <a>
@@ -813,3 +814,50 @@ button {
 }
 ```
 
+
+**Example**
+
+```js
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="div1">This is first div</div>
+    <span id="span1">This is span</span>
+    <img  id="img" src="https://images.unsplash.com/photo-1527903789995-dc8ad2ad6de0?q=80&w=1420&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="df">
+    <span id="span2">This is span 2</span>
+<div id="div2"> This is last Div</div>
+  </body>
+</html>
+
+//css
+#div1 {
+  display: block;
+  background-color: red;
+}
+
+#span1 {
+  display: inline;
+  background-color: cyan;
+}
+#span2 {
+  display: inline;
+  background-color: purple;
+}
+
+#div2 {
+  display: inline-block;
+  background-color: greenyellow;
+}
+#img {
+  width: 80px;
+  height: 80px;
+}
+```
