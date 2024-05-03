@@ -793,7 +793,7 @@ p {
 - Description: This value makes the element behave like a block-level element, occupying the full width available and starting on a new line.
 - Example: <div>, <p>, <h1> - <h6>,<form>,<header>,<footer>,<section>
 
-,**2. display:inline**
+**2. display:inline**
 
 - Description: This value makes the element behave like an inline element, meaning it does not start on a new line and only occupies as much width as necessary.
 - 
