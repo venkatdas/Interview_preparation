@@ -791,7 +791,7 @@ p {
 **1.display:block**
 
 - Description: This value makes the element behave like a block-level element, occupying the full width available and starting on a new line.
-- Example: <div>, <p>, <h1> - <h6>,<form>,<header>,<footer>,<section>
+- `Example: <div>, <p>, <h1> - <h6>,<form>,<header>,<footer>,<section>`
 
 **2. display:inline**
 
