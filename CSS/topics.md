@@ -838,7 +838,7 @@ button {
 </html>
 ```
 
-```js
+`
 
 #div1 {
   display: block;
@@ -862,7 +862,7 @@ button {
   width: 80px;
   height: 80px;
 }
-```
+`
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f936c6ee-b4ea-48d3-9c51-2b3371705725)
 
