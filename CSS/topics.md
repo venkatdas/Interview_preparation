@@ -836,9 +836,7 @@ button {
 <div id="div2"> This is last Div</div>
   </body>
 </html>
-```
 
-`
 
 #div1 {
   display: block;
@@ -862,8 +860,10 @@ button {
   width: 80px;
   height: 80px;
 }
-`
+```
 
-![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f936c6ee-b4ea-48d3-9c51-2b3371705725)
+
+
+- ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/42453ece-6e1e-4e0e-8e86-11f9de51f294)
 
 
