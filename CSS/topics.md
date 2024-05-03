@@ -782,3 +782,18 @@ p {
 - IDs - Example: #navbar
 - Classes, pseudo-classes, attribute selectors - Example: .test, :hover, [href]
 - Elements and pseudo-elements - Example: h1, ::before
+
+
+## 9. CSS Display properties
+
+- **CSS display properties control the layout behavior of elements on a web page.** Here are some of the most commonly used values for the display property and examples of how they might be used:
+
+**1.display:block**
+
+- Description: This value makes the element behave like a block-level element, occupying the full width available and starting on a new line.
+- Example: <div>, <p>, <h1> - <h6>,<form>,<header>,<footer>,<section>
+
+,**2. display:inline**
+
+- Description: This value makes the element behave like an inline element, meaning it does not start on a new line and only occupies as much width as necessary.
+- 
