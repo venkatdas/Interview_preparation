@@ -867,3 +867,47 @@ button {
 - ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/42453ece-6e1e-4e0e-8e86-11f9de51f294)
 
 
+## 10. CSS flex
+
+- If Flexbox is a powerful layout system because it’s a one-dimensional system (meaning that we can work with rows or columns)
+- It makes our life easier to design and build responsive web pages without having to use tricky hacks and a lot of float and position properties in our CSS code.
+
+
+```js
+<div class="container">
+  <div id="one">1</div>
+  <div id="two">2</div>
+  <div id="three">3</div>
+</div>
+
+//css
+.container{
+  display: flex;
+}
+```
+
+
+ ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/afb7b411-c060-4873-816c-f0162dbf78a7)
+
+- In our flex container, we could decide to set a direction for the items in our container. The most frequently used flex directions are row and column. Our corresponding CSS would look like this:
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/33e36512-630e-47e9-b512-939528bb4a8c)
+
+- In some cases, flex-direction could be set to row-reverse or column-reverse. One important thing to note under flex directions is the concept of axes. Depending on the flex direction, we can have a main axis and a cross axis. In the case where the flex-direction is row, the main axis is in the horizontal direction, and the cross axis is in the vertical. The opposite is of the case when the flex-direction is column. This will be useful when we look into aligning:
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/d525153b-bec4-4c79-aff0-f65b76fe61c5)
+
+- Another interesting property is flex-wrap, which lets items in a flex container move on to the next line when there is no more room:
+
+```js
+.container{
+  flex-wrap: wrap | nowrap| wrap-reverse;
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/3940d3e4-d703-4946-9523-369a5489d11d)
+
+
+
+
+
