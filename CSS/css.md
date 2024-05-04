@@ -942,7 +942,67 @@ button {
 
 - CSS Grid is a two-dimensional layout system, we can work with rows and columns together, which means that it opens a lot of different possibilities to build more complex and organized design systems.
 
+```js
+
+<div class="container">
+  <div id="one">1</div>
+  <div id="two">2</div>
+  <div id="three">3</div>
+  <div id="four">4</div>
+  <div id="five">5</div>
+</div>
+
+
+.container {
+  display: grid;
+  grid-template-columns: 60px 60px ;
+  grid-template-rows: auto;
+}
+
+```
+
+- To define a grid container, all you need to do is pass a display: grid property to your block element. Now you have a grid, so you should define how many rows and columns you want.
+- To create rows and columns, we use the grid-template-rows and grid-template-columns properties, and pass values that tell how much our grid items will span through the container:
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/94401745-5372-4f23-87af-8f9a6a2cc145)
+
+- Just like now, Grid also has some properties that let you align items within the container. An example is the justify-self property
+
+
+```js
+
+#one{
+  justify-self: start | end | center | stretch
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/41a2f3be-a5cb-4413-b167-6f937afe6eda)
+
+
+- It is worth noting that justify-self is not the only alignment property that grid has. We could also use justify-content, justify-items, align-items, and align-self. 
+
+- **CSS Grid is for layout; Flexbox is for alignment**
+
+
+**When to use CSS Flexbox**
+
+- You have a small design to implement: Flexbox is ideal when you have a small layout design to implement, with a few rows or a few columns
+- You need to align elements: Flexbox is perfect for that, the only thing we should do is create a flex container using display: flex and then define the flex-direction that we want
+- You need a content-first design : Flexbox is the ideal layout system to create web pages if you don’t know exactly how your content is going to look, so if you want everything just to fit in, Flexbox is perfect for that
+
+**When to use CSS Grid**
+
+
+- You have a complex design to implement
 - 
+
+
+
+
+
+
+
+
 
 
 
