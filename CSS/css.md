@@ -909,5 +909,40 @@ button {
 
 
 
+- The problem with flex-wrap, however, is that when the items wrap, they form their own flex line below the ones above, and so are not perfectly aligned with the items above them. You see that item4 and item5 spread out to fill all the room below the elements above them.
+- To demonstrate this, let’s look at a few alignment-related properties of Flexbox such as align-self and justify-content.
+
+
+```js
+<div id="container">
+  <div id="one">1</div>
+  <div id="two">2</div>
+  <div id="three">3</div>
+  <div id="four">4</div>
+</div>
+
+#one{
+  align-self: flex-start | flex-end | center | stretch 
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/f34d37a7-0a9c-4e97-9e4a-76638814ed58)
+
+- Instead of aligning each individual item, say we wanted to align all items together within the container. For that, we’ll use justify-content.
+
+```js
+.container{
+  justify-content: flex-start | flex-end | center | space-between | space-around
+}
+```
+
+![image](https://github.com/venkatdas/Interview_prep/assets/43024084/9ebe9259-7ccf-4b41-9c89-62d17d49a293)
+
+## 11.CSS Grid
+
+- CSS Grid is a two-dimensional layout system, we can work with rows and columns together, which means that it opens a lot of different possibilities to build more complex and organized design systems.
+
+- 
+
 
 
