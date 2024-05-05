@@ -1018,6 +1018,16 @@ button {
 
 
   
+## 14. How is responsive design different from adaptive design?
+
+**Responsive Design:**
+
+- In this design web designers design the user interface of a website in such a manner that whatever device you are using you can access comfortably web page. if we use a web page on the laptop then it splits into a large view but if you use the same web page on mobile then it synchronizes itself. web designers simply design it by using only HTML & CSS. designer works with the developer for a better user experience.
+
+**Adaptive Design:**
+
+- In this design web designers design the user interface of a website in such a manner that it creates different layouts of the web page for the different devices. so based on the screen size of the device it loads the layout of the page. it creates the different layouts for different devices like screen size as for 320px, 480px, 760px, 960px, 1200px, 1600px. for different sizes of mobile screens, tablet screens, and many more devices it depicts the size of layouts of the screen and displays the content of the page. web designers have to work more because they have to develop six different pages.
+
 
 
 
