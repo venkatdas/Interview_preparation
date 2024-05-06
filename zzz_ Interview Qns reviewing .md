@@ -38,6 +38,7 @@
 29) Post vs put
 30) SOLID Principles
 31) output the longest prefix that is found in the array of arguments
+32)  How the DOM will get updated?
 
 
 ## React Machine Coding
