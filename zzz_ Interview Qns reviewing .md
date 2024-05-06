@@ -38,3 +38,10 @@
 29) Post vs put
 30) SOLID Principles
 31) output the longest prefix that is found in the array of arguments
+
+
+## React Machine Coding
+
+- Take any API url and show the data on the client side
+- How can we achieve the pagination, can you write down the logic
+- How can we achieve infinite scrolling, can you write down the logic
