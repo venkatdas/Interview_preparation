@@ -255,3 +255,50 @@ button.addEventListener(
   <script src="script.js"></script>
 </html>
 ```
+
+
+```js
+
+ const itemList = document.getElementById('listItems');
+
+itemList.addEventListener('click',function(e){
+
+  if(e.target.tagName==='LI'){
+    alert(`clicked on ${e.target.innerHTML}`)
+  }
+  
+})
+```
+
+```css
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  padding: 10px;
+  background-color: lightgray;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: darkgray;
+}
+```
+
+- Event delegation is a technique in JavaScript where instead of attaching event listeners to individual child elements, a single event listener is attached to a parent element. This leverages event propagation (specifically event bubbling) to manage events from multiple child elements.
+- How this Example Works
+
+
+- Parent Selection: The parent <ul> element (itemList) is selected and an event listener is attached to it.
+- Event Listener Function:
+    1) The click event listener uses the event object to identify the specific child <li> that triggered the event.
+    2) event.target provides the exact child element clicked.
+    3) By checking event.target.tagName, only clicks on <li> elements are processed.
+
+
+- Why Use Event Delegation?
+- Performance: Minimizes the number of event listeners attached to individual child elements.
+- Dynamic Elements: Simplifies handling of events for dynamically added or removed child elements.
