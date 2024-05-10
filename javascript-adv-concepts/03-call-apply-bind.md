@@ -198,3 +198,7 @@ const bindraj =college.collegeName.apply(college1,["Hyd","Engineering"])
 console.log(bindraj);
 ```
 
+
+
+- call vs apply: Both invoke a function immediately with a specific this context, but call accepts individual arguments, while apply expects an array.
+- bind: Different from call and apply, bind returns a new function that can be called later, using the bound this value.
