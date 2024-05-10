@@ -1,4 +1,4 @@
-###Synchrnous vs Asynchrnous
+### Synchrnous vs Asynchrnous
 
 
 - Sync
