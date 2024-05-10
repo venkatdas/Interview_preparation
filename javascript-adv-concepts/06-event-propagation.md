@@ -288,6 +288,9 @@ li:hover {
 }
 ```
 
+![image](https://github.com/venkatdas/Interview_preparation/assets/43024084/64742461-0987-4e96-a17a-e9bacd144057)
+
+
 - Event delegation is a technique in JavaScript where instead of attaching event listeners to individual child elements, a single event listener is attached to a parent element. This leverages event propagation (specifically event bubbling) to manage events from multiple child elements.
 - How this Example Works
 
