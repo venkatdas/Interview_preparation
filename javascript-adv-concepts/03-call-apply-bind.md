@@ -161,4 +161,40 @@ person.fullName.apply(person1, ["Oslo", "Norway"]);
 - while the call and apply methods sets the this keyword and calls the function immediately
 
 
+- bind: It returns a new function, permanently binding this and optionally setting up initial arguments.Example:
+
+```js
+function greet(greeting, name) {
+    console.log(`${greeting}, ${name}!`);
+}
+
+const sayHelloToCarol = greet.bind(null, 'Hello', 'Carol');
+sayHelloToCarol(); // Output: Hello, Carol!
+```
+
+
+```js
+
+const college={
+  collegeName: function (city, type) {
+    return (
+      this.name +
+      " is best college from " +
+      this.country +
+      ", " +
+      city +
+      " among " +
+      type
+    );
+    
+  }
+}
+
+const college1={
+  name:"CBIT",
+  country:"India"
+}
+const bindraj =college.collegeName.apply(college1,["Hyd","Engineering"])
+console.log(bindraj);
+```
 
