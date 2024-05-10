@@ -125,3 +125,87 @@ console.log(ages); // Output will vary depending on the current year.
 //(3) [24, 25, 27]
 
 ```
+
+
+
+
+
+3)Mapping IDs to Objects
+- Retrieve objects based on a related field or value, like mapping product IDs to product objects.
+
+
+```js
+const productIDs = [1, 2, 3];
+const products = [
+  { id: 1, name: 'Laptop' },
+  { id: 2, name: 'Phone' },
+  { id: 3, name: 'Tablet' },
+];
+
+// Get product objects from product IDs.
+const matchedProducts = productIDs.map(id => products.find(product => product.id === id));
+
+console.log(matchedProducts);
+// Output:
+// [
+//   { id: 1, name: 'Laptop' },
+//   { id: 2, name: 'Phone' },
+//   { id: 3, name: 'Tablet' }
+// ]
+```
+
+
+_________________
+
+
+
+**.forEach Use Cases**
+
+1) Performing Side Effects
+- Logging, updating an external store, or modifying variables outside the loop.
+- Example:
+
+```js
+const groceries = ['apples', 'bananas', 'milk'];
+
+// Log each grocery item.
+groceries.forEach(item => console.log(`Don't forget to buy ${item}`));
+// Output:
+// Don't forget to buy apples
+// Don't forget to buy bananas
+// Don't forget to buy milk
+```
+
+2) Mutating Elements in Place
+- When modifying the elements directly within the array.
+
+
+```js
+const fruits = ['apple', 'banana', 'cherry'];
+
+// Capitalize all fruit names.
+fruits.forEach((fruit, index, array) => {
+  array[index] = fruit.toUpperCase();
+});
+
+console.log(fruits); // Output: [ 'APPLE', 'BANANA', 'CHERRY' ]
+```
+
+3) Accumulating Results in an External Variable
+
+```js
+const scores = [80, 90, 70, 85, 95];
+let sum = 0;
+
+// Calculate the sum of scores.
+scores.forEach(score => sum += score);
+
+console.log(sum); // Output: 420
+
+```
+
+
+- Use .map when you want to transform an array and return a new one.
+- Use .forEach when you want to apply side effects without needing a return value.
+
+
