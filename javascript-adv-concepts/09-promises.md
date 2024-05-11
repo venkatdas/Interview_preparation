@@ -2,6 +2,9 @@
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/846de6a3-c102-4f4e-8c5b-50a86e75e63a)
 
+![image](https://github.com/venkatdas/Interview_preparation/assets/43024084/72b7f993-3313-4ba5-af29-42f8eebeb76a)
+
+
 
 ```js
 console.log("promise start");
