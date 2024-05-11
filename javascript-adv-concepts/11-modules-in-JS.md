@@ -27,4 +27,34 @@ define(['dep1', 'dep2'], function (dep1, dep2) {
 ```
 ### UMD.
 
-### ESM
+### ESM(ES6)
+
+- Introduced in ES6 (ECMAScript 2015), ES modules are now widely used in modern JavaScript development.
+
+- Named Exports 
+```js
+// mathUtils.js
+export function add(a, b) {
+  return a + b;
+}
+export function subtract(a, b) {
+  return a - b;
+}
+```
+- Default exports
+```js
+// appConfig.js
+const config = { appName: 'MyApp', version: '1.0.0' };
+export default config;
+```
+
+**Importing both**
+
+```js
+// index.js
+import { add, subtract } from './mathUtils.js'; // Named Import
+import config from './appConfig.js'; // Default Import
+
+console.log(add(5, 3)); // Output: 8
+console.log(config.appName); // Output: MyApp
+```
