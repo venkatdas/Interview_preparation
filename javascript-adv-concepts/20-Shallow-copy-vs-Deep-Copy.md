@@ -5,6 +5,15 @@
 - Impure function mutates the original data
 
 
+
+**Shallow Copy**
+
+- Definition: A shallow copy is a copy of the original object that only copies the references to the objects nested within, not the objects themselves. This means that changes to the nested objects in the copy will affect the original object.
+- Use Cases: Useful when you only need to copy the immediate properties, but don’t need to worry about changing nested objects.
+**Examples:**
+- Object.assign() can be used for shallow copying.
+- Using the spread operator (...).
+
 **Ex:**
 
 ```js
@@ -41,6 +50,10 @@ console.log(scoreArray(resultArray,28));
 
 ### Deep Copy
 - what if multiple nested objects are there the above two methods won't work
+
+
+- Definition: A deep copy creates a completely independent clone of the original object, including its nested objects. This way, changes made to nested objects in the copy won't affect the original.
+- Use Cases: Ideal when you need a complete, independent copy of the original object.
 
   ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/8f6ffca6-5600-493c-adcf-99507e1dcb19)
 
