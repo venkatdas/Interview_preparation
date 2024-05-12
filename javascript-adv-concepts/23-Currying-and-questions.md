@@ -150,7 +150,40 @@ console.log(resultVal(2)(3)(4));
 
 
 
+**How above curry function will work**
 
+```js
+function multiply(a, b, c) {
+  return a * b * c;
+}
+
+const curriedMultiply = curry(multiply);
+console.log(curriedMultiply(2)(3)(4)); // Expected output: 24
+```
+
+- Purpose: curry is a higher-order function that converts a normal function into a curried version.
+Parameters:
+- func: The original function that needs to be curried.
+
+**Working Process (Using multiply as an Example)**
+
+1) Function Initialization:
+- curry takes the original function (multiply in this case) and returns a new function called curriedFunc.
+2) Initial Call:
+- curriedFunc is first invoked with a subset of arguments, e.g., resultVal(2).
+- Check:
+  - If the number of arguments provided (1 here) is less than the arity of multiply (3), curriedFunc returns a new function to collect more arguments.
+- This returned function has access to the arguments already collected ([2]).
+3) Subsequent Calls:
+- Second Call:
+- The new function is invoked with another argument, e.g., resultVal(2)(3).
+- Now, curriedFunc is called with [2, 3].
+- If fewer than 3 arguments are still provided (2 here), it returns another function to gather more arguments.
+- Third Call:
+- The final function is called with the last argument, e.g., resultVal(2)(3)(4).
+- curriedFunc is now called with [2, 3, 4].
+3) Final Execution:
+- Once curriedFunc is invoked with the full number of required arguments (3 in this case), it directly calls the original multiply function with all collected arguments, computing:
 
 
 
