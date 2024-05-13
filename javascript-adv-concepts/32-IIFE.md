@@ -38,6 +38,32 @@ console.log(result);  // Output: 5
 
 ```
 
+## IIFE with closure
 
+```js
+const counter = (function() {
+    let count = 0; // This variable is private to the IIFE
+
+    return {
+        increment: function() {
+            count += 1;
+            return count;
+        },
+        decrement: function() {
+            count -= 1;
+            return count;
+        },
+        getCount: function() {
+            return count;
+        }
+    };
+})();
+
+console.log(counter.getCount());  // 0
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.decrement()); // 1
+console.log(counter.getCount());  // 1
+```
 
 
