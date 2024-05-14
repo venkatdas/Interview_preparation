@@ -165,6 +165,11 @@ if(timer) clearTimeout(timer)
 };
 ```
 
+**Explanation**
+
+- The debounce function accepts two parameters: func (the function to execute after the delay) and delay (how long to wait before executing func after the last call).
+- Inside, it uses a variable timeoutId to keep track of the timeout between calls. If the debounced function is invoked again before the delay has elapsed, the previous timeout is cleared (clearTimeout(timeoutId)), and a new timeout is set. This ensures that func is only called once per every delay milliseconds, after the last invocation.
+
 ___________________________
 
 ## Throttile polyfill
