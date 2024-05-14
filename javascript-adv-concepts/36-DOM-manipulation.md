@@ -1,4 +1,4 @@
-`## DOM Manipulation in js
+## DOM Manipulation in js
 
 
 
