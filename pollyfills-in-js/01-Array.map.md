@@ -57,6 +57,7 @@ console.log(mappeddarr);
     let resultArr = [];
 
     for (let i = 0; i < this.length; i++) {
+// this means parent array., parentarray.length
       resultArr.push(callback.call(thisArg, this[i], i, this));
     }
     return resultArr;
