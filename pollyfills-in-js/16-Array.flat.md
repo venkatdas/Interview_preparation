@@ -42,3 +42,43 @@ console.log(nestedArray.flat()); // [1, 2, [3, [4]], 5]
 ```
 
 
+        **OR**
+
+
+
+```js
+// Check for native support
+if (!Array.prototype.flat) {
+  // Define the polyfill
+  Array.prototype.flat = function(depth = 1) {
+    // Recursive flatten function
+    function flatten(arr, depth) {
+      // Base case for recursion
+      if (depth < 1) {
+        return arr.slice();
+      }
+      // Use reduce to accumulate values
+      return arr.reduce((acc, val) => {
+        // Check for nested arrays
+        if (Array.isArray(val)) {
+          // Recursively flatten the array
+          acc.push(...flatten(val, depth - 1));
+        } else {
+          // Concatenate flattened elements
+          acc.push(val);
+        }
+        return acc;
+      }, []);
+    }
+    // Return flattened array
+    return flatten(this, depth);
+  };
+}
+
+// Usage example
+const nestedArray = [1, [2, [3, [4]], 5]];
+console.log(nestedArray.flat()); // [1, 2, [3, [4]], 5]
+console.log(nestedArray.flat(2)); // [1, 2, 3, [4], 5]
+console.log(nestedArray.flat(3)); // [1, 2, 3, 4, 5]
+```
+
