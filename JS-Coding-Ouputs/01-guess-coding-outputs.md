@@ -31,3 +31,23 @@ The callback moved from message queue to the stack since the stack is empty.
 The console.log for B is added to the stack and display on the console.
 
 </details>
+
+
+## 2. 
+
+```js
+console.log(0.1 + 0.2 === 0.3);
+```
+
+<details>
+  <summary> solution</summary>
+
+- false
+- This is due to the float point math problem. Since the floating point numbers are encoded in binary format,
+-  In binary, numbers like 0.1 and 0.2 have repeating fractions, which can't be represented exactly with a finite number of binary digits. When these numbers are added together, the result is not exactly 0.3, but something very close to it (e.g., 0.30000000000000004).
+
+</details>
+
+
+
+
