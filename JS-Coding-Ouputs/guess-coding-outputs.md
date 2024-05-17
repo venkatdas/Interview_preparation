@@ -12,7 +12,7 @@ main();
 ```
 
 <details>
-  <summary output>
+  <summary >
   jfgksdgf
     /summary>
 </details>
