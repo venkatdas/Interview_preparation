@@ -76,4 +76,40 @@ There are 8 falsy values:
 </details>
 
 
+## 4. 
+
+```js
+const numbers = [1, 2, 3];
+numbers[10] = 11;
+console.log(numbers);
+```
+
+<details>
+
+  <summary>solution</summary>
+- When you set a value to an element in an array that exceeds the length of the array, JavaScript creates something called "empty slots". These actually have the value of undefined, but you will see something like:
+
+- [1, 2, 3, empty x 7, 11]
+
+- depending on where you run it (it's different for every browser, node, etc.)
+</details>
+
+
+## 4. 
+
+```js
+[1, 2, 3].map(num => {
+  if (typeof num === 'number') return;
+  return num * 2;
+});
+```
+
+<details><summary>
+  solution
+</summary>
+- [undefined, undefined, undefined]
+- When mapping over the array, the value of num is equal to the element it’s currently looping over. In this case, the elements are numbers, so the condition of the if statement typeof num === "number" returns true. The map function creates a new array and inserts the values returned from the function.
+
+- However, we don’t return a value. When we don’t return a value from the function, the function returns undefined. For every element in the array, the function block gets called, so for each element we return undefined.
+</details>
 
