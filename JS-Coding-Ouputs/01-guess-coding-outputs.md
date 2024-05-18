@@ -49,5 +49,31 @@ console.log(0.1 + 0.2 === 0.3);
 </details>
 
 
+## 3. Which of these values are falsy?
+
+```js
+0;
+new Number(0);
+('');
+(' ');
+new Boolean(false);
+undefined;
+```
+
+<details>
+  <summary>solution</summary>
+There are 8 falsy values:
+
+- undefined
+- null
+- NaN
+- false
+- '' (empty string)
+- 0
+- -0
+- 0n (BigInt(0))
+- Function constructors, like new Number and new Boolean are truthy.
+</details>
+
 
 
