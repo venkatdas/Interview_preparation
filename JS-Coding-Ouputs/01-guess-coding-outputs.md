@@ -146,4 +146,4 @@ sayHi();
 - With the catch statement, we can specify what to do if an exception is thrown in the try block. An exception is thrown: the string 'Hello world!'. e is now equal to that string, which we log. This results in 'Oh an error: Hello world!'.
 </details>
 
-## 7. 
+## 7
