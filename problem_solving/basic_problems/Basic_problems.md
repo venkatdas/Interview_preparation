@@ -377,7 +377,7 @@ c) By creating new array
 
 <details>
   <summary>Solution</summary>
-  ```js
+```js
 let arr = [1, 2, 3, 4, 5];
 arr = [];
 console.log(arr); // []
