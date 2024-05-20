@@ -463,8 +463,8 @@ function fibonacciSeries(n) {
   return series;
 }
 
-console.log(fibonacciSeries(1)); // Outputs: [0, 1, 1, 2, 3]
-console.log(fibonacciSeries(10));
+console.log(fibonacciSeries(1)); // Outputs: [0]
+console.log(fibonacciSeries(10)); // [0, 1,  1,  2,  3, 5, 8, 13, 21, 34 ]
 ```
 </details>
 
