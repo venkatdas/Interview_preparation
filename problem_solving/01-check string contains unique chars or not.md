@@ -3,7 +3,7 @@
 **Approach Taken**
 
 - Initiate Outer Loop: Start looping through each character in the string.
-- Initiate Inner Loop: For each character, start another loop from the next character to the end of the string.
+- Initiate Inner Loop: For each character, start another loop from the next character to the end of the string..
 - Check for Duplicate: Compare the current character with every other character in the inner loop.
 - Return False if Duplicate Found: If any character matches the current character, return false.
 - Return True if No Duplicate: After completing all iterations without finding duplicates, return true.
