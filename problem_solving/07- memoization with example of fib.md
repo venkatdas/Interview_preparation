@@ -37,6 +37,8 @@ function fib(num) {
 }
 ```
 
+
+```js
 const calculateFib = simpleMemoization(fib);
 
 console.log(calculateFib(10)); // 55 , calculate the result
@@ -44,7 +46,7 @@ console.log(calculateFib(10)); //55 return from cache
 console.log(calculateFib(10)); // 55 return from cache
 console.log(calculateFib(11)); // 89 calucalte the result
 console.log(calculateFib(11)); // 89 return from cache
-
+```
 
 
 
