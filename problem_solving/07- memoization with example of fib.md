@@ -71,5 +71,50 @@ console.log(factorialResult(5)); // 120 fetched from cache
 
 ```
 
+              **OR**
+
+
+```js
+// Function to memoize another function
+function memoize(fn) {
+  // Cache object to store results
+  const cache = {};
+
+  // Return a new function that wraps the original function
+  return function (...args) {
+    // Create a unique key for the arguments
+    const key = JSON.stringify(args);
+
+    // Check if the result is in the cache
+    if (cache[key]) {
+      return cache[key];
+    }
+
+    // Call the original function with the arguments
+    const result = fn(...args);
+
+    // Store the result in the cache
+    cache[key] = result;
+
+    return result;
+  };
+}
+
+// Original recursive Fibonacci function
+// This function calculates the nth Fibonacci number
+function fibonacci(n) {
+  // Base case: if n is 0 or 1, return n
+  if (n <= 1) return n;
+  
+  // Recursive case: sum of the two preceding numbers
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Memoized version of the Fibonacci function
+// This version caches results to avoid redundant calculations
+const memoizedFibonacci = memoize(fibonacci);
+
+console.log(memoizedFibonacci(40)); // Much faster than the non-memoized version
+```
 
 
