@@ -17,6 +17,14 @@
 - The useReducer function takes two arguments: a reducer function and an initial state.
 - The reducer function is responsible for updating the state based on the type of action dispatched. It receives the current state and an action object, and it returns the new state.
 
+
+
+- When you use the useReducer hook in a React component, it returns an array with two elements: the current state and the dispatch function.
+
+- Values of [state, dispatch]
+
+
+
 - syntax
 
 ```js
