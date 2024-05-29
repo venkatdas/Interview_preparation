@@ -3,6 +3,9 @@
 - These are all inbuilt methods in react
 - The useEffect hook is used to handle side effects in your component. Side effects are any operations that can affect components outside their scope or that need to persist or change over time, such as data fetching, subscriptions, timers, manually changing the DOM, and more.
 
+- The useEffect hook can be seen as a combination of componentDidMount, componentDidUpdate, and componentWillUnmount in class components.
+
+
 
 ```js
 useEffect(() => {
