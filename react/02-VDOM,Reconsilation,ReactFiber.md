@@ -137,7 +137,48 @@
 - Prior to Fiber, unhandled errors could corrupt the internal state of React and cause the entire application to crash.
 
 
+        **OR**
 
+
+
+- React Fiber is the reimplementation of React’s core algorithm. It was introduced in React 16 to address some limitations of the previous architecture, such as handling complex applications and improving rendering performance.
+
+**Key Concepts**
+
+1. Reconciliation:
+
+- **Old Algorithm:** React’s old reconciliation algorithm (stack reconciler) was synchronous and could not be paused. It was problematic for complex updates, as they could block the main thread and cause performance issues.
+- **Fiber**: React Fiber introduces a more granular approach to reconciliation. It breaks down rendering work into units of work (fibers) that can be paused, resumed, and aborted as needed.
+
+
+2. Fiber Node:
+
+A fiber node is a JavaScript object representing a unit of work. Each fiber corresponds to a React element and tracks information about the component, its state, and its relationship to other fibers.
+Work Loop:
+
+React Fiber introduces a new work loop that prioritizes updates. The work loop allows React to handle high-priority updates first and work on low-priority updates when the main thread is idle.
+Concurrent Mode:
+
+React Fiber enables concurrent mode, allowing React to work on multiple tasks simultaneously. This improves the responsiveness of applications by breaking rendering work into small chunks and distributing it over multiple frames.
+Scheduler:
+
+The scheduler in React Fiber helps manage the prioritization and execution of fibers. It ensures that high-priority tasks, like user interactions, are processed before low-priority tasks, like data fetching.
+
+______________
+
+Motivation and Benefits
+Improved Performance:
+
+By breaking down tasks into smaller units of work and allowing interruptions, React Fiber reduces the risk of blocking the main thread. This results in smoother and more responsive UIs.
+Better Handling of Complex UIs:
+
+Applications with complex and nested components benefit from React Fiber’s ability to manage and prioritize updates more efficiently.
+Enhanced User Experience:
+
+Users experience fewer janky frames and smoother interactions, as React Fiber can pause and resume work, giving priority to tasks that improve the perceived performance.
+New Features:
+
+React Fiber lays the groundwork for new features, such as Suspense and concurrent rendering, which further enhance the development experience and application performance.
 
 
 
