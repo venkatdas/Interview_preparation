@@ -46,3 +46,14 @@
 - Take any API url and show the data on the client side
 - How can we achieve the pagination, can you write down the logic
 - How can we achieve infinite scrolling, can you write down the logic
+
+
+
+
+
+
+
+
+__________________
+
+- An experienced IT professional with 5 years in the industry, specializing in API development and full-stack JavaScript. For the first 3 years, managed and supported an API team, excelling in API optimization. In the past 2 years, transitioned to React and Node.js development, converting REST APIs to GraphQL and utilizing Redux for state management. Proficient in React.js, Node.js, GraphQL, RESTful APIs, and Redux, with strong leadership and problem-solving skills.
