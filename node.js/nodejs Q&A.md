@@ -502,4 +502,80 @@ console.log(copy); // <Buffer 01 02 03 04 05>
 - It's a practical example of converting binary data to a text-based format and then reversing the process,
 
 
+## 20 Add middleware for authentication
 
+
+```js
+
+const express = require("express");
+// const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+
+const app = express();
+const PORT =   4000;
+
+// Secret key for JWT
+const SECRET_KEY = "your_secret_key";
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+
+// In-memory user store (for demonstration purposes)
+const users = [
+  { id: 1, username: "user1", password: "password1" },
+  { id: 2, username: "user2", password: "password2" },
+];
+
+// Middleware to authenticate JWT token
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+app.get('/',(req,res)=>{
+  res.send("Testing route")
+})
+
+// Login route
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(400).send("Username or password is incorrect");
+  }
+
+  const accessToken = jwt.sign(
+    { username: user.username, id: user.id },
+    SECRET_KEY,
+    { expiresIn: "1h" }
+  );
+  res.json({ accessToken });
+});
+
+// Logout route (just a placeholder since JWTs are stateless)
+app.post("/logout", authenticateToken, (req, res) => {
+  // Here we just send a message since JWTs are stateless and cannot be invalidated server-side
+  res.send(`Logout successful for user ${req.user.username}`);
+});
+
+// Protected route
+app.get("/protected", authenticateToken, (req, res) => {
+  res.send(`Hello ${req.user.username}, this is a protected route`);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+```
