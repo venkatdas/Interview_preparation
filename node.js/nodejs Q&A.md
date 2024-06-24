@@ -579,3 +579,90 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 ```
+
+
+## 21. Aneother example using middleware
+
+```js
+
+const express = require("express");
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Logging middleware
+const logger = (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+};
+
+// Authentication middleware
+const authenticate = (req, res, next) => {
+  console.log("Headers:", req.headers);
+    const apiKey = req.headers["apikey"] || req.headers["apiKey"];
+  // const { apiKey } = req.headers;
+  if (apiKey === "secret") {
+    next();
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+};
+
+// Validation middleware for user creation
+const validateUserCreation = (req, res, next) => {
+  const { name, email } = req.body;
+  if (!name || !email) {
+    return res.status(400).send("Name and email are required");
+  }
+  next();
+};
+
+// Apply the logger middleware globally
+app.use(logger);
+
+// Apply the authenticate middleware to specific routes
+app.use("/user", authenticate);
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Welcome to the Home Page!");
+});
+
+app.get("/about", (req, res) => {
+  res.send("Welcome to the About Page!");
+});
+
+app.get("/contact", (req, res) => {
+  res.send("Welcome to the Contact Page!");
+});
+
+app.get("/user/:username", (req, res) => {
+  const username = req.params.username;
+  res.send(`Welcome to the profile of ${username}`);
+});
+
+// POST route with validation middleware
+app.post("/user", validateUserCreation, (req, res) => {
+  const user = req.body;
+  res.send(`User ${user.name} created!`);
+});
+
+app.put("/user/:username", (req, res) => {
+  const username = req.params.username;
+  const updatedUser = req.body;
+  res.send(`User ${username} updated to ${updatedUser.name}`);
+});
+
+app.delete("/user/:username", (req, res) => {
+  const username = req.params.username;
+  res.send(`User ${username} deleted!`);
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
+```
