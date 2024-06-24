@@ -666,3 +666,66 @@ app.listen(port, () => {
 });
 
 ```
+
+
+## 22. For Routes
+
+
+```js
+
+
+const express = require("express");
+const app = express();
+const port = 5000;
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Welcome t the page");
+});
+
+app.get('/about',(req,res)=>{
+  res.send('welocme to the about page')
+})
+
+app.get("/contact", (req, res) => {
+  res.send("Welcome to the Contact Page!");
+});
+
+app.get('/user/:username',(req,res)=>{
+  const {username}= req.params;
+  res.send(`welcome to the profile of ${username}`)
+})
+
+app.post('/user',(req,res)=>{
+  const user= req.body;
+  console.log(user);
+
+  res.send(`User ${user.name} created!`);
+})
+
+app.put("/user/:username",(req,res)=>{
+  const username = req.params.username;
+  const updatedUsername= req.body
+   res.send(`User ${username} updated to ${updatedUsername.name}`);
+});
+
+app.delete("/user/:username", (req, res) => {
+  const username = req.params.username;
+  // In a real application, you would delete the user from the database here
+  res.send(`User ${username} deleted!`);
+});
+app.listen(port, () => {
+  console.log(`listening on the ${port}`);
+});
+
+```
+
+
+
+
+
+
+
+
+
+
+
