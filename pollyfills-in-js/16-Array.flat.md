@@ -82,3 +82,28 @@ console.log(nestedArray.flat(2)); // [1, 2, 3, [4], 5]
 console.log(nestedArray.flat(3)); // [1, 2, 3, 4, 5]
 ```
 
+______________________________________________________________
+
+## WITH DEPTH EFFICIENTLY WORKING (CONSIDER)
+
+```js
+Array.prototype.myFlat = function (depth = 1) {
+  function flatten(arr, depth) {
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i]) && depth > 0) {
+        result = result.concat(flatten(arr[i], depth - 1));
+      } else {
+        result.push(arr[i]);
+      }
+    }
+    return result;
+  }
+
+  return flatten(this, depth);
+};
+
+// Test the custom myFlat method
+console.log([1, 2, [3, 4, [5, 6]]].myFlat(1)); // [1, 2, 3, 4, [5, 6]]
+console.log([1, 2, [3, 4, [5, 6]]].myFlat(2)); // [1, 2, 3, 4, 5, 6]
+```
