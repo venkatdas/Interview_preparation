@@ -60,4 +60,43 @@ Array.prototype.myReduce = function (callback, initialValue) {
 };
 ```
 
+____________
+
+```js
+if (!Array.prototype.myReduce) {
+  Array.prototype.myReduce = function (callback, initialValue) {
+    // Ensure callback is a function
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    }
+
+    let accumulator = initialValue;
+    let startIndex = 0;
+
+    // If initialValue is not provided, use the first element as the initial value
+    if (accumulator === undefined) {
+      if (this.length === 0) {
+        throw new TypeError('Reduce of empty array with no initial value');
+      }
+      accumulator = this[0];
+      startIndex = 1;
+    }
+
+    // Iterate over the array
+    for (let i = startIndex; i < this.length; i++) {
+      accumulator = callback(accumulator, this[i], i, this);
+    }
+
+    return accumulator;
+  };
+}
+
+// Example usage:
+let arr = [1, 2, 3, 4];
+
+let sum = arr.myReduce((acc, val) => acc + val);
+
+console.log(sum); // Output: 10
+```
+
 
