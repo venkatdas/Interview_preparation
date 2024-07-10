@@ -589,3 +589,47 @@ function reverseNumber(number) {
 console.log(reverseNumber(-123)); // Output: -321
 ```
 </details>
+
+
+
+## 18. Find the third largest element in the array
+
+<details>
+  <summary>Solution</summary>
+
+```js
+function findThirdLargest(arr) {
+  if (arr.length < 3) {
+    throw new Error("Array should have at least three elements");
+  }
+
+  // Initialize the first, second, and third largest elements
+  let first = -Infinity;
+  let second = -Infinity;
+  let third = -Infinity;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > first) {
+      // Update first, second, and third
+      third = second;
+      second = first;
+      first = arr[i];
+    } else if (arr[i] > second && arr[i] < first) {
+      // Update second and third
+      third = second;
+      second = arr[i];
+    } else if (arr[i] > third && arr[i] < second) {
+      // Update third
+      third = arr[i];
+    }
+  }
+
+  return third;
+}
+
+// Example usage:
+const arr = [12, 13, 1, 10, 34, 16];
+const thirdLargest = findThirdLargest(arr);
+console.log(thirdLargest);  // Output: 13
+```
+</details>
