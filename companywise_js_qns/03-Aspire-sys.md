@@ -16,4 +16,7 @@
 14. error 400 vs 404
 15. scenario: I have the application where user to login with username and password: if u enter more than 3 times wring details , 
     - then we have to halt the page for 10 minuites, please try again after 10 minuites, how do u acheive this.
-16. 
+16. Which authentication did u used in your appllication
+17. How do u build yopur application
+18. Explain JWT
+19. 
