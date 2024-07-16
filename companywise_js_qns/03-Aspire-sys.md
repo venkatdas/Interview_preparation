@@ -19,4 +19,4 @@
 16. Which authentication did u used in your appllication
 17. How do u build yopur application
 18. Explain JWT
-19. 
+19. Strict mode component react
