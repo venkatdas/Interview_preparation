@@ -13,4 +13,6 @@
 - Test cases example component approach, how wold you write
 - which databse did u used in your project
 - is your project monolithic or microfront end
-- 
+- which authentication did u used,(JWT) explanation
+- which library did u used fetch or axios
+
