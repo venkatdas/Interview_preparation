@@ -1,0 +1,16 @@
+- When to use Redux
+- How would you acheive routing in react
+- react performance optimization
+- react name input name display code
+- example for react functinal component props code
+- caching mechanisams overview
+- useHistory, useLocation
+- why graphql over rest API
+- if node js single threaded how it supports multiple requests
+- node js streams and clusters
+- did u done the crud operations
+- design patterns in front end
+- Test cases example component approach, how wold you write
+- which databse did u used in your project
+- is your project monolithic or microfront end
+- 
