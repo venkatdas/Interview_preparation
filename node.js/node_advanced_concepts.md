@@ -333,5 +333,95 @@ async function readFile() {
 readFile();
 ```
 
+## express.Router
+- Setup
+![image](https://github.com/user-attachments/assets/02a5197d-9c7d-4f3f-b161-3c4d15b54663)
 
 
+
+```js
+routes/users.js
+
+const express = require('express');
+const userRoutes = express.Router();
+
+// Define routes for the user router
+userRoutes.get('/', (req, res) => {
+  res.send('Get all users');
+});
+
+userRoutes.post('/', (req, res) => {
+  res.send('Create a new user');
+});
+
+userRoutes.get('/:id', (req, res) => {
+  res.send(`Get user with ID ${req.params.id}`);
+});
+
+userRoutes.put('/:id', (req, res) => {
+  res.send(`Update user with ID ${req.params.id}`);
+});
+
+userRoutes.delete('/:id', (req, res) => {
+  res.send(`Delete user with ID ${req.params.id}`);
+});
+
+module.exports = userRoutes;
+```
+
+
+```js
+
+routes/products.js
+
+const express = require('express');
+const productRoutes = express.Router();
+
+// Define routes for the product router
+productRoutes.get('/', (req, res) => {
+  res.send('Get all products');
+});
+
+productRoutes.post('/', (req, res) => {
+  res.send('Create a new product');
+});
+
+productRoutes.get('/:id', (req, res) => {
+  res.send(`Get product with ID ${req.params.id}`);
+});
+
+productRoutes.put('/:id', (req, res) => {
+  res.send(`Update product with ID ${req.params.id}`);
+});
+
+productRoutes.delete('/:id', (req, res) => {
+  res.send(`Delete product with ID ${req.params.id}`);
+});
+
+module.exports = productRoutes;
+```
+
+
+- Import them with any variable name
+```js
+const express = require('express');
+const app = express();
+
+// Import the user and product routes
+const userRouter = require('./routes/user');
+const productRouter = require('./routes/product');
+
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// Mount the routers on specific paths
+app.use('/users', userRouter);
+app.use('/products', productRouter);
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+```
