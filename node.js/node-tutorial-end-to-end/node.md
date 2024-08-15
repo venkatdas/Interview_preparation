@@ -10,3 +10,13 @@
 
 ## EPI-4
 - **Module.export&require**
+- By default modules are protected means moduled protected their variables and functions from leaking
+
+- To export multiple modules we have to use object like this
+  
+```js
+
+module.exports = {sum:sum,
+
+y:y}
+```
