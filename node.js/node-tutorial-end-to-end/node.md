@@ -70,4 +70,7 @@ _______________________
 
 ![image](https://github.com/user-attachments/assets/37af8005-43fb-4892-9208-6f30de96cd2b)
 
+- Timeout
+
+![image](https://github.com/user-attachments/assets/c3a47602-d659-46b8-b092-340cbd2b7796)
 
