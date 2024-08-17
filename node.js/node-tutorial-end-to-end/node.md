@@ -66,4 +66,7 @@ _______________________
 
 ![image](https://github.com/user-attachments/assets/a230d389-62d7-488e-bc8d-8698ef696718)
 
+- Blocking code
+
+![Uploading image.png…]()
 
