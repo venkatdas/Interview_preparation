@@ -68,5 +68,6 @@ _______________________
 
 - Blocking code
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/37af8005-43fb-4892-9208-6f30de96cd2b)
+
 
