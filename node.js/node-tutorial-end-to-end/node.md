@@ -54,5 +54,7 @@ y:y}
 
 ![image](https://github.com/user-attachments/assets/35441bce-4a75-4c56-8268-2aff0c838de8)
 
+- Js Garbage collector colects the memory of unused variables or functions.
+
 
 
