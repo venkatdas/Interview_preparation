@@ -51,10 +51,14 @@ y:y}
 
 ![image](https://github.com/user-attachments/assets/e9d185ac-0222-4d4a-b506-06d1162ff050)
 
+_______________________
+
+- This is how unused memory collects from heap.
 
 ![image](https://github.com/user-attachments/assets/35441bce-4a75-4c56-8268-2aff0c838de8)
 
 - Js Garbage collector colects the memory of unused variables or functions.
+
 
 
 
