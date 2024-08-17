@@ -46,5 +46,13 @@ y:y}
 
 # EPI-6 Libuv & Asynchrnous I/O
 
+
+- Synchrnous vs Asynchrnous
+
+![image](https://github.com/user-attachments/assets/e9d185ac-0222-4d4a-b506-06d1162ff050)
+
+
 ![image](https://github.com/user-attachments/assets/35441bce-4a75-4c56-8268-2aff0c838de8)
+
+
 
