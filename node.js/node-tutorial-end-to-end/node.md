@@ -59,6 +59,11 @@ _______________________
 
 - Js Garbage collector colects the memory of unused variables or functions.
 
+![image](https://github.com/user-attachments/assets/167948da-7fd2-483e-ac90-d7c041ea100c)
 
+
+# EPI- 7 - sync,Async, execution code
+
+![image](https://github.com/user-attachments/assets/a230d389-62d7-488e-bc8d-8698ef696718)
 
 
