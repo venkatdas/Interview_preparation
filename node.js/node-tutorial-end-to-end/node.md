@@ -8,6 +8,13 @@
 - wherever there is JS, defintly there is JS engine
 
 
+# EPI-3 
+
+
+![image](https://github.com/user-attachments/assets/af660726-3782-4c57-96a7-618f533bd045)
+
+- how our js code convert t machine understandable code
+
 ## EPI-4
 - **Module.export&require**
 - By default modules are protected means moduled protected their variables and functions from leaking
