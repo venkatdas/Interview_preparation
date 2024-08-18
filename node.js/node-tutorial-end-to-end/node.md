@@ -234,8 +234,7 @@ Last line of the file.
 nextTick
 inner nextTick
 Promise
-File Reading CB
 Timer expired
 setImmediate
-
+File Reading CB
 ```
