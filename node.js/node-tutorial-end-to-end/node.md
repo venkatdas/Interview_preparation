@@ -124,3 +124,45 @@ File Reading CB
 
 ```
 
+
+**Example 2**
+
+
+
+![image](https://github.com/user-attachments/assets/d511dee8-91cb-47cb-bb64-51b85b749017)
+
+
+```js
+
+require('./xyz')
+const fs = require("fs")
+
+const a =100;
+setImmediate(()=>console.log("setImmediate"))
+
+
+Promise.resolve("Promise").then(console.log)
+
+fs.readFile("./file.txt","utf8",()=>{
+    console.log("File Reading CB");
+    
+})
+setTimeout(()=>console.log("Timer Expired"),0)
+process.nextTick(()=>console.log("process.nextTick()"))
+function printA(){
+    console.log("a=",a);
+    
+}
+printA();
+console.log("Last line of the file");
+
+
+a= 100
+Last line of the file
+process.nextTick()
+Promise
+Timer Expired
+setImmediate
+File Reading CB
+```
+
