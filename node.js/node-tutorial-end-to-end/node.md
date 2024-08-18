@@ -238,3 +238,10 @@ Timer expired
 setImmediate
 File Reading CB
 ```
+
+# EPI-10 - Thread POOL
+
+![image](https://github.com/user-attachments/assets/d48c7bb6-caa4-4870-8b11-234c2902401d)
+
+- By default thread pool size is 4
+- 
