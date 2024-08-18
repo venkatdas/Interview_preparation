@@ -81,3 +81,7 @@ _______________________
 
 ![image](https://github.com/user-attachments/assets/7b1789b4-c05c-404e-8ad4-38803970a915)
 
+- Evnet loop phases
+
+![image](https://github.com/user-attachments/assets/6ebf19f5-40c1-48bb-acc8-3eaf986cd48e)
+
