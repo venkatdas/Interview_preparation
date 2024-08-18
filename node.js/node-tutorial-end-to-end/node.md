@@ -8,12 +8,16 @@
 - wherever there is JS, defintly there is JS engine
 
 
-# EPI-3 
+# EPI-2
 
 
 ![image](https://github.com/user-attachments/assets/af660726-3782-4c57-96a7-618f533bd045)
 
-- how our js code convert t machine understandable code
+- from above image how our js code convert t machine understandable code
+
+![image](https://github.com/user-attachments/assets/72b87680-9582-4eec-bb11-e5561b4e6e6d)
+
+- From above image node js run time
 
 ## EPI-4
 - **Module.export&require**
