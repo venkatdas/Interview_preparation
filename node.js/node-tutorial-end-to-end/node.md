@@ -85,3 +85,10 @@ _______________________
 
 ![image](https://github.com/user-attachments/assets/6ebf19f5-40c1-48bb-acc8-3eaf986cd48e)
 
+
+- jgh
+
+![image](https://github.com/user-attachments/assets/a913140d-ed87-4fde-b3ee-19d2ab0d539d)
+
+- From above image , process.nextcallbacks runs before any loop starts.
+
