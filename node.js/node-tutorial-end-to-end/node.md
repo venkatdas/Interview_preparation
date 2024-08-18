@@ -74,3 +74,10 @@ _______________________
 
 ![image](https://github.com/user-attachments/assets/c3a47602-d659-46b8-b092-340cbd2b7796)
 
+
+# EPI-9 Libuv and Event loop
+
+![image](https://github.com/user-attachments/assets/80ccb4fc-471b-42b3-9d2a-dc5da7a11ebe)
+
+![image](https://github.com/user-attachments/assets/7b1789b4-c05c-404e-8ad4-38803970a915)
+
