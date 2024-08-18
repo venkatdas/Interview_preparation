@@ -244,4 +244,47 @@ File Reading CB
 ![image](https://github.com/user-attachments/assets/d48c7bb6-caa4-4870-8b11-234c2902401d)
 
 - By default thread pool size is 4
-- 
+- We can change the thread pool size also by using process.env.UV_THREADPOOL_SIZE= 8 like this
+- thread pool mostly used for fs, crypto, dns.lookup like these
+- If thread pool blocks all 4 threads, and still there one more task need to be executed
+- that task execute when one of the thread frees from the thread pool, then that same thread will take the task and execute.
+
+
+**example 1 examining thread pool behaviour**
+
+
+```js
+const fs = require("fs");
+const crypto = require("crypto")
+
+
+crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
+  console.log("1 - cryptoPBKDF2 done");
+});
+
+crypto.pbkdf2("password","salt",500000,50,"sha512",(err,key)=>{
+    console.log("2 - cryptoPBKDF2 done");
+    
+})
+crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
+  console.log("3 - cryptoPBKDF2 done");
+});
+crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
+  console.log("4 - cryptoPBKDF2 done");
+});
+crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
+  console.log("5 - cryptoPBKDF2 done");
+});
+
+//output
+2 - cryptoPBKDF2 done
+4 - cryptoPBKDF2 done
+3 - cryptoPBKDF2 done
+1 - cryptoPBKDF2 done
+5 - cryptoPBKDF2 done
+
+```
+
+- From this behaviour for first 4 threads, we got  output at a time
+- for the 5th one, it has to wait to free up thread to get it execute
+
