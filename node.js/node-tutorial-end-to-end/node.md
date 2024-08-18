@@ -287,4 +287,11 @@ crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
 
 - From this behaviour for first 4 threads, we got  output at a time
 - for the 5th one, it has to wait to free up thread to get it execute
+______________________
+
+- For number of incoming connections, we cant make n threads to each request , for that epoll comes
+
+![image](https://github.com/user-attachments/assets/84cf7fb9-0d66-4b91-ba82-4f302faf6edd)
+
+
 
