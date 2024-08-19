@@ -1,5 +1,9 @@
 - While useDispatch is used to change the state, useSelector is used to read the state.
 
+
+- Dispatching an Action: When the user clicks a button, the component uses useDispatch to send an action to the Redux store.
+- State Update: The Redux store processes the action using a reducer, updating the state.
+- Selecting State: Another component (or the same one) uses useSelector to read the updated state and reflect it in the UI.
 ## redux
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/db78ec7b-2aef-40a4-97ce-23b51939b37b)
