@@ -1,3 +1,5 @@
+- While useDispatch is used to change the state, useSelector is used to read the state.
+
 ## redux
 
 ![image](https://github.com/venkatdas/Interview_prep/assets/43024084/db78ec7b-2aef-40a4-97ce-23b51939b37b)
