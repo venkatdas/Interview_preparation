@@ -10,6 +10,8 @@
 
 **Core Concepts of Redux**
 
+- Explanation: The initial state is the starting point of your application's state. It's a plain JavaScript object that holds the default values for your application's state.
+
 1) **Actions**
 
 - Actions are JavaScript objects that describe what happened in the application. They must have a type property that indicates the type of action being performed. They can also have additional data fields, called the payload.
