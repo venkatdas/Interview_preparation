@@ -19,3 +19,6 @@ Community and Ecosystem: MUI has a large and active community, offering a wealth
 Support for TypeScript: MUI comes with TypeScript support, providing better type safety, autocompletion, and error checking, which is particularly useful for large-scale applications.
 
 Performance Optimization: MUI is optimized for performance, leveraging features like tree-shaking to reduce bundle sizes, lazy loading to improve load times, and minimal CSS to enhance rendering speed.
+
+
+
