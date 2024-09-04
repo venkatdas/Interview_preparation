@@ -22,3 +22,7 @@ Performance Optimization: MUI is optimized for performance, leveraging features 
 
 
 
+## 2. MICRO FRONT END
+
+
+
