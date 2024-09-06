@@ -45,3 +45,27 @@ export const myFunction = () => {
 import { myFunction } from './myModule.js';
 myFunction();
 ```
+**Asynchronous Module Definition (AMD)**
+
+- AMD was created for the browser to define modules that can be loaded asynchronously. The most notable library that uses AMD is RequireJS.
+- Uses a define function to define modules and a require function to import them.
+- Modules can be loaded asynchronously, which is useful for optimizing load time in browsers.
+
+```js
+// Defining a module
+define(['dependency1', 'dependency2'], function(dep1, dep2) {
+  function myFunction() {
+    console.log("Hello from AMD");
+  }
+  return myFunction;
+});
+
+// Importing a module
+require(['myModule'], function(myFunction) {
+  myFunction();
+});
+```
+
+
+**4. Universal Module Definition (UMD)**
+
