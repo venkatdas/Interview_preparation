@@ -40,4 +40,26 @@ ___________________________
   - Diffing: React compares the current Virtual DOM with the previous version to find differences.
   - Batching Updates: React batches multiple updates together to minimize the number of direct manipulations to the real DOM.
   - Efficient Updating: React only updates parts of the real DOM that have changed, rather than re-rendering the entire page.
+ 
+
 **Performance Optimization:** This approach minimizes the costly operations of reflows and repaints, making React applications faster and more efficient, especially for complex user interfaces with frequent updates.
+
+
+```js
+import React, { useState } from 'react';
+
+function MyComponent() {
+  const [text, setText] = useState('Old Content');
+
+  const handleClick = () => {
+    setText('New Content'); // React automatically schedules an update
+  };
+
+  return (
+    <div>
+      <p>{text}</p>
+      <button onClick={handleClick}>Change Text</button>
+    </div>
+  );
+}
+```
