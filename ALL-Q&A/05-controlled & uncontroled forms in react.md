@@ -7,7 +7,7 @@
 - This gives you full control over the form data and allows for real-time validation,formatting, dynamic field updates, and more.
 
 **How Controlled Forms Work:**
-- Each form element (like <input>, <textarea>, <select>) has a value attribute that is bound to a state variable.
+- Each form element like input,textarea,select has a value attribute that is bound to a state variable.
 - The onChange handler is used to update the state whenever the user makes changes to the input fields.
 
 
