@@ -11,7 +11,7 @@
 - The onChange handler is used to update the state whenever the user makes changes to the input fields.
 
 
-- Example
+- **Example**
 
 ```js
 import React, { useState } from "react";
@@ -33,8 +33,6 @@ const ControlledForms = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="">
