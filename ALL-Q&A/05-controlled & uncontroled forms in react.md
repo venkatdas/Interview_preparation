@@ -10,7 +10,52 @@
 - Each form element (like <input>, <textarea>, <select>) has a value attribute that is bound to a state variable.
 - The onChange handler is used to update the state whenever the user makes changes to the input fields.
 
+```js
+import React, { useState } from "react";
 
-- **Example**
+const ControlledForms = () => {
+  const [formData, setFormData] = useState({ name: "", email: "" });
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+   
+    console.log(formData);
+  
+    setFormData({ name: "", email: "" });
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="">
+        Name:
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+      </label>
+      <label htmlFor="">
+        Email:{" "}
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ControlledForms;
+```
 
 
