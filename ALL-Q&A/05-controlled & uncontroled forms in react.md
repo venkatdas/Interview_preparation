@@ -88,6 +88,9 @@ export default ControlledForms;
 
 **Uncontrolled Forms**
 
+- Uncontrolled forms are those where form data is handled by the DOM itself, instead of being fully controlled by React.
+- In this case, React references the form elements directly and uses refs to access their current values.
+
 ```js
 import React, { useRef } from 'react';
 
