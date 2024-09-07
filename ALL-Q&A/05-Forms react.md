@@ -10,7 +10,7 @@
 
 - Each form element (like <input>, <textarea>, <select>) has a value attribute that is bound to a state variable.
 - The onChange handler is used to update the state whenever the user makes changes to the input fields.
-
+j
 
 ```js
 import React, { useState } from "react";
