@@ -15,12 +15,13 @@ import React, { useState } from "react";
 
 const ControlledForms = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
- 
+  //   const [name, setName] = useState("");
+  //   const [show, setShow] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+    // console.log(e);
     console.log(formData);
-  
+    // formData("");
     setFormData({ name: "", email: "" });
   };
 
@@ -30,6 +31,10 @@ const ControlledForms = () => {
       [e.target.name]: e.target.value,
     });
   };
+  //   const handleButtonClick = () => {
+  //     setShow(name);
+  //   };
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="">
@@ -52,10 +57,24 @@ const ControlledForms = () => {
       </label>
       <button type="submit">Submit</button>
     </form>
+    // <div>
+    //   <input
+    //     type="text"
+    //     name="name"
+    //     value={name}
+    //     onChange={(e) => setName(e.target.value)}
+    //   />
+
+    //   <button onClick={handleButtonClick}>submit</button>
+    //   {show && (
+    //     <div>
+    //       <h3>Submitted Text:</h3>
+    //       <p>{show}</p>
+    //     </div>
+    //   )}
+    // </div>
   );
 };
 
 export default ControlledForms;
 ```
-
-
