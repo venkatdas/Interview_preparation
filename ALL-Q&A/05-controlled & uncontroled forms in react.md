@@ -83,3 +83,43 @@ const ControlledForms = () => {
 
 export default ControlledForms;
 ```
+
+
+
+**Uncontrolled Forms**
+
+```js
+import React, { useRef } from 'react';
+
+const UncontrolledForm = () => {
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = nameRef.current.value;
+    const email = emailRef.current.value;
+    console.log('Form submitted:', { name, email });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        ref={nameRef}
+        placeholder="Name"
+      />
+      <input
+        type="email"
+        name="email"
+        ref={emailRef}
+        placeholder="Email"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default UncontrolledForm;
+```
