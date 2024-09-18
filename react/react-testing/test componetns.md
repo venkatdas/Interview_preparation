@@ -122,3 +122,67 @@ test('increments the counter when the button is clicked', () => {
   expect(countElement).toHaveTextContent('Current Count: 1');
 });
 ```
+_______________________________
+
+## Let's talk about code coverage
+
+- Code coverage is a measure used in software testing that describes the degree to which the source code of a program is tested by a particular test suite.
+- **In simpler terms, it tells you how much of your code is being executed when tests are run.**
+
+Code coverage typically measures:
+
+- Line coverage: The percentage of lines of code that have been executed.
+- Branch coverage: The percentage of decision points (like if and switch statements) that have been executed.
+- Function coverage: The percentage of functions that have been executed.
+- Statement coverage: The percentage of executable statements that have been executed.
+
+**Steps to Implement Code Coverage in React with Jest**
+- Step 1: Install Dependencies Jest has built-in support for code coverage, so if you're using Jest (which is often included in React apps), you can easily enable it.
+
+
+`npm install --save-dev jest`
+
+- Step 2: Enable Code Coverage in Jest You can enable code coverage by passing the --coverage flag to Jest when running your tests.
+
+```js
+npm test -- --coverage
+```
+
+
+- Alternatively, add the coverage command in your package.json under scripts for convenience:
+
+```js
+{
+  "scripts": {
+    "test": "jest --coverage"
+  }
+}
+```
+
+- Step 3: Run Tests with Coverage Run the tests:
+
+
+`npm test`
+
+- Will get the report like this
+
+-----------------|----------|----------|----------|----------|-------------------|
+File             |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+-----------------|----------|----------|----------|----------|-------------------|
+All files        |      90% |    85.71%|       90%|      95% |                   |
+ Button.js       |    100%  |      100%|     100% |    100%  |                   |
+ Counter.js      |    80%   |     60%  |      75% |     85%  | 13,15,17,20       |
+-----------------|----------|----------|----------|----------|-------------------|
+
+
+
+
+
+
+
+
+
+
+
+
+
