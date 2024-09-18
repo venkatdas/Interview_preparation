@@ -166,6 +166,13 @@ const ParentComponent = () => {
 
 
 
+- `const MemoizedComponent = React.memo(Component, areEqual);`
+
+- Component: The functional component you want to memoize.
+- areEqual: Optional custom comparison function. It compares the previous and next props and determines whether the component should re-render.
+- If it returns true, the component will not re-render
+- 
+
 
 
 
