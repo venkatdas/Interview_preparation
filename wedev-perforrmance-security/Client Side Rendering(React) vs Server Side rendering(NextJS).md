@@ -156,7 +156,7 @@ The server only needs to deliver static files (HTML, JavaScript, CSS), reducing 
 
 - **Summary:**
 **Starting Point:** In SSR, the process starts when the user enters the URL, and the browser sends an HTTP request to the server.
-Server's Role: The server is responsible for rendering the entire HTML content before sending it to the browser. This involves fetching data, applying templates, and generating the complete HTML.
+**Server's Role:** The server is responsible for rendering the entire HTML content before sending it to the browser. This involves fetching data, applying templates, and generating the complete HTML.
 **Browser's Role:** The browser receives the fully rendered HTML and displays it immediately, providing a quick initial load. JavaScript and CSS are still downloaded to enhance the page's interactivity, but the main content is already available.
 
 
