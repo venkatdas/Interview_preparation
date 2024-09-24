@@ -27,5 +27,118 @@ M- ixins: Reusable chunks of CSS code that can be included in multiple places th
 - Preprocessor code needs to be compiled into regular CSS before it can be used in the browser.
 - This is usually done using task runners like Gulp, Grunt, or through build tools like Webpack, which automate the process of compiling your Sass/LESS files.
 
+**Examples for SCSS and LESS**
+
+
+
+**SASS (Indented Syntax)**
+```js
+// Variables
+$primary-color: #3498db
+$font-stack: Helvetica, sans-serif
+
+// Nesting and Mixins
+=border-radius($radius)
+  -webkit-border-radius: $radius
+     -moz-border-radius: $radius
+      -ms-border-radius: $radius
+          border-radius: $radius
+
+body
+  font: 100% $font-stack
+  color: $primary-color
+
+  header
+    background: $primary-color
+    h1
+      font-size: 2em
+
+  .button
+    @include border-radius(5px)
+    padding: 10px 15px
+    background-color: darken($primary-color, 10%)
+    &:hover
+      background-color: lighten($primary-color, 10%)
+```
+
+**SCSS**
+```js
+// Variables
+$primary-color: #3498db;
+$font-stack: Helvetica, sans-serif;
+
+// Nesting and Mixins
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+
+  header {
+    background: $primary-color;
+    h1 {
+      font-size: 2em;
+    }
+  }
+
+  .button {
+    @include border-radius(5px);
+    padding: 10px 15px;
+    background-color: darken($primary-color, 10%);
+    
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+    }
+  }
+}
+
+````
+
+**LESS**
+
+
+- LESS syntax is also similar to regular CSS but with its own set of features like variables, nesting, and mixins. It uses the @ symbol for variables.
+
+```js
+// Variables
+@primary-color: #3498db;
+@font-stack: Helvetica, sans-serif;
+
+// Mixins
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+      -ms-border-radius: @radius;
+          border-radius: @radius;
+}
+
+body {
+  font: 100% @font-stack;
+  color: @primary-color;
+
+  header {
+    background: @primary-color;
+    h1 {
+      font-size: 2em;
+    }
+  }
+
+  .button {
+    .border-radius(5px);
+    padding: 10px 15px;
+    background-color: darken(@primary-color, 10%);
+
+    &:hover {
+      background-color: lighten(@primary-color, 10%);
+    }
+  }
+}
+
+```
 
 
