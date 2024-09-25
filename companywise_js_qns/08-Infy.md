@@ -26,6 +26,30 @@
 21. What is SASS? and preprocessors 
 22. Do you have hosting experience , like web application hosting?
 23. What is the diff b/w filter and find?
+
+- Both filter and find are array methods in JavaScript used to search through elements of an array, but they serve different purposes and return different types of results
+**filter Method**
+
+- The filter method creates a new array with all elements that pass the test implemented by the provided function. It returns an array of elements that match the criteria specified in the callback function.4
+- . If no elements match, it returns an empty array.
+- filter can return multiple elements (or none), depending on how many elements match the condition
+- filter continues to iterate through the entire array, even if some elements already matched, to gather all possible matches.
+- filter: Immutable — returns a new array, does not modify the original array.
+-
+
+**find Method:**
+
+- The find method returns the first element in the array that satisfies the provided testing function. If no element satisfies the testing function, undefined is returned.
+- find: Use find when you need to retrieve only the first element that matches a condition. If you are only interested in one matching element, find is more appropriate.
+- find stops iterating as soon as it finds the first match, which can be more efficient when you're only interested in one result.
+- find: Immutable — returns the first matching element, does not modify the original array.
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+const firstEvenNumber = numbers.find(num => num % 2 === 0);
+console.log(firstEvenNumber); // Output: 2
+console.log(numbers); // Output: [1, 2, 3, 4, 5] (Original array remains unchanged)
+```
 24. 
 
 
