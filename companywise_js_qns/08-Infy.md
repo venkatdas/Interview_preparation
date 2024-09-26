@@ -195,11 +195,44 @@ useEffect(() => {
 }); // No dependency array: runs after every render
 ```
 
-13. What is pure component?
+**13. What is pure component?**
 
 - A Pure Component in React is a component that renders the same output given the same props and state.
 - Pure Components implement a shallow comparison between the previous and current props and state, which allows React to skip rendering the component if nothing has changed.
 - This optimization can lead to better performance, especially in larger applications.
+
+
+
+**Shallow Comparison:**
+
+- Pure Components perform a shallow comparison of the component's props and state.
+- This means that for primitive types (like numbers, strings, and booleans), React compares their values directly.
+- For objects and arrays, React checks their references rather than their contents.
+- If the shallow comparison indicates that nothing has changed, React skips the rendering of the component.
+
+
+- In class-based components, you can create a Pure Component by extending React.PureComponent instead of React.Component.
+
+```js
+class MyComponent extends React.PureComponent {
+  render() {
+    console.log('Rendering MyComponent');
+    return <div>{this.props.value}</div>;
+  }
+}
+```
+
+**Functional Components**
+
+- For functional components, you can achieve similar behavior using React.memo.
+- This function memoizes the result of the component and only re-renders if the props have changed based on a shallow comparison.
+
+```js
+const MyComponent = React.memo(({ value }) => {
+  console.log('Rendering MyComponent');
+  return <div>{value}</div>;
+});
+```
 
 14. What is the difference between export and export default?
 15. what is named export?
