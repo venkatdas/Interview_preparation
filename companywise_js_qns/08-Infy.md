@@ -29,17 +29,21 @@ const element = React.createElement('h1', null, 'Hello, world!');
 - Yes, there are several key differences between normal HTML and JSX syntax. Here’s a breakdown of the main differences:
 
 **Attribute Naming**
+
 - HTML: Uses standard attribute names like class, for, onclick, etc.
 - JSX: Uses camelCase for attribute names. For example:
 - class becomes className
 - for becomes htmlFor
 - onclick becomes onClick
+
 **Self-Closing Tags**
 - HTML: Tags like <img>, <input>, <br> can be written without self-closing slashes.
 - JSX: All elements without children must be self-closed using a slash /.
+
 **JavaScript Expressions**
 - HTML: Pure HTML cannot directly embed JavaScript expressions.
 - JSX: You can embed JavaScript expressions within {}.
+
 **Style Attribute**
 
 - HTML: Inline styles are written as a string.
@@ -51,7 +55,9 @@ const element = React.createElement('h1', null, 'Hello, world!');
 // JSX
 <div style={{ backgroundColor: 'blue' }}></div>
 ```
+
 **Conditional Rendering**
+
 - HTML: Cannot directly perform conditional rendering.
 - JSX: You can use JavaScript logic to conditionally render elements.
 ```js
