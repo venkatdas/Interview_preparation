@@ -266,13 +266,51 @@ function fetchData() {
 - The await keyword is used inside an async function to pause the execution of the function until the promise is resolved or rejected.
 - It effectively "waits" for the promise to resolve and then returns the resulting value. If the promise is rejected, await will throw the rejected value as an error.
 
-
+- Error Handling: You can handle errors using try/catch blocks when using await, making error handling more intuitive.
 ```js
 async function fetchData() {
     let data = await fetchSomeData();
     console.log(data); // This will log the resolved value of the promise
 }
 ```
+
+
+- with promises
+- Without async/await (using promises with .then() and .catch()):
+
+```js
+function getUserData() {
+    return fetch('https://api.example.com/user')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+getUserData();
+```
+
+- with async /await
+
+```js
+async function getUserData() {
+    try {
+        const response = await fetch('https://api.example.com/user');
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+getUserData();
+```
+
+
+
 18. What is Asynchrnous means?
 19. What is responsive desigining?
 20. How do we write CSS to implement responsiveness
