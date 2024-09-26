@@ -240,7 +240,39 @@ const MyComponent = React.memo(({ value }) => {
 
 15. what is named export?
 16. How promises works?
-17. What is async/ await?
+
+**17. What is async/ await?**
+
+- async and await are syntactic features in JavaScript that make working with promises easier and more readable.
+- They allow you to write asynchronous code that looks like synchronous code, avoiding the complexity of chaining .then() and .catch() blocks.
+
+**async function**
+
+- An async function is a function that always returns a promise. If the function returns a value, that value is automatically wrapped in a resolved promise.
+- If the function throws an error, the error is caught and the promise is rejected with that error.
+
+```js
+async function fetchData() {
+    return "Data fetched";
+}
+
+// Equivalent to:
+function fetchData() {
+    return Promise.resolve("Data fetched");
+}
+```
+**await keyword**
+
+- The await keyword is used inside an async function to pause the execution of the function until the promise is resolved or rejected.
+- It effectively "waits" for the promise to resolve and then returns the resulting value. If the promise is rejected, await will throw the rejected value as an error.
+
+
+```js
+async function fetchData() {
+    let data = await fetchSomeData();
+    console.log(data); // This will log the resolved value of the promise
+}
+```
 18. What is Asynchrnous means?
 19. What is responsive desigining?
 20. How do we write CSS to implement responsiveness
