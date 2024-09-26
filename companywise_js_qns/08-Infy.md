@@ -235,6 +235,9 @@ const MyComponent = React.memo(({ value }) => {
 ```
 
 14. What is the difference between export and export default?
+
+
+
 15. what is named export?
 16. How promises works?
 17. What is async/ await?
