@@ -5,9 +5,60 @@
 3. In react, how can we do the component reusability.
 4. In the react application, if we have two components and both are sharing a common component and it should call different functions 
   - we have two components C1 and C2 , there is a common componet that is text , we need to use this common component in both C1 and C2, inside the text component, when i do some changes and i need to call function which is return C1, and if i call from C2 , it should call from C2.
-5. What JSX.
+**5. What JSX.**
+- JSX stands for JavaScript XML. It is a syntax extension for JavaScript that looks similar to HTML or XML and is used in React to describe what the UI should look like.
+- When you write JSX, you are essentially writing a syntax that gets compiled to React.createElement() calls under the hood, which creates React elements.
+- Explanation: JSX makes it easier to write and understand the structure of React components.
+- It allows developers to write the UI in a declarative manner, mixing HTML-like syntax with JavaScript logic.
+- This improves readability and maintainability compared to the alternative of using plain JavaScript with React.createElement().
+- Explanation: JSX isn’t valid JavaScript, so it needs to be compiled into JavaScript before it can be executed by the browser.
+- Tools like Babel are used to transform JSX into React.createElement() calls. For example, <div>Hello</div> in JSX is compiled to React.createElement('div', null, 'Hello').
+
+```js
+const element = <h1>Hello, world!</h1>;
+
+// Transformed into:
+const element = React.createElement('h1', null, 'Hello, world!');
+```
+
 6. Is there any difference between normal html and JSX syntax.
 
+- Yes, there are several key differences between normal HTML and JSX syntax. Here’s a breakdown of the main differences:
+
+**Attribute Naming**
+- HTML: Uses standard attribute names like class, for, onclick, etc.
+- JSX: Uses camelCase for attribute names. For example:
+- class becomes className
+- for becomes htmlFor
+- onclick becomes onClick
+**Self-Closing Tags**
+- HTML: Tags like <img>, <input>, <br> can be written without self-closing slashes.
+- JSX: All elements without children must be self-closed using a slash /.
+**JavaScript Expressions**
+- HTML: Pure HTML cannot directly embed JavaScript expressions.
+- JSX: You can embed JavaScript expressions within {}.
+**Style Attribute**
+
+- HTML: Inline styles are written as a string.
+- JSX: Inline styles are passed as an object, with camelCase properties.
+
+```js
+<!-- HTML -->
+<div style="background-color: blue;"></div>
+// JSX
+<div style={{ backgroundColor: 'blue' }}></div>
+```
+**Conditional Rendering**
+- HTML: Cannot directly perform conditional rendering.
+- JSX: You can use JavaScript logic to conditionally render elements.
+```js
+// JSX
+{isLoggedIn ? <h1>Welcome!</h1> : <h1>Please sign in</h1>}
+```
+**Fragment Syntax**
+
+- HTML: HTML doesn’t have an equivalent to React Fragments.
+- JSX: You can use <React.Fragment> or shorthand <>...</> to group elements without adding extra nodes to the DOM.
 
 7. Internal CSS in react. write an example
 8. what is the virtual DOM
