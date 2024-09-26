@@ -128,11 +128,79 @@ export default MyComponent;
 
 9. I have one array with 3 elements, i need to display ul,li with ths array values, and in the browser i can see these values , now i am adding two more elements in the array.. based on that i have 5 elements in the browser,saving the file and how does browser updates VDOM and all things.is it will update the whole Ui or only changed 2 elemtns.?
 
+- **Initial Rendering:**
 
-10. What is the state?
+- When you first render the array with 3 elements, React creates a Virtual DOM representation of the unordered list (ul) with 3 list items (li), each corresponding to an element in your array.
+- React then compares this Virtual DOM with the real DOM and updates the real DOM to reflect the changes. Since it's the initial render, the entire ul with its 3 li elements is added to the real DOM.
+
+- **Updating the Array:**
+
+- You then add two more elements to the array, making it 5 elements in total.
+- React will trigger a re-render of the component where this array is used. During this re-render, React generates a new Virtual DOM with 5 li elements instead of 3.
+
+- **Virtual DOM Diffing:**
+
+- React compares the previous Virtual DOM (with 3 li elements) with the new Virtual DOM (with 5 li elements).
+- React identifies that the first 3 li elements are the same and only 2 new li elements have been added.
+
+- **Updating the Real DOM:**
+
+- React efficiently updates the real DOM by only adding the 2 new li elements to the existing ul without re-rendering the entire ul and the original 3 li elements.
+- This efficient update is due to React’s reconciliation algorithm, which minimizes the number of changes needed to update the UI.
+
+
+10. **What is the state?**
+
+- State is a built-in object in React that stores data or information about the component that can change over time.
+- It's essentially the "memory" of the component, allowing it to keep track of dynamic values and rendering the UI based on those values.
+- When the state changes, React re-renders the component to reflect the new state.
+- State is local to the component, meaning it encapsulates the data within the component, making it easier to manage and debug.
+- You should never directly modify the state.
+- Instead, use state setters (like setState in class components or the setter function returned by useState in functional components) to update state,
+- ensuring a new object reference is created.
+- State updates are often batched and handled asynchronously, meaning that multiple state updates may be combined for efficiency, and the actual state update may not happen immediately.
+
+
+
+
+
+
+
 11. what is the diff b/w redux state? In redux how many source are there/
+
+
 12. What is the useEffect and syntax? and how it works?
+
+- useEffect is a hook in React that allows you to perform side effects in your functional components.
+- Side effects include operations like data fetching, subscriptions, manual DOM manipulations, logging, and setting up timers.
+- The useEffect hook combines the functionality of React’s lifecycle methods like componentDidMount, componentDidUpdate, and componentWillUnmount
+- in class-based components into a single API.
+
+```js
+useEffect(() => {
+  // Your side effect logic goes here
+
+  return () => {
+    // Cleanup logic goes here (optional)
+  };
+}, [dependencies]);
+```
+- Initial Render: When the component first renders, useEffect runs the effect function after the DOM updates.
+- Cleanup Function (Optional): The function returned from the effect function is where you can clean up side effects like cancelling subscriptions, clearing timers,
+- or other cleanup operations. This function runs when the component unmounts or before the effect is re-run.
+
+```js
+useEffect(() => {
+  console.log('Effect runs after every render');
+}); // No dependency array: runs after every render
+```
+
 13. What is pure component?
+
+- A Pure Component in React is a component that renders the same output given the same props and state.
+- Pure Components implement a shallow comparison between the previous and current props and state, which allows React to skip rendering the component if nothing has changed.
+- This optimization can lead to better performance, especially in larger applications.
+
 14. What is the difference between export and export default?
 15. what is named export?
 16. How promises works?
