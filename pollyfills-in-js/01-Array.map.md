@@ -26,12 +26,18 @@ if (!Array.prototype.map) {
 ```js
 const arr = [2, 3, 4];
 
-const mappeddarr = arr.map((num) => {
+const mappeddarr = arr.map((num,index, arr) => {
   return num * 2;
 });
 
+
+
 console.log(mappeddarr);
 ```
+
+- num , current element this [i]
+- index current index , i
+- arr, current array, this
 
 - Above code is for just executing the map built in function
 --------------------------------------------------
@@ -99,7 +105,6 @@ console.log(result);
 
 
   ``
-
 
 
 
