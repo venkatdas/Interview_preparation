@@ -45,5 +45,14 @@
 41. Scopes in JS
 42. CORS, CSP and XSS explain
 43. Explain service and web workers.
+44. TEMPORAL DEAD ZONE
 
+- The Temporal Dead Zone (TDZ) is the period from when JavaScript enters a block (like a function or conditional)
+- until it reaches the line where a let or const variable is declared and initialized.
+- During this period, the variable exists but cannot be accessed, and any attempt to do so results in a ReferenceError.
+- The TDZ ends as soon as JavaScript encounters the variable declaration.
+
+
+45. dlfs
+46. 
 
