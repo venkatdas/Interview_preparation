@@ -1,0 +1,23 @@
+
+# Getting Started with React
+
+React is a JavaScript library for building user interfaces.
+
+## Hello World Example
+
+<CodeBlock language="jsx">
+{`import React from 'react';
+import ReactDOM from 'react-dom';
+
+function App() {
+  return <h1>Hello, world!</h1>;
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));`}
+</CodeBlock>
+
+### Try It Yourself
+
+<LiveEditor code={`function App() { return <h1>Hello, world!</h1>; }`} />
+
+For more details, check out the [React Documentation](https://react.dev).
