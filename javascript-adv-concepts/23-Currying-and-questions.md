@@ -185,7 +185,48 @@ Parameters:
 3) Final Execution:
 - Once curriedFunc is invoked with the full number of required arguments (3 in this case), it directly calls the original multiply function with all collected arguments, computing:
 
+_______________________________
 
+## Infinite currying
+
+```js
+
+function curry(a){
+  return function(b){
+    if(b){
+      return curry(a+b)
+    }else{
+      return a
+    }
+  }
+}
+
+
+console.log(curry(1)(2)(3)(null)());
+
+
+```
+
+- This will work but it will not handle the falsy values, like 0 and null.
+- which results undefined
+
+- to remove that we have to add the check condition as follows
+
+
+```js
+function curry(a){
+  return function(b){
+    if(b!== undefined){
+      return curry(a+b)
+    }else{
+      return a
+    }
+  }
+}
+
+
+console.log(curry(1)(2)(3)(null)()); //6
+```
 
 
 
