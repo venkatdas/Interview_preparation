@@ -53,6 +53,42 @@
 - The TDZ ends as soon as JavaScript encounters the variable declaration.
 
 
-45. dlfs
-46. 
+45. How does function is being executed in Javascript?
+46. Inheritance in js
+47. Arrow function and what is the difference apart from syntax?
+48. Generator Function and write a range Generator functions
+49. Real time example of Generator Functions?
+50. ES6 features
+51. Write down the code for spread operator, rest operator and Object destructuring?
+52. Difference between forEach and map?
+53. Difference between Object.assign(), Object.create()? Which one mutates the data ?
+54. Software Principles (DRY, KISS) how do you implemented in your codebase
+55. SOLID Principles
+56. Explain me the various ways of Performance Optimization that you can do at any level (ex: CSS, JS, HTML)
+57. How do you configure typescript in your project?
+58. How many ways you can create an object ?
+59. What does we have in typescript .tsconfig.json? can you explain them?
+60. What are semantic tags?
+61. Why do we need constructors? can we create classes without constructors
+62. What are the different module systems
+63. difference between <p>, <span> and <label> tags when to use which tag
+64. How to improve the performance of an application ?
+65. What is sass and why it was introduced, what problems does it solve
+66. Local storage and session storage in the context of web browsers.
+67. write the polyfill for map and multiply the array elements with 2
+68. what is Box Model
+69. what is diff between displa none & hidden
+70. Code for merging two array and sorting
+71. Pass by value and pass by reference
+72. Do you have exp on micro frontend and explain in detail
+73. What is a browser object model (BOM) ?
+74. What best practices did you follow in making your web application ?
+75. How did you generate the bundle ?
+76. 17 round 3
+
+
+
+
+
+
 
