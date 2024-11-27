@@ -147,3 +147,45 @@ _____________________________________
 - Performance: Creating new objects for every single event (like clicks, inputs, etc.) can slow things down, especially in apps with a lot of interactions.
 - Memory Efficiency: Reusing the event object reduces memory usage.
 
+
+**How Does Pooling Affect You?**
+- Once the event handler finishes running, the SyntheticEvent is cleared (reset). This means you cannot use the event object later unless you save the data you need before it gets cleared.
+
+
+```js
+const handleClick = (event) => {
+  console.log(event.type); // Works: Logs "click"
+
+  setTimeout(() => {
+    console.log(event.type); // ERROR: Event object is already cleared!
+  }, 1000);
+};
+
+<button onClick={handleClick}>Click Me</button>
+```
+
+- Why does this happen?
+- React clears the event object after the handler runs.
+- By the time the setTimeout callback runs, the event is already reset and can no longer be used.
+
+
+
+
+**How to Fix This?**
+- If you want to use the event later (like inside a setTimeout or async function), you can use event.persist(). This tells React not to pool the event.
+
+- Example with persist():
+
+
+```js
+const handleClick = (event) => {
+  event.persist(); // Prevent React from reusing the event
+  console.log(event.type); // Logs "click"
+
+  setTimeout(() => {
+    console.log(event.type); // Still logs "click"
+  }, 1000);
+};
+
+<button onClick={handleClick}>Click Me</button>
+```
