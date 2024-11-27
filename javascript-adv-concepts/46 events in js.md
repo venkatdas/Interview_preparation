@@ -101,3 +101,42 @@ scroll	Triggered when the user scrolls the page.
 - Bubbling Phase: The event bubbles up from the target element to the root.
 
 
+________________
+
+
+
+## Event Delegation
+
+Event delegation is a technique that allows you to handle events for multiple child elements by attaching a single event listener to a common parent. 
+It leverages event bubbling, where the event propagates from the target element up through its ancestors.
+
+```js
+<ul id="parentList">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+<script>
+  const parentList = document.getElementById('parentList');
+
+  // Add a single event listener to the parent element
+  parentList.addEventListener('click', (event) => {
+    if (event.target.tagName === 'LI') { // Check if a <li> was clicked
+      alert(`You clicked: ${event.target.textContent}`);
+    }
+  });
+
+  // Dynamically add a new item
+  const newItem = document.createElement('li');
+  newItem.textContent = 'Item 4';
+  parentList.appendChild(newItem);
+</script>
+```
+
+
+
+Why Use Event Delegation?
+Reduces the number of event listeners in the DOM, improving performance.
+Dynamically handles elements added to the DOM later.
+
