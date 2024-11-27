@@ -133,3 +133,17 @@ export default EventExample;
 
 - By calling event.persist(), the event is removed from the pool, and its properties are no longer nullified after the event handler finishes executing. This allows you to use the event object asynchronously without encountering issues due to React's event pooling.
 
+_____________________________________
+
+
+
+**What is Event Pooling?**
+
+- React reuses the same SyntheticEvent object across multiple events to improve performance.
+- This is called event pooling. Instead of creating a brand-new event object every time, React resets and reuses the same object.
+
+
+**Why Use Event Pooling?**
+- Performance: Creating new objects for every single event (like clicks, inputs, etc.) can slow things down, especially in apps with a lot of interactions.
+- Memory Efficiency: Reusing the event object reduces memory usage.
+
