@@ -140,3 +140,11 @@ Why Use Event Delegation?
 Reduces the number of event listeners in the DOM, improving performance.
 Dynamically handles elements added to the DOM later.
 
+
+
+_________-
+
+
+- Event delegation is a way to handle events efficiently. Instead of adding event listeners to every individual element (like buttons or list items), you attach one event listener to a parent element.
+
+- When you click on a child element, the event travels (or "bubbles up") from the clicked element to its parent. The parent can "catch" this event and figure out which child was clicked.
