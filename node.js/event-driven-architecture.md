@@ -86,6 +86,8 @@ server.listen(8080,()=>{
 ___________________
 
 
+- .on is the event emitter
+
 
 ```js
 
