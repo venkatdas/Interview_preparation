@@ -1,3 +1,53 @@
+## Basic server using http
+
+
+```js
+// Import the http module
+const http = require('http');
+
+// Create the server
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello, World!');
+});
+
+// Server listens on port 3000
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});
+```
+
+## using Express
+
+```js
+// Import the express module
+const express = require('express');
+
+// Create an instance of express
+const app = express();
+
+// Define a simple route
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Server listens on port 3000
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});
+
+```
+
+
+
+
+
+
+
+
+
+
+
 ## Event Driven Programming in Node.js
 
 - Event-driven programming is a programming paradigm in which the flow of the application is determined by events such as user actions (e.g., clicks, inputs), messages from other systems,
@@ -20,6 +70,24 @@
 
 
 ```js
+const http = require('http');
+
+const server= http.createServer();
+
+server.on("request", (req, res) => {
+  res.end("this is event emitter ");
+});
+
+server.listen(8080,()=>{
+    console.log("server is listening on 8080")
+})
+```
+- On 8080 port will get this is event emitter
+___________________
+
+
+
+```js
 
 const EventEmitter = require('events');
 
@@ -35,5 +103,8 @@ myEmitter.on('greet', (name) => {
 myEmitter.emit('greet', 'Alice');
 
 ```
+
+
+
 
 
