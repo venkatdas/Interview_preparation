@@ -1,7 +1,7 @@
 A bundler is a tool that takes multiple files and dependencies (like JavaScript, CSS, HTML, images, etc.) in a web project and combines them into a single or a few output files (often called "bundles"). The purpose of a bundler is to optimize the web application's performance by reducing the number of HTTP requests required to load all the necessary resources, thereby enhancing the loading speed and efficiency of the application.
 
 - **Example of a Bundler: Webpack**
-One of the most popular bundlers is Webpack.
+One of the most popular bundlers is Webpack..
 
 Webpack is a powerful bundler for JavaScript applications that also handles assets like images, fonts, and styles. It allows developers to create modular code and manage dependencies efficiently. It can transform, bundle, and serve the files efficiently, making it one of the most widely used tools in the JavaScript ecosystem.
 - Benefits of Using a Bundler
