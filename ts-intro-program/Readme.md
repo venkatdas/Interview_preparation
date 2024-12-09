@@ -1,0 +1,2 @@
+- to run .ts file use npm tsx
+- now build will generate and then use node dist/index.js
