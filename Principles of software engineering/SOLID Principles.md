@@ -229,42 +229,5 @@ function UserAddress({ address }) {
 
 - In React, you can achieve this by using context or dependency injection patterns.
 
+
 ```js
-// BAD: Violates DIP
-function UserComponent() {
-  const [user, setUser] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api/user")
-      .then((response) => response.json())
-      .then((data) => setUser(data));
-  }, []);
-
-  return <div>{user && user.name}</div>;
-}
-
-// GOOD: Follows DIP
-const UserContext = React.createContext();
-
-function UserProvider({ children, fetchUser }) {
-  const [user, setUser] = React.useState(null);
-
-  React.useEffect(() => {
-    fetchUser().then(setUser);
-  }, [fetchUser]);
-
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-}
-
-function UserComponent() {
-  const user = React.useContext(UserContext);
-  return <div>{user && user.name}</div>;
-}
-
-// Usage
-const fetchUser = () => fetch("/api/user").then((response) => response.json());
-
-<UserProvider fetchUser={fetchUser}>
-  <UserComponent />
-</UserProvider>;
-```
