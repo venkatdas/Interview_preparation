@@ -158,7 +158,9 @@ export default App;
 
 - Without {...props}, any additional props (title in this case) passed to the wrapped component would be lost and unavailable in the Counter component. Using {...props} ensures that all props are passed through, maintaining the component's flexibility and functionality.
 
----
+- Final Output
+
+## ![alt text](image.png)
 
 // HOC Component
 
