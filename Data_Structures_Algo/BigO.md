@@ -3,11 +3,12 @@
 
 - This is the example for the performance that means how much time does it take to run the program. A small example below.
 
-![alt text](image.png)
+
+<img src="./images_used_bigO/image.png">
 
 - From the above image we can see that , the code ran around 343 milli seconds. The above time will depend on machine to machine.
 
-![alt text](image-1.png)
+<img src="./images_used_bigO/image-1.png">
 
 ----
 
@@ -15,7 +16,7 @@ O(n)----> Time Complexity
 
 - I removed both performace and console now will see the how this works
 
-![alt text](image-2.png)
+<img src="./images_used_bigO/image-2.png">
 
 - The loop runs once for every element in the array.
 
@@ -23,17 +24,17 @@ O(n)----> Time Complexity
 
 - As n grows, the number of operations grows linearly.
 
-![alt text](image-3.png)
+<img src="./images_used_bigO/image-3.png">
 
 O(n) -->Linear Time
 
-![alt text](image-4.png)
+<img src="./images_used_bigO/image-4.png">
 
 ----
 
 #### O(1)--> Constant time
 
-![alt text](image-5.png)
+<img src="./images_used_bigO/image-5.png">
 
 - An algorithm has O(1) time complexity when its execution time stays constant, regardless of the size of the input
 - X-axis → Number of elements (input size).
@@ -74,7 +75,7 @@ logFirstTwoBoxes(boxes); // O(1 + 1) → O(2) ≈ O(1)
 
 - EX: 3
 
-![alt text](image-6.png)
+<img src="./images_used_bigO/image-6.png">
 
 ```js
 function funChallenge(input) {
@@ -98,7 +99,7 @@ funChallenge();
 
 - Ex 4
 
-![alt text](image-7.png)
+<img src="./images_used_bigO/image-7.png">
 
 ```js
 function anotherFunCahllenge(input) {
@@ -130,3 +131,4 @@ O(1 + 3n + 2n + 1) = O(5n + 2) \Rightarrow O(n)
 Only the highest order term matters, and constants are ignored in Big-O notation.
 
 👉 Therefore, the overall time complexity is **O(n)** — linear time
+
