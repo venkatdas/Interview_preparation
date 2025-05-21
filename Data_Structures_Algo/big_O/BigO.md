@@ -1,22 +1,22 @@
 ### Big O Notation In detail
-----
+
+---
 
 - This is the example for the performance that means how much time does it take to run the program. A small example below.
 
-
-<img src="./images_used_bigO/image.png">
+<img src="./images_used/image.png">
 
 - From the above image we can see that , the code ran around 343 milli seconds. The above time will depend on machine to machine.
 
-<img src="./images_used_bigO/image-1.png">
+<img src="./images_used/image-1.png">
 
-----
+---
 
 O(n)----> Time Complexity
 
 - I removed both performace and console now will see the how this works
 
-<img src="./images_used_bigO/image-2.png">
+<img src="./images_used/image-2.png">
 
 - The loop runs once for every element in the array.
 
@@ -24,17 +24,17 @@ O(n)----> Time Complexity
 
 - As n grows, the number of operations grows linearly.
 
-<img src="./images_used_bigO/image-3.png">
+<img src="./images_used/image-3.png">
 
 O(n) -->Linear Time
 
-<img src="./images_used_bigO/image-4.png">
+<img src="./images_used/image-4.png">
 
-----
+---
 
 #### O(1)--> Constant time
 
-<img src="./images_used_bigO/image-5.png">
+<img src="./images_used/image-5.png">
 
 - An algorithm has O(1) time complexity when its execution time stays constant, regardless of the size of the input
 - X-axis → Number of elements (input size).
@@ -52,7 +52,7 @@ getFirstElement([100, 200, 300, 400]);
 // No matter if the array has 5 or 5 million items, this is just one operation.
 ```
 
--  It always takes the same amount of time to complete, no matter how big the input is.
+- It always takes the same amount of time to complete, no matter how big the input is.
 
 - Ex 2:
 
@@ -75,7 +75,7 @@ logFirstTwoBoxes(boxes); // O(1 + 1) → O(2) ≈ O(1)
 
 - EX: 3
 
-<img src="./images_used_bigO/image-6.png">
+<img src="./images_used/image-6.png">
 
 ```js
 function funChallenge(input) {
@@ -83,9 +83,9 @@ function funChallenge(input) {
   a = 50 + 3; // Constant time operation: O(1)
 
   for (let i = 0; i < input.length; i++) {
-    anotherFunction();         // O(n) — runs once per element
-    let stranger = true;       // O(n) — runs once per element
-    a++;                       // O(n) — runs once per element
+    anotherFunction(); // O(n) — runs once per element
+    let stranger = true; // O(n) — runs once per element
+    a++; // O(n) — runs once per element
   }
 
   return a; // Constant time: O(1)
@@ -96,16 +96,15 @@ funChallenge();
 
 - At last O(n)
 
-
 - Ex 4
 
-<img src="./images_used_bigO/image-7.png">
+<img src="./images_used/image-7.png">
 
 ```js
 function anotherFunCahllenge(input) {
-  let a = 5;       // O(1)
-  let b = 10;      // O(1)
-  let c = 50;      // O(1)
+  let a = 5; // O(1)
+  let b = 10; // O(1)
+  let c = 50; // O(1)
 
   for (let i = 0; i < input.length; i++) {
     let x = i + 1; // O(n)
@@ -132,32 +131,34 @@ Only the highest order term matters, and constants are ignored in Big-O notation
 
 👉 Therefore, the overall time complexity is **O(n)** — linear time
 
-----
+---
 
 **Simplifying the bigO and the rules**
 
-<img src="./images_used_bigO/image8.png">
+<img src="./images_used/image8.png">
 
 - Big O cares about the worst case mostly
 
 - 1. Drop Constants
 - Loops = O(n), Nested Loops = O(n²)
+
 ```js
 for (let i = 0; i < n; i++) {
-  console.log(i);        // O(n)
+  console.log(i); // O(n)
 }
 
 for (let i = 0; i < n; i++) {
   for (let j = 0; j < n; j++) {
-    console.log(i, j);   // O(n²)
+    console.log(i, j); // O(n²)
   }
 }
 ```
-<img src="./images_used_bigO/img9.png">
+
+<img src="./images_used/img9.png">
 
 **RUlE 3: Different terms for inputs**
 
-<img src="./images_used_bigO/image10.png">
+<img src="./images_used/image10.png">
 
 - from the above image
 
@@ -172,17 +173,18 @@ boxes2.forEach(...) runs b times if boxes2.length = b
 - Rule:
 - For different inputs:
 - O(n + m) → if iterating over two inputs sequentially
-- O(n * m) → if iterating over two inputs nested
+- O(n \* m) → if iterating over two inputs nested
 - If nested follow the below image
 
-![alt text](image.png)
+<img src="./images_used/image11.png">
 
 **Rule 4: Drop non dominant terms**
 
-![alt text](image-1.png)
+<img src="./images_used/image12.png">
 
 
 ---
+
 Now we can create the cheatsheet for BigO.
 
-![Screenshot (133)](https://github.com/user-attachments/assets/fdf67cba-f785-45df-8f8f-a51f328163e5)
+<img src="./images_used/image13.png">
