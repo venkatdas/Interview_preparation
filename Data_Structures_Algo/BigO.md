@@ -180,3 +180,9 @@ boxes2.forEach(...) runs b times if boxes2.length = b
 **Rule 4: Drop non dominant terms**
 
 ![alt text](image-1.png)
+
+
+---
+Now we can create the cheatsheet for BigO.
+
+![Screenshot (133)](https://github.com/user-attachments/assets/fdf67cba-f785-45df-8f8f-a51f328163e5)
