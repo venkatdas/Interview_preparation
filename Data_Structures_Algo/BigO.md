@@ -132,3 +132,51 @@ Only the highest order term matters, and constants are ignored in Big-O notation
 
 👉 Therefore, the overall time complexity is **O(n)** — linear time
 
+----
+
+**Simplifying the bigO and the rules**
+
+<img src="./images_used_bigO/image8.png">
+
+- Big O cares about the worst case mostly
+
+- 1. Drop Constants
+- Loops = O(n), Nested Loops = O(n²)
+```js
+for (let i = 0; i < n; i++) {
+  console.log(i);        // O(n)
+}
+
+for (let i = 0; i < n; i++) {
+  for (let j = 0; j < n; j++) {
+    console.log(i, j);   // O(n²)
+  }
+}
+```
+<img src="./images_used_bigO/img9.png">
+
+**RUlE 3: Different terms for inputs**
+
+<img src="./images_used_bigO/image10.png">
+
+- from the above image
+
+```js
+boxes.forEach(...) runs a times if boxes.length = a
+
+boxes2.forEach(...) runs b times if boxes2.length = b
+```
+
+- When you have two different inputs, you can’t combine them — they must be added, not multiplied, unless they are nested.
+
+- Rule:
+- For different inputs:
+- O(n + m) → if iterating over two inputs sequentially
+- O(n * m) → if iterating over two inputs nested
+- If nested follow the below image
+
+![alt text](image.png)
+
+**Rule 4: Drop non dominant terms**
+
+![alt text](image-1.png)
