@@ -188,3 +188,9 @@ boxes2.forEach(...) runs b times if boxes2.length = b
 Now we can create the cheatsheet for BigO.
 
 <img src="./images_used/image13.png">
+
+- Basic data structure and it's cheatsheet
+
+
+<img src="./images_used/image14.png">
+
