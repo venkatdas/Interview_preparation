@@ -1,0 +1,1008 @@
+# React Machine Coding Cheat Sheet
+
+**Copy-paste these patterns and change names**
+
+---
+
+## 1. BASIC SETUP
+
+```jsx
+import { useState, useEffect } from 'react';
+
+function ComponentName() {
+  return (
+    <div>
+      {/* Your JSX here */}
+    </div>
+  );
+}
+
+export default ComponentName;
+```
+
+---
+
+## 2. REMEMBER A VALUE (STATE)
+
+```jsx
+// Remember a number
+const [count, setCount] = useState(0);
+
+// Remember text
+const [text, setText] = useState('');
+
+// Remember true/false
+const [isOpen, setIsOpen] = useState(false);
+
+// Remember an array
+const [items, setItems] = useState([]);
+
+// Remember an object
+const [user, setUser] = useState({ name: '', age: 0 });
+```
+
+---
+
+## 3. HANDLE BUTTON CLICK
+
+```jsx
+const handleClick = () => {
+  // Do something here
+  console.log('clicked');
+};
+
+<button onClick={handleClick}>Click Me</button>
+
+// With inline function (for simple things)
+<button onClick={() => alert('Hi')}>Click</button>
+```
+
+---
+
+## 4. HANDLE TEXT INPUT
+
+```jsx
+const [inputValue, setInputValue] = useState('');
+
+<input 
+  type="text"
+  value={inputValue}
+  onChange={(e) => setInputValue(e.target.value)}
+  placeholder="Type here"
+/>
+```
+
+---
+
+## 5. HANDLE FORM SUBMIT
+
+```jsx
+const handleSubmit = (e) => {
+  e.preventDefault(); // IMPORTANT: stops page refresh
+  // Do something with the form data
+  console.log(inputValue);
+};
+
+<form onSubmit={handleSubmit}>
+  <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+  <button type="submit">Submit</button>
+</form>
+```
+
+---
+
+## 6. SHOW A LIST
+
+```jsx
+const items = [
+  { id: 1, name: 'Apple' },
+  { id: 2, name: 'Banana' },
+  { id: 3, name: 'Orange' }
+];
+
+<ul>
+  {items.map(item => (
+    <li key={item.id}>{item.name}</li>
+  ))}
+</ul>
+```
+
+---
+
+## 7. ADD ITEM TO ARRAY
+
+```jsx
+const addItem = () => {
+  const newItem = { 
+    id: Date.now(), // Simple way to get unique ID
+    name: inputValue 
+  };
+  setItems([...items, newItem]); // Add to end
+  setInputValue(''); // Clear input
+};
+```
+
+---
+
+## 8. REMOVE ITEM FROM ARRAY
+
+```jsx
+const deleteItem = (idToDelete) => {
+  setItems(items.filter(item => item.id !== idToDelete));
+};
+
+// In JSX:
+<button onClick={() => deleteItem(item.id)}>Delete</button>
+```
+
+---
+
+## 9. UPDATE ITEM IN ARRAY
+
+```jsx
+const updateItem = (idToUpdate, newName) => {
+  setItems(items.map(item => 
+    item.id === idToUpdate 
+      ? { ...item, name: newName }
+      : item
+  ));
+};
+```
+
+---
+
+## 10. TOGGLE TRUE/FALSE
+
+```jsx
+const [isVisible, setIsVisible] = useState(false);
+
+const toggle = () => {
+  setIsVisible(!isVisible);
+};
+
+<button onClick={toggle}>Toggle</button>
+```
+
+---
+
+## 11. SHOW/HIDE CONTENT
+
+```jsx
+{isVisible && <div>This content shows/hides</div>}
+
+// If/else for two different things:
+{isVisible ? <div>Show this</div> : <div>Show that</div>}
+```
+
+---
+
+## 12. INCREASE/DECREASE NUMBER
+
+```jsx
+const [count, setCount] = useState(0);
+
+const increment = () => setCount(count + 1);
+const decrement = () => setCount(count - 1);
+
+<button onClick={increment}>+</button>
+<button onClick={decrement}>-</button>
+```
+
+---
+
+## 13. IF/ELSE CHECK
+
+```jsx
+const doSomething = () => {
+  if (count > 10) {
+    alert('Too high!');
+  } else if (count < 0) {
+    alert('Too low!');
+  } else {
+    alert('Just right');
+  }
+};
+```
+
+---
+
+## 14. HANDLE MULTIPLE INPUTS
+
+```jsx
+const [formData, setFormData] = useState({
+  name: '',
+  email: '',
+  age: ''
+});
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+};
+
+<input name="name" value={formData.name} onChange={handleChange} />
+<input name="email" value={formData.email} onChange={handleChange} />
+<input name="age" value={formData.age} onChange={handleChange} />
+```
+
+---
+
+## 15. FILTER/SEARCH ARRAY
+
+```jsx
+const [searchTerm, setSearchTerm] = useState('');
+
+const filteredItems = items.filter(item => 
+  item.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+<input 
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  placeholder="Search..."
+/>
+
+{filteredItems.map(item => (
+  <div key={item.id}>{item.name}</div>
+))}
+```
+
+---
+
+## 16. HANDLE CHECKBOX
+
+```jsx
+const [isChecked, setIsChecked] = useState(false);
+
+<input 
+  type="checkbox"
+  checked={isChecked}
+  onChange={(e) => setIsChecked(e.target.checked)}
+/>
+```
+
+---
+
+## 17. HANDLE RADIO BUTTONS
+
+```jsx
+const [selected, setSelected] = useState('option1');
+
+<input 
+  type="radio" 
+  value="option1" 
+  checked={selected === 'option1'}
+  onChange={(e) => setSelected(e.target.value)}
+/>
+<input 
+  type="radio" 
+  value="option2" 
+  checked={selected === 'option2'}
+  onChange={(e) => setSelected(e.target.value)}
+/>
+```
+
+---
+
+## 18. HANDLE SELECT/DROPDOWN
+
+```jsx
+const [selectedValue, setSelectedValue] = useState('');
+
+<select value={selectedValue} onChange={(e) => setSelectedValue(e.target.value)}>
+  <option value="">Choose...</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+</select>
+```
+
+---
+
+## 19. RUN CODE WHEN COMPONENT LOADS
+
+```jsx
+useEffect(() => {
+  // This runs once when component first appears
+  console.log('Component loaded');
+}, []); // Empty array = run once
+```
+
+---
+
+## 20. RUN CODE WHEN SOMETHING CHANGES
+
+```jsx
+useEffect(() => {
+  // This runs whenever 'count' changes
+  console.log('Count changed to:', count);
+}, [count]); // Run when count changes
+```
+
+---
+
+## 21. SET TIMER/DELAY
+
+```jsx
+const [message, setMessage] = useState('');
+
+const showMessage = () => {
+  setMessage('Hello!');
+  
+  setTimeout(() => {
+    setMessage(''); // Clear after 2 seconds
+  }, 2000);
+};
+```
+
+---
+
+## 22. FETCH DATA FROM API
+
+```jsx
+const [data, setData] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  fetch('https://api.example.com/data')
+    .then(response => response.json())
+    .then(data => {
+      setData(data);
+      setLoading(false);
+    })
+    .catch(error => console.error(error));
+}, []);
+
+{loading ? <div>Loading...</div> : <div>Data loaded</div>}
+```
+
+---
+
+## 23. PREV/NEXT NAVIGATION (Carousel, Pagination)
+
+```jsx
+const [currentIndex, setCurrentIndex] = useState(0);
+const items = ['Item 1', 'Item 2', 'Item 3'];
+
+const goNext = () => {
+  if (currentIndex === items.length - 1) {
+    setCurrentIndex(0); // Go back to start
+  } else {
+    setCurrentIndex(currentIndex + 1);
+  }
+};
+
+const goPrev = () => {
+  if (currentIndex === 0) {
+    setCurrentIndex(items.length - 1); // Go to end
+  } else {
+    setCurrentIndex(currentIndex - 1);
+  }
+};
+
+<button onClick={goPrev}>Previous</button>
+<div>{items[currentIndex]}</div>
+<button onClick={goNext}>Next</button>
+```
+
+---
+
+## 24. TABS PATTERN
+
+```jsx
+const [activeTab, setActiveTab] = useState('tab1');
+
+<button onClick={() => setActiveTab('tab1')}>Tab 1</button>
+<button onClick={() => setActiveTab('tab2')}>Tab 2</button>
+
+{activeTab === 'tab1' && <div>Content for Tab 1</div>}
+{activeTab === 'tab2' && <div>Content for Tab 2</div>}
+```
+
+---
+
+## 25. ACCORDION PATTERN
+
+```jsx
+const [openIndex, setOpenIndex] = useState(null);
+
+const toggleAccordion = (index) => {
+  setOpenIndex(openIndex === index ? null : index);
+};
+
+<div onClick={() => toggleAccordion(0)}>Section 1</div>
+{openIndex === 0 && <div>Content 1</div>}
+
+<div onClick={() => toggleAccordion(1)}>Section 2</div>
+{openIndex === 1 && <div>Content 2</div>}
+```
+
+---
+
+## 26. MODAL/POPUP PATTERN
+
+```jsx
+const [isModalOpen, setIsModalOpen] = useState(false);
+
+const openModal = () => setIsModalOpen(true);
+const closeModal = () => setIsModalOpen(false);
+
+<button onClick={openModal}>Open Modal</button>
+
+{isModalOpen && (
+  <div className="modal">
+    <div className="modal-content">
+      <button onClick={closeModal}>Close</button>
+      <p>Modal content here</p>
+    </div>
+  </div>
+)}
+```
+
+---
+
+## 27. SORT ARRAY
+
+```jsx
+const sortAscending = () => {
+  const sorted = [...items].sort((a, b) => a.name.localeCompare(b.name));
+  setItems(sorted);
+};
+
+const sortDescending = () => {
+  const sorted = [...items].sort((a, b) => b.name.localeCompare(a.name));
+  setItems(sorted);
+};
+```
+
+---
+
+## 28. COUNT/TRACK SOMETHING
+
+```jsx
+// Count items matching a condition
+const completedCount = items.filter(item => item.completed).length;
+
+// Check if all items match condition
+const allCompleted = items.every(item => item.completed);
+
+// Check if any item matches condition
+const hasCompleted = items.some(item => item.completed);
+```
+
+---
+
+## 29. DEBOUNCE SEARCH (wait before searching)
+
+```jsx
+const [searchTerm, setSearchTerm] = useState('');
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    // Do search here after user stops typing for 500ms
+    console.log('Searching for:', searchTerm);
+  }, 500);
+
+  return () => clearTimeout(timer); // Cleanup
+}, [searchTerm]);
+```
+
+---
+
+## 30. PASS DATA TO CHILD COMPONENT
+
+```jsx
+// Parent:
+const [count, setCount] = useState(0);
+<ChildComponent count={count} onIncrement={() => setCount(count + 1)} />
+
+// Child:
+function ChildComponent({ count, onIncrement }) {
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={onIncrement}>Increase</button>
+    </div>
+  );
+}
+```
+
+---
+
+## 31. PAGINATION
+
+```jsx
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 10;
+
+// Calculate what to show
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+// Calculate total pages
+const totalPages = Math.ceil(items.length / itemsPerPage);
+
+const goToNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
+
+const goToPrevPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+<button onClick={goToPrevPage} disabled={currentPage === 1}>
+  Previous
+</button>
+<span>Page {currentPage} of {totalPages}</span>
+<button onClick={goToNextPage} disabled={currentPage === totalPages}>
+  Next
+</button>
+
+{currentItems.map(item => (
+  <div key={item.id}>{item.name}</div>
+))}
+```
+
+---
+
+## 32. INFINITE SCROLL
+
+```jsx
+const [items, setItems] = useState([]);
+const [page, setPage] = useState(1);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+      loadMore();
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
+const loadMore = () => {
+  if (loading) return;
+  setLoading(true);
+  // Fetch more data here
+  fetch(`/api/items?page=${page}`)
+    .then(res => res.json())
+    .then(newItems => {
+      setItems([...items, ...newItems]);
+      setPage(page + 1);
+      setLoading(false);
+    });
+};
+```
+
+---
+
+## 33. DRAG AND DROP (Simple)
+
+```jsx
+const [draggedItem, setDraggedItem] = useState(null);
+
+const handleDragStart = (item) => {
+  setDraggedItem(item);
+};
+
+const handleDrop = (targetItem) => {
+  // Reorder items here
+  const newItems = [...items];
+  const draggedIndex = items.findIndex(i => i.id === draggedItem.id);
+  const targetIndex = items.findIndex(i => i.id === targetItem.id);
+  
+  newItems.splice(draggedIndex, 1);
+  newItems.splice(targetIndex, 0, draggedItem);
+  setItems(newItems);
+};
+
+<div
+  draggable
+  onDragStart={() => handleDragStart(item)}
+  onDragOver={(e) => e.preventDefault()}
+  onDrop={() => handleDrop(item)}
+>
+  {item.name}
+</div>
+```
+
+---
+
+## 34. STAR RATING
+
+```jsx
+const [rating, setRating] = useState(0);
+const [hover, setHover] = useState(0);
+
+{[1, 2, 3, 4, 5].map(star => (
+  <span
+    key={star}
+    onClick={() => setRating(star)}
+    onMouseEnter={() => setHover(star)}
+    onMouseLeave={() => setHover(0)}
+    style={{ cursor: 'pointer', color: star <= (hover || rating) ? 'gold' : 'gray' }}
+  >
+    ★
+  </span>
+))}
+```
+
+---
+
+## 35. AUTO-COMPLETE / TYPEAHEAD
+
+```jsx
+const [input, setInput] = useState('');
+const [suggestions, setSuggestions] = useState([]);
+const [showSuggestions, setShowSuggestions] = useState(false);
+
+const allOptions = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+
+const handleInputChange = (e) => {
+  const value = e.target.value;
+  setInput(value);
+  
+  if (value.length > 0) {
+    const filtered = allOptions.filter(option =>
+      option.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filtered);
+    setShowSuggestions(true);
+  } else {
+    setShowSuggestions(false);
+  }
+};
+
+const selectSuggestion = (suggestion) => {
+  setInput(suggestion);
+  setShowSuggestions(false);
+};
+
+<input value={input} onChange={handleInputChange} />
+{showSuggestions && (
+  <ul>
+    {suggestions.map((suggestion, index) => (
+      <li key={index} onClick={() => selectSuggestion(suggestion)}>
+        {suggestion}
+      </li>
+    ))}
+  </ul>
+)}
+```
+
+---
+
+## 36. MULTI-SELECT DROPDOWN
+
+```jsx
+const [selectedItems, setSelectedItems] = useState([]);
+const options = ['Apple', 'Banana', 'Cherry', 'Date'];
+
+const toggleItem = (item) => {
+  if (selectedItems.includes(item)) {
+    setSelectedItems(selectedItems.filter(i => i !== item));
+  } else {
+    setSelectedItems([...selectedItems, item]);
+  }
+};
+
+{options.map(option => (
+  <label key={option}>
+    <input
+      type="checkbox"
+      checked={selectedItems.includes(option)}
+      onChange={() => toggleItem(option)}
+    />
+    {option}
+  </label>
+))}
+
+<p>Selected: {selectedItems.join(', ')}</p>
+```
+
+---
+
+## 37. OTP INPUT (4-digit code)
+
+```jsx
+const [otp, setOtp] = useState(['', '', '', '']);
+
+const handleChange = (index, value) => {
+  if (value.length <= 1) {
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    
+    // Auto-focus next input
+    if (value && index < 3) {
+      document.getElementById(`otp-${index + 1}`).focus();
+    }
+  }
+};
+
+{otp.map((digit, index) => (
+  <input
+    key={index}
+    id={`otp-${index}`}
+    type="text"
+    maxLength="1"
+    value={digit}
+    onChange={(e) => handleChange(index, e.target.value)}
+    style={{ width: '40px', margin: '5px' }}
+  />
+))}
+```
+
+---
+
+## 38. PROGRESS BAR
+
+```jsx
+const [progress, setProgress] = useState(0);
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setProgress(prev => (prev >= 100 ? 0 : prev + 10));
+  }, 1000);
+  
+  return () => clearInterval(timer);
+}, []);
+
+<div style={{ width: '100%', backgroundColor: '#ddd' }}>
+  <div style={{ width: `${progress}%`, backgroundColor: 'blue', height: '20px' }}>
+    {progress}%
+  </div>
+</div>
+```
+
+---
+
+## 39. COUNTDOWN TIMER
+
+```jsx
+const [seconds, setSeconds] = useState(60);
+const [isActive, setIsActive] = useState(false);
+
+useEffect(() => {
+  let interval = null;
+  if (isActive && seconds > 0) {
+    interval = setInterval(() => {
+      setSeconds(seconds => seconds - 1);
+    }, 1000);
+  } else if (seconds === 0) {
+    setIsActive(false);
+  }
+  return () => clearInterval(interval);
+}, [isActive, seconds]);
+
+<div>{seconds}s</div>
+<button onClick={() => setIsActive(!isActive)}>
+  {isActive ? 'Pause' : 'Start'}
+</button>
+<button onClick={() => setSeconds(60)}>Reset</button>
+```
+
+---
+
+## 40. COPY TO CLIPBOARD
+
+```jsx
+const [copied, setCopied] = useState(false);
+
+const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text);
+  setCopied(true);
+  setTimeout(() => setCopied(false), 2000);
+};
+
+<button onClick={() => copyToClipboard('Text to copy')}>
+  {copied ? 'Copied!' : 'Copy'}
+</button>
+```
+
+---
+
+## 41. IMAGE PREVIEW BEFORE UPLOAD
+
+```jsx
+const [preview, setPreview] = useState(null);
+
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+<input type="file" accept="image/*" onChange={handleFileChange} />
+{preview && <img src={preview} alt="Preview" style={{ width: '200px' }} />}
+```
+
+---
+
+## 42. BREADCRUMB NAVIGATION
+
+```jsx
+const [path, setPath] = useState(['Home', 'Products', 'Electronics']);
+
+const navigateTo = (index) => {
+  setPath(path.slice(0, index + 1));
+};
+
+{path.map((item, index) => (
+  <span key={index}>
+    <span onClick={() => navigateTo(index)} style={{ cursor: 'pointer' }}>
+      {item}
+    </span>
+    {index < path.length - 1 && ' > '}
+  </span>
+))}
+```
+
+---
+
+## 43. DARK MODE TOGGLE
+
+```jsx
+const [isDark, setIsDark] = useState(false);
+
+useEffect(() => {
+  document.body.style.backgroundColor = isDark ? '#333' : '#fff';
+  document.body.style.color = isDark ? '#fff' : '#000';
+}, [isDark]);
+
+<button onClick={() => setIsDark(!isDark)}>
+  {isDark ? 'Light Mode' : 'Dark Mode'}
+</button>
+```
+
+---
+
+## 44. FORM VALIDATION
+
+```jsx
+const [email, setEmail] = useState('');
+const [error, setError] = useState('');
+
+const validateEmail = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (!validateEmail(email)) {
+    setError('Invalid email address');
+  } else {
+    setError('');
+    // Submit form
+  }
+};
+
+<form onSubmit={handleSubmit}>
+  <input
+    type="email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
+  {error && <p style={{ color: 'red' }}>{error}</p>}
+  <button type="submit">Submit</button>
+</form>
+```
+
+---
+
+## 45. STEPPER / WIZARD
+
+```jsx
+const [step, setStep] = useState(1);
+const totalSteps = 3;
+
+const nextStep = () => {
+  if (step < totalSteps) setStep(step + 1);
+};
+
+const prevStep = () => {
+  if (step > 1) setStep(step - 1);
+};
+
+<div>Step {step} of {totalSteps}</div>
+
+{step === 1 && <div>Step 1 Content</div>}
+{step === 2 && <div>Step 2 Content</div>}
+{step === 3 && <div>Step 3 Content</div>}
+
+<button onClick={prevStep} disabled={step === 1}>Back</button>
+<button onClick={nextStep} disabled={step === totalSteps}>Next</button>
+```
+
+---
+
+## COMMON MISTAKES TO AVOID
+
+### ❌ WRONG: Modifying state directly
+```jsx
+items.push(newItem);
+setItems(items);
+```
+
+### ✅ RIGHT: Create new array
+```jsx
+setItems([...items, newItem]);
+```
+
+---
+
+### ❌ WRONG: Forgetting key in lists
+```jsx
+{items.map(item => <div>{item.name}</div>)}
+```
+
+### ✅ RIGHT: Always add key
+```jsx
+{items.map(item => <div key={item.id}>{item.name}</div>)}
+```
+
+---
+
+### ❌ WRONG: Calling function immediately
+```jsx
+<button onClick={handleClick()}>Click</button>
+```
+
+### ✅ RIGHT: Pass function reference
+```jsx
+<button onClick={handleClick}>Click</button>
+<button onClick={() => handleClick()}>Click</button>
+```
+
+---
+
+### ❌ WRONG: Using = instead of ===
+```jsx
+if (count = 5) // This assigns, doesn't compare!
+```
+
+### ✅ RIGHT: Use === for comparison
+```jsx
+if (count === 5)
+```
+
+---
+
+## HOW TO USE THIS CHEAT SHEET
+
+1. Read the problem
+2. Find the matching pattern here
+3. Copy the pattern
+4. Paste in your code
+5. Change variable names to match your problem
+6. Test it
+7. Repeat for next part of problem
+
+---
+
+## PRACTICE SCHEDULE
+
+- **Week 1:** Counter, Toggle, Todo (add only), Input display
+- **Week 2:** Todo with delete, Search filter, Tabs, Accordion
+- **Week 3:** Carousel, Pagination, Modal, Star rating
+- **Week 4:** Form validation, Auto-complete, Multi-select, Timer
+- **Week 5:** Infinite scroll, Drag-drop, OTP input, Progress bar
+- **Week 6:** Dark mode, Breadcrumb, Stepper, Image preview
+
+After 50 problems, these patterns will be muscle memory!
