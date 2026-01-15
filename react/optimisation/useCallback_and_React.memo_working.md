@@ -910,3 +910,729 @@ const user = useMemo(() => ({ name: 'John' }), []);
 
 **Remember:** You only need `useCallback` when passing **FUNCTIONS** as props, and `useMemo` when passing **OBJECTS/ARRAYS** as props!
 
+--------------------
+
+# React Optimization - Complete Examples Guide
+
+A comprehensive guide with practical examples covering all React optimization scenarios: `React.memo`, `useCallback`, and `useMemo`.
+
+---
+
+## Table of Contents
+
+1. [Primitive Props - React.memo Only](#example-1-primitive-props)
+2. [Object Props - Problem Without useMemo](#example-2-object-props-problem)
+3. [Object Props - Solution With useMemo](#example-3-object-props-solution)
+4. [Function Props - Problem Without useCallback](#example-4-function-props-problem)
+5. [Function Props - Solution With useCallback](#example-4b-function-props-solution)
+6. [Expensive Calculations - useMemo Primary Purpose](#example-5-expensive-calculations)
+7. [Array Props - Problem and Solution](#example-6-array-props)
+8. [Multiple Props - Combined Optimization](#example-7-multiple-props)
+9. [Custom Comparison Function](#example-8-custom-comparison)
+
+---
+
+## Example 1: Primitive Props (NO useMemo needed)
+
+**✅ React.memo works automatically with primitive values**
+
+### Code
+
+```javascript
+import React, { useState } from "react";
+
+const Child = React.memo(({ name }) => {
+  console.log("Child rendered");
+  return <h2>Hello {name}</h2>;
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  const name = "John"; // primitive (string)
+
+  console.log("Parent rendered");
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child name={name} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+1. Click the "Count" button
+2. `count` state changes → Parent re-renders
+3. `name` is still `"John"` (same value)
+4. React.memo compares: `"John" === "John"` → `true` ✅
+5. **Child does NOT re-render** ✅
+
+### Console Output
+
+```
+Parent rendered
+Child rendered          // Only on mount
+Parent rendered         // After clicking button
+Parent rendered         // After clicking again
+```
+
+### 📝 Key Takeaway
+
+**Primitive values (strings, numbers, booleans, null, undefined) are compared by VALUE**, so React.memo works perfectly without any additional hooks.
+
+---
+
+## Example 2: Object Props - PROBLEM Without useMemo
+
+**❌ Child re-renders unnecessarily because object is recreated**
+
+### Code
+
+```javascript
+import React, { useState } from "react";
+
+const Child = React.memo(({ user }) => {
+  console.log("Child rendered");
+  return <h2>{user.name}</h2>;
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  const user = { name: "John" }; // ❌ new object every render
+
+  console.log("Parent rendered");
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child user={user} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+1. Click the "Count" button
+2. Parent re-renders
+3. New `user` object created: `{ name: "John" }` (new memory address)
+4. React.memo compares: `0x001 !== 0x002` → `false` ❌
+5. **Child re-renders unnecessarily** ❌
+
+### Console Output
+
+```
+Parent rendered
+Child rendered          // Mount
+Parent rendered         // After click
+Child rendered          // ❌ Unnecessary re-render!
+Parent rendered         // After another click
+Child rendered          // ❌ Unnecessary re-render!
+```
+
+### Why This Happens
+
+```javascript
+// Every render creates a NEW object
+const user = { name: "John" }; // Memory: 0x001
+
+// Next render (after state change)
+const user = { name: "John" }; // Memory: 0x002 (DIFFERENT!)
+
+// JavaScript comparison
+{ name: "John" } === { name: "John" } // false ❌
+```
+
+---
+
+## Example 3: Object Props - SOLUTION With useMemo
+
+**✅ Correct approach from React documentation**
+
+### Code
+
+```javascript
+import React, { useState, useMemo } from "react";
+
+const Child = React.memo(({ user }) => {
+  console.log("Child rendered");
+  return <h2>{user.name}</h2>;
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  // ✅ Object cached - same reference
+  const user = useMemo(() => {
+    return { name: "John" };
+  }, []); // Empty deps = never changes
+
+  console.log("Parent rendered");
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child user={user} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+1. First render: `user` object created → Memory: `0x001`
+2. Click button → Parent re-renders
+3. `useMemo` checks dependencies: `[]` (nothing changed)
+4. Returns SAME object → Memory: `0x001` ✅
+5. React.memo compares: `0x001 === 0x001` → `true` ✅
+6. **Child does NOT re-render** ✅
+
+### Console Output
+
+```
+Parent rendered
+Child rendered          // Only on mount
+Parent rendered         // After click
+Parent rendered         // After another click
+```
+
+### ⚠️ Important Note
+
+**However**, this use of `useMemo` is a **workaround**. Better alternatives:
+
+1. **Pass primitive props instead:**
+   ```javascript
+   <Child name="John" />
+   ```
+
+2. **Define object outside component:**
+   ```javascript
+   const USER = { name: "John" };
+   // Then use: <Child user={USER} />
+   ```
+
+3. **Use `useState` for dynamic objects:**
+   ```javascript
+   const [user] = useState({ name: "John" });
+   ```
+
+---
+
+## Example 4: Function Props - PROBLEM Without useCallback
+
+**❌ Child re-renders because function is recreated**
+
+### Code
+
+```javascript
+import React, { useState } from "react";
+
+const Child = React.memo(({ onClick }) => {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Child Button</button>;
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  // ❌ Function recreated every render
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
+  console.log("Parent rendered");
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child onClick={handleClick} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+1. Click "Count" button
+2. Parent re-renders
+3. `handleClick` function RECREATED (new memory address)
+4. React.memo compares: `0x001 !== 0x002` → `false` ❌
+5. **Child re-renders unnecessarily** ❌
+
+### Console Output
+
+```
+Parent rendered
+Child rendered          // Mount
+Parent rendered         // After click
+Child rendered          // ❌ Unnecessary!
+Parent rendered
+Child rendered          // ❌ Unnecessary!
+```
+
+### Why This Happens
+
+```javascript
+// Every render creates a NEW function
+const handleClick = () => console.log("clicked"); // 0x001
+
+// Next render
+const handleClick = () => console.log("clicked"); // 0x002 (NEW!)
+
+// Function comparison
+(() => {}) === (() => {}) // false ❌
+```
+
+---
+
+## Example 4b: Function Props - SOLUTION With useCallback
+
+**✅ Child only renders when necessary**
+
+### Code
+
+```javascript
+import React, { useState, useCallback } from "react";
+
+const Child = React.memo(({ onClick }) => {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Child Button</button>;
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  // ✅ Function cached - same reference
+  const handleClick = useCallback(() => {
+    console.log("clicked");
+  }, []); // Empty deps = never changes
+
+  console.log("Parent rendered");
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child onClick={handleClick} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+1. First render: `handleClick` created → Memory: `0x001`
+2. Click button → Parent re-renders
+3. `useCallback` checks dependencies: `[]` (nothing changed)
+4. Returns SAME function → Memory: `0x001` ✅
+5. React.memo compares: `0x001 === 0x001` → `true` ✅
+6. **Child does NOT re-render** ✅
+
+### Console Output
+
+```
+Parent rendered
+Child rendered          // Only on mount
+Parent rendered         // After click
+Parent rendered         // After another click
+```
+
+---
+
+## Example 5: Expensive Calculations (PRIMARY PURPOSE of useMemo)
+
+**✅ This is what `useMemo` is REALLY designed for**
+
+### Code
+
+```javascript
+import React, { useState, useMemo } from "react";
+
+function slowSum(num) {
+  console.log("Calculating...");
+  let total = 0;
+  for (let i = 0; i < 1e7; i++) {
+    total += num;
+  }
+  return total;
+}
+
+export default function App() {
+  const [count, setCount] = useState(1);
+  const [text, setText] = useState("");
+
+  // ✅ Memoize expensive calculation
+  const result = useMemo(() => slowSum(count), [count]);
+
+  return (
+    <div>
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type here"
+      />
+      <p>Result: {result}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment Count
+      </button>
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+**Without `useMemo`:**
+- Type in input → Component re-renders
+- `slowSum()` runs AGAIN (takes ~100ms) ❌
+- UI feels laggy
+
+**With `useMemo`:**
+- Type in input → Component re-renders
+- `useMemo` checks: `count` hasn't changed
+- Returns cached `result` → No calculation! ✅
+- UI stays responsive
+
+### Console Output
+
+```
+Calculating...          // On mount
+                        // Type in input → NO "Calculating..."
+Calculating...          // Only when clicking Increment
+```
+
+### 📝 Key Takeaway
+
+**This is the PRIMARY and CORRECT use case for `useMemo`:**
+- Avoid expensive recalculations
+- Cache heavy computations
+- Improve performance for costly operations
+
+---
+
+## Example 6: Array Props - Problem and Solution
+
+### ❌ Problem: Array Recreated Every Render
+
+```javascript
+import React, { useState } from "react";
+
+const Child = React.memo(({ items }) => {
+  console.log("Child rendered");
+  return (
+    <ul>
+      {items.map((item, i) => <li key={i}>{item}</li>)}
+    </ul>
+  );
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  const items = ["Apple", "Banana", "Cherry"]; // ❌ New array every render
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child items={items} />
+    </div>
+  );
+}
+```
+
+**Result:** Child re-renders every time ❌
+
+### ✅ Solution 1: Define Outside Component
+
+```javascript
+// ✅ Best for static arrays
+const ITEMS = ["Apple", "Banana", "Cherry"];
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child items={ITEMS} />
+    </div>
+  );
+}
+```
+
+### ✅ Solution 2: Use useState
+
+```javascript
+export default function App() {
+  const [count, setCount] = useState(0);
+  const [items] = useState(["Apple", "Banana", "Cherry"]);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child items={items} />
+    </div>
+  );
+}
+```
+
+### ✅ Solution 3: useMemo (Only if Processing is Expensive)
+
+```javascript
+export default function App() {
+  const [count, setCount] = useState(0);
+  const [rawData, setRawData] = useState([...]);
+
+  // ✅ Only if filtering/mapping is expensive
+  const items = useMemo(() => {
+    console.log("Processing array...");
+    return rawData
+      .filter(item => item.active)
+      .map(item => item.name);
+  }, [rawData]);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child items={items} />
+    </div>
+  );
+}
+```
+
+---
+
+## Example 7: Multiple Props - Combined Optimization
+
+**Real-world scenario with mixed prop types**
+
+```javascript
+import React, { useState, useCallback, useMemo } from "react";
+
+const Child = React.memo(({ name, age, onClick, config }) => {
+  console.log("Child rendered");
+  return (
+    <div>
+      <h2>{name} - {age}</h2>
+      <button onClick={onClick}>Click</button>
+      <p>Theme: {config.theme}</p>
+    </div>
+  );
+});
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  // ✅ Primitives - no memo needed
+  const name = "John";
+  const age = 30;
+
+  // ✅ Function - needs useCallback
+  const handleClick = useCallback(() => {
+    console.log("clicked");
+  }, []);
+
+  // ✅ Object - better to define outside or use useMemo
+  const config = useMemo(() => ({ theme: "dark" }), []);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      <Child 
+        name={name} 
+        age={age} 
+        onClick={handleClick} 
+        config={config} 
+      />
+    </div>
+  );
+}
+```
+
+### Console Output
+
+```
+Child rendered          // Only on mount
+                        // Click "Count" → Child does NOT render ✅
+```
+
+---
+
+## Example 8: Custom Comparison Function
+
+**Advanced: Fine-grained control over when to re-render**
+
+```javascript
+import React, { useState } from "react";
+
+// ✅ Custom comparison - only re-render if user.id changes
+const Child = React.memo(
+  ({ user }) => {
+    console.log("Child rendered");
+    return <h2>{user.name} - {user.age}</h2>;
+  },
+  (prevProps, nextProps) => {
+    // Return true to SKIP re-render
+    // Return false to ALLOW re-render
+    return prevProps.user.id === nextProps.user.id;
+  }
+);
+
+export default function App() {
+  const [user, setUser] = useState({ id: 1, name: "John", age: 30 });
+
+  const updateAge = () => {
+    // Even though age changes, Child won't re-render
+    setUser({ id: 1, name: "John", age: user.age + 1 });
+  };
+
+  const updateUser = () => {
+    // ID changes → Child will re-render
+    setUser({ id: 2, name: "Jane", age: 25 });
+  };
+
+  return (
+    <div>
+      <button onClick={updateAge}>Update Age</button>
+      <button onClick={updateUser}>Change User</button>
+      <Child user={user} />
+    </div>
+  );
+}
+```
+
+### 🔍 What Happens
+
+- Click "Update Age" → Age changes but `id` is same → **Child does NOT re-render** ✅
+- Click "Change User" → `id` changes → **Child re-renders** ✅
+
+---
+
+## Complete Comparison Table
+
+| Prop Type | React.memo Alone? | What You Need | Example |
+|-----------|------------------|---------------|---------|
+| **String** | ✅ YES | Just `React.memo` | `name="John"` |
+| **Number** | ✅ YES | Just `React.memo` | `age={30}` |
+| **Boolean** | ✅ YES | Just `React.memo` | `active={true}` |
+| **Null/Undefined** | ✅ YES | Just `React.memo` | `data={null}` |
+| **Function** | ❌ NO | `React.memo` + `useCallback` | `onClick={handleClick}` |
+| **Object** | ❌ NO | Define outside OR `useMemo` | `user={USER}` |
+| **Array** | ❌ NO | Define outside OR `useMemo` | `items={ITEMS}` |
+| **Expensive Calc** | N/A | `useMemo` | `result={useMemo(...)}` |
+
+---
+
+## Decision Tree: Which Hook to Use?
+
+```
+Is it a primitive value (string, number, boolean)?
+├─ YES → Just use React.memo ✅
+└─ NO → Continue...
+
+Is it a function?
+├─ YES → Use useCallback ✅
+└─ NO → Continue...
+
+Is it an object or array?
+├─ Static (never changes)? → Define outside component ✅
+├─ Dynamic? → Use useState ✅
+└─ Expensive to compute? → Use useMemo ✅
+
+Is it an expensive calculation?
+└─ YES → Use useMemo ✅ (PRIMARY PURPOSE)
+```
+
+---
+
+## Common Mistakes to Avoid
+
+### ❌ Mistake 1: Using useMemo for Simple Objects
+
+```javascript
+// ❌ DON'T DO THIS - Unnecessary overhead
+const user = useMemo(() => ({ name: "John" }), []);
+
+// ✅ DO THIS - Define outside
+const USER = { name: "John" };
+```
+
+### ❌ Mistake 2: Forgetting useCallback for Functions
+
+```javascript
+// ❌ DON'T DO THIS
+const handleClick = () => console.log("hi");
+<MemoChild onClick={handleClick} />
+
+// ✅ DO THIS
+const handleClick = useCallback(() => console.log("hi"), []);
+<MemoChild onClick={handleClick} />
+```
+
+### ❌ Mistake 3: Overusing React.memo
+
+```javascript
+// ❌ DON'T DO THIS - Component is already fast
+const SimpleText = React.memo(({ text }) => <p>{text}</p>);
+
+// ✅ DO THIS - Only memo when re-renders are expensive
+function SimpleText({ text }) {
+  return <p>{text}</p>;
+}
+```
+
+---
+
+## Summary: The Three Optimization Tools
+
+### 1. React.memo
+**Purpose:** Prevent component re-renders when props haven't changed  
+**Works with:** Primitives automatically  
+**Needs help with:** Functions (useCallback), Objects/Arrays (useMemo or alternatives)
+
+### 2. useCallback
+**Purpose:** Cache function definitions  
+**Use when:** Passing functions to memoized children  
+**Don't use:** For every function (only when needed for optimization)
+
+### 3. useMemo
+**Purpose:** Cache expensive computation results  
+**Primary use:** Avoid recalculating heavy operations  
+**Secondary use:** Stabilize object/array references (but prefer alternatives)
+
+---
+
+## Final Best Practices
+
+1. ✅ **Start without optimization** - Only optimize when you have performance issues
+2. ✅ **Use React DevTools Profiler** to identify slow components
+3. ✅ **Prefer primitives** as props when possible
+4. ✅ **Define constants outside** components
+5. ✅ **Use useState** for dynamic objects/arrays
+6. ✅ **Reserve useMemo** for genuinely expensive calculations
+7. ✅ **Combine tools properly** - React.memo + useCallback/useMemo when needed
+
+**Remember:** Premature optimization is the root of all evil. Measure first, then optimize! 🎯
