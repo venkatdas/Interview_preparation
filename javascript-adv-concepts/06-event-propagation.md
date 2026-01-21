@@ -11,7 +11,7 @@
 - and If I click on button form and div also executed .. In which direction or sequence all of these events is executed. Can we change the sequence of Execution?
 -  Which involves lot of phases and these comes under Event propagation.
 
-#### Event Bubling
+#### Event Bubling (Default Phase)
 
 - Event bubbling in JavaScript is a mechanism where an event triggered on a DOM element propagates up to its ancestors in the hierarchy, potentially triggering event handlers attached to these ancestor elements.
 - This means that if you click on a child element, the event will first be handled by the child (if an event handler is attached), and then the event will "bubble" up to its parent, and then to the parent's parent, and so on,
