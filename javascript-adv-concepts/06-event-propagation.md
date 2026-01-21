@@ -1,5 +1,7 @@
 ### Event Propagation topics .. Bubbling, capturing and Delegation
 
+- Event propagation describes how an event travels through the DOM tree when something happens (like a click)
+
 - Event propagation is a way of defining the element order when an event occurs.
 -  If you have a `p` element inside a `div` element, and the user clicks on the `p` element, which element's "click" event should be handled first?
 
