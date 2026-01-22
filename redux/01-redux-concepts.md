@@ -521,3 +521,885 @@ const store = configureStore({
 ## 14 Middewares that you have worked on
 
 ## 15 Redux Middleware and Redux Toolkit
+
+----------
+
+# Redux Toolkit - Complete Interview Guide
+
+## Table of Contents
+1. [useSelector & useDispatch](#useselector--usedispatch)
+2. [How Immer Handles Immutability](#how-immer-handles-immutability)
+3. [How Actions Are Auto-Generated](#how-actions-are-auto-generated)
+4. [Complete Working Example with Console Logs](#complete-working-example)
+
+---
+
+## useSelector & useDispatch
+
+### 1. useSelector - Reading State from Redux
+
+**Purpose:** Get data FROM Redux store
+
+**When to use:**
+- When you need to READ/ACCESS Redux state in a component
+- To display data from Redux store in UI
+
+**Basic Syntax:**
+```javascript
+const data = useSelector((state) => state.sliceName.property);
+```
+
+#### Scenario 1: Get Simple Value
+```javascript
+// Redux state:
+{
+  counter: {
+    value: 5
+  }
+}
+
+// Component:
+import { useSelector } from 'react-redux';
+
+function Counter() {
+  const count = useSelector((state) => state.counter.value);
+  
+  return <h1>Count: {count}</h1>;  // Shows: Count: 5
+}
+```
+
+#### Scenario 2: Get Array
+```javascript
+// Redux state:
+{
+  todos: {
+    items: [
+      { id: 1, text: 'Buy milk' },
+      { id: 2, text: 'Learn Redux' }
+    ]
+  }
+}
+
+// Component:
+function TodoList() {
+  const todos = useSelector((state) => state.todos.items);
+  
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### Scenario 3: Get Object
+```javascript
+// Redux state:
+{
+  user: {
+    profile: {
+      name: 'John',
+      email: 'john@example.com',
+      age: 25
+    }
+  }
+}
+
+// Component:
+function UserProfile() {
+  const profile = useSelector((state) => state.user.profile);
+  
+  return (
+    <div>
+      <p>Name: {profile.name}</p>
+      <p>Email: {profile.email}</p>
+      <p>Age: {profile.age}</p>
+    </div>
+  );
+}
+```
+
+#### Scenario 4: Get Multiple Values
+```javascript
+// Redux state:
+{
+  todos: {
+    items: [...],
+    filter: 'all',
+    loading: false
+  }
+}
+
+// Component:
+function TodoApp() {
+  // Option 1: Multiple useSelector calls
+  const todos = useSelector((state) => state.todos.items);
+  const filter = useSelector((state) => state.todos.filter);
+  const loading = useSelector((state) => state.todos.loading);
+  
+  // Option 2: Get everything at once
+  const { items, filter, loading } = useSelector((state) => state.todos);
+  
+  return (
+    <div>
+      {loading ? <p>Loading...</p> : <TodoList todos={items} />}
+      <p>Filter: {filter}</p>
+    </div>
+  );
+}
+```
+
+#### Scenario 5: Get Computed/Filtered Data
+```javascript
+function ActiveTodos() {
+  // Filter data inside selector
+  const activeTodos = useSelector((state) => 
+    state.todos.items.filter(todo => !todo.completed)
+  );
+  
+  return (
+    <ul>
+      {activeTodos.map(todo => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+---
+
+### 2. useDispatch - Sending Actions to Redux
+
+**Purpose:** Send actions TO Redux store (to update state)
+
+**When to use:**
+- When you need to UPDATE/CHANGE Redux state
+- To trigger state changes from components
+
+**Basic Syntax:**
+```javascript
+const dispatch = useDispatch();
+dispatch(actionCreator(payload));
+```
+
+#### Scenario 1: Action with NO Payload
+```javascript
+// Slice:
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) => {
+      state.value += 1;  // No payload needed
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+  },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+
+// Component:
+import { useDispatch } from 'react-redux';
+import { increment, decrement } from './counterSlice';
+
+function Counter() {
+  const dispatch = useDispatch();
+  
+  return (
+    <div>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+    </div>
+  );
+}
+
+// What happens:
+// dispatch(increment()) sends: { type: 'counter/increment' }
+// dispatch(decrement()) sends: { type: 'counter/decrement' }
+```
+
+#### Scenario 2: Action with SIMPLE Payload (string, number)
+```javascript
+// Slice:
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState: { items: [] },
+  reducers: {
+    addTodo: (state, action) => {
+      state.items.push({
+        id: Date.now(),
+        text: action.payload,  // payload is a string
+        completed: false
+      });
+    },
+    removeTodo: (state, action) => {
+      state.items = state.items.filter(
+        todo => todo.id !== action.payload  // payload is a number
+      );
+    },
+  },
+});
+
+export const { addTodo, removeTodo } = todoSlice.actions;
+
+// Component:
+import { useDispatch } from 'react-redux';
+import { addTodo, removeTodo } from './todoSlice';
+
+function TodoApp() {
+  const [text, setText] = useState('');
+  const dispatch = useDispatch();
+  
+  const handleAdd = () => {
+    dispatch(addTodo(text));  
+    // Sends: { type: 'todos/addTodo', payload: 'Buy milk' }
+  };
+  
+  const handleRemove = (id) => {
+    dispatch(removeTodo(id));
+    // Sends: { type: 'todos/removeTodo', payload: 123 }
+  };
+  
+  return (
+    <div>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleAdd}>Add</button>
+      <button onClick={() => handleRemove(123)}>Delete</button>
+    </div>
+  );
+}
+```
+
+#### Scenario 3: Action with OBJECT Payload
+```javascript
+// Slice:
+const userSlice = createSlice({
+  name: 'user',
+  initialState: { profile: null },
+  reducers: {
+    setUser: (state, action) => {
+      state.profile = action.payload;  // payload is an object
+    },
+    updateUser: (state, action) => {
+      state.profile.name = action.payload.name;
+      state.profile.email = action.payload.email;
+    },
+  },
+});
+
+export const { setUser, updateUser } = userSlice.actions;
+
+// Component:
+import { useDispatch } from 'react-redux';
+import { setUser, updateUser } from './userSlice';
+
+function UserForm() {
+  const dispatch = useDispatch();
+  
+  const handleLogin = () => {
+    dispatch(setUser({
+      id: 1,
+      name: 'John',
+      email: 'john@example.com',
+      age: 25
+    }));
+    // Sends: { 
+    //   type: 'user/setUser', 
+    //   payload: { id: 1, name: 'John', email: '...', age: 25 }
+    // }
+  };
+  
+  const handleUpdate = () => {
+    dispatch(updateUser({
+      name: 'John Updated',
+      email: 'newemail@example.com'
+    }));
+  };
+  
+  return (
+    <div>
+      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleUpdate}>Update</button>
+    </div>
+  );
+}
+```
+
+#### Scenario 4: Action with MULTIPLE Parameters
+```javascript
+// Slice:
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState: { items: [] },
+  reducers: {
+    editTodo: (state, action) => {
+      // payload: { id: number, text: string }
+      const todo = state.items.find(t => t.id === action.payload.id);
+      if (todo) {
+        todo.text = action.payload.text;
+      }
+    },
+  },
+});
+
+export const { editTodo } = todoSlice.actions;
+
+// Component:
+import { useDispatch } from 'react-redux';
+import { editTodo } from './todoSlice';
+
+function TodoItem({ todo }) {
+  const dispatch = useDispatch();
+  
+  const handleEdit = (newText) => {
+    dispatch(editTodo({
+      id: todo.id,
+      text: newText
+    }));
+    // Sends: { 
+    //   type: 'todos/editTodo', 
+    //   payload: { id: 123, text: 'Updated text' }
+    // }
+  };
+  
+  return (
+    <button onClick={() => handleEdit('New text')}>Edit</button>
+  );
+}
+```
+
+---
+
+### Quick Reference Table
+
+| Hook | Purpose | Usage | Returns |
+|------|---------|-------|---------|
+| `useSelector` | **Read** state | `useSelector(state => state.slice.property)` | The selected data |
+| `useDispatch` | **Update** state | `useDispatch()` | The dispatch function |
+
+### Payload Patterns
+
+| Action Type | Payload | Example |
+|-------------|---------|---------|
+| **No payload** | `undefined` | `dispatch(increment())` |
+| **String** | `"text"` | `dispatch(addTodo("Buy milk"))` |
+| **Number** | `123` | `dispatch(removeTodo(123))` |
+| **Boolean** | `true/false` | `dispatch(setLoading(true))` |
+| **Object** | `{...}` | `dispatch(setUser({ name: 'John' }))` |
+| **Array** | `[...]` | `dispatch(setTodos([...]))` |
+
+---
+
+## How Immer Handles Immutability
+
+### The Problem Without Immer
+
+In traditional Redux, you must update state immutably:
+
+```javascript
+// ❌ WRONG - Direct mutation
+function reducer(state, action) {
+  state.count = state.count + 1;  // Mutates original state
+  return state;  // Redux won't detect change!
+}
+
+// ✅ CORRECT - Immutable update
+function reducer(state, action) {
+  return {
+    ...state,
+    count: state.count + 1
+  };
+}
+
+// ❌ PAINFUL - Nested updates
+function reducer(state, action) {
+  return {
+    ...state,
+    user: {
+      ...state.user,
+      profile: {
+        ...state.user.profile,
+        address: {
+          ...state.user.profile.address,
+          city: action.payload  // Finally update!
+        }
+      }
+    }
+  };
+}
+```
+
+### How Immer Works
+
+Immer uses **Proxy objects** to track changes:
+
+```javascript
+import produce from 'immer';
+
+const currentState = {
+  count: 5,
+  user: {
+    name: 'John',
+    address: {
+      city: 'New York'
+    }
+  }
+};
+
+// With Immer
+const nextState = produce(currentState, draft => {
+  // Write code that LOOKS like mutation
+  draft.count += 1;
+  draft.user.address.city = 'Boston';
+  // Immer handles immutability!
+});
+
+console.log('Current State:', currentState);
+// { count: 5, user: { name: 'John', address: { city: 'New York' } } }
+
+console.log('Next State:', nextState);
+// { count: 6, user: { name: 'John', address: { city: 'Boston' } } }
+
+console.log('Current state unchanged?', currentState.count === 5);  // true
+console.log('New state created?', currentState !== nextState);  // true
+```
+
+### Immer's Magic Process
+
+```
+Step 1: Create Draft (Proxy)
+────────────────────────────
+currentState → [Immer] → draft (proxy object)
+
+Step 2: Track Mutations
+────────────────────────────
+draft.count += 1;
+↓
+Immer records: "count property changed from 5 to 6"
+
+Step 3: Produce New State
+────────────────────────────
+Immer creates new object with only changed parts copied:
+{
+  count: 6,           ← NEW (copied and modified)
+  user: {             ← SAME reference (unchanged)
+    name: 'John',
+    address: {...}
+  }
+}
+```
+
+### RTK Auto-Wraps Reducers with Immer
+
+```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState: { items: [] },
+  reducers: {
+    // What you write:
+    addTodo: (state, action) => {
+      state.items.push(action.payload);  // Looks like mutation!
+    },
+    
+    // What RTK does behind the scenes:
+    addTodo: (state, action) => {
+      return produce(state, draft => {
+        draft.items.push(action.payload);
+      });
+    }
+  }
+});
+```
+
+### Immer Performance - Structural Sharing
+
+```javascript
+const state = {
+  todos: [/* 1000 items */],
+  user: { name: 'John' },
+  settings: { theme: 'dark' }
+};
+
+// Update only todos
+const nextState = produce(state, draft => {
+  draft.todos.push({ id: 1001, text: 'New todo' });
+});
+
+// Result:
+// todos: NEW array (copied + modified)
+// user: SAME reference (not copied)
+// settings: SAME reference (not copied)
+
+console.log(state.user === nextState.user);  // true ✅
+console.log(state.settings === nextState.settings);  // true ✅
+console.log(state.todos === nextState.todos);  // false (changed)
+```
+
+### Two Valid Patterns in RTK
+
+#### Pattern 1: Mutating Draft (Recommended)
+```javascript
+reducers: {
+  addTodo: (state, action) => {
+    state.items.push(action.payload);
+    // No return needed!
+  }
+}
+```
+
+#### Pattern 2: Returning New State
+```javascript
+reducers: {
+  addTodo: (state, action) => {
+    return {
+      ...state,
+      items: [...state.items, action.payload]
+    };
+  }
+}
+```
+
+#### ⚠️ DON'T Mix Both!
+```javascript
+// ❌ WRONG
+reducers: {
+  addTodo: (state, action) => {
+    state.items.push(action.payload);  // Mutation
+    return state;  // Don't return after mutating!
+  }
+}
+```
+
+---
+
+## How Actions Are Auto-Generated
+
+### Traditional Redux (Manual)
+
+```javascript
+// Step 1: Define action type
+const ADD_TODO = 'todos/addTodo';
+
+// Step 2: Create action creator
+function addTodo(text) {
+  return {
+    type: ADD_TODO,
+    payload: text
+  };
+}
+
+// Step 3: Use in component
+dispatch(addTodo('Buy milk'));
+// Creates: { type: 'todos/addTodo', payload: 'Buy milk' }
+```
+
+### Redux Toolkit (Auto-Generated)
+
+```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
+const todoSlice = createSlice({
+  name: 'todos',  // ← Used as action type prefix
+  initialState: { items: [] },
+  reducers: {
+    // You ONLY write the reducer function
+    addTodo: (state, action) => {
+      state.items.push(action.payload);
+    },
+  },
+});
+
+// RTK AUTO-GENERATES the action creator!
+export const { addTodo } = todoSlice.actions;
+
+// Use it the same way:
+dispatch(addTodo('Buy milk'));
+// Creates: { type: 'todos/addTodo', payload: 'Buy milk' }
+```
+
+### What createSlice Returns
+
+```javascript
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState: { items: [] },
+  reducers: {
+    addTodo: (state, action) => {
+      state.items.push(action.payload);
+    },
+    removeTodo: (state, action) => {
+      state.items = state.items.filter(t => t.id !== action.payload);
+    },
+  },
+});
+
+console.log(todoSlice);
+/*
+{
+  name: 'todos',
+  reducer: [Function],        // The combined reducer
+  actions: {                  // ✨ AUTO-GENERATED action creators
+    addTodo: [Function],
+    removeTodo: [Function]
+  },
+  caseReducers: {            // Individual reducer functions
+    addTodo: [Function],
+    removeTodo: [Function]
+  }
+}
+*/
+```
+
+### How Action Types Are Generated
+
+```javascript
+// Format: 'name/reducerKey'
+
+const slice = createSlice({
+  name: 'todos',  // ← Prefix
+  reducers: {
+    addTodo: ...,      // → 'todos/addTodo'
+    removeTodo: ...,   // → 'todos/removeTodo'
+    toggleTodo: ...,   // → 'todos/toggleTodo'
+  }
+});
+
+// Different slice, same reducer name - no conflict!
+const userSlice = createSlice({
+  name: 'user',  // ← Different prefix
+  reducers: {
+    update: ...,  // → 'user/update'
+  }
+});
+
+const productSlice = createSlice({
+  name: 'product',
+  reducers: {
+    update: ...,  // → 'product/update' ✅ No conflict!
+  }
+});
+```
+
+---
+
+## Complete Working Example with Console Logs
+
+Here's a complete example with console.log statements to see everything in action:
+
+```javascript
+// ============ todoSlice.js ============
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  items: []
+};
+
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState,
+  reducers: {
+    addTodo: (state, action) => {
+      console.log('🎯 REDUCER CALLED: addTodo');
+      console.log('📥 Current state:', JSON.stringify(state));
+      console.log('📦 Action received:', action);
+      console.log('📦 Payload:', action.payload);
+      
+      const newTodo = {
+        id: Date.now(),
+        text: action.payload,
+        completed: false
+      };
+      
+      state.items.push(newTodo);
+      
+      console.log('📤 State after mutation:', JSON.stringify(state));
+      console.log('───────────────────────────────');
+    },
+    
+    removeTodo: (state, action) => {
+      console.log('🎯 REDUCER CALLED: removeTodo');
+      console.log('📥 Current state:', JSON.stringify(state));
+      console.log('📦 Action:', action);
+      console.log('📦 Payload (ID to remove):', action.payload);
+      
+      state.items = state.items.filter(todo => todo.id !== action.payload);
+      
+      console.log('📤 State after mutation:', JSON.stringify(state));
+      console.log('───────────────────────────────');
+    },
+    
+    toggleTodo: (state, action) => {
+      console.log('🎯 REDUCER CALLED: toggleTodo');
+      console.log('📦 Payload (ID to toggle):', action.payload);
+      
+      const todo = state.items.find(t => t.id === action.payload);
+      if (todo) {
+        console.log('📝 Before toggle:', todo);
+        todo.completed = !todo.completed;
+        console.log('📝 After toggle:', todo);
+      }
+      console.log('───────────────────────────────');
+    }
+  }
+});
+
+// Log the auto-generated actions
+console.log('✨ AUTO-GENERATED ACTIONS:', Object.keys(todoSlice.actions));
+// Output: ['addTodo', 'removeTodo', 'toggleTodo']
+
+export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+export default todoSlice.reducer;
+
+
+// ============ Component ============
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo, removeTodo, toggleTodo } from './todoSlice';
+
+function TodoApp() {
+  const [text, setText] = useState('');
+  
+  // Get dispatch function
+  const dispatch = useDispatch();
+  console.log('🔧 Dispatch function:', typeof dispatch);  // 'function'
+  
+  // Get todos from Redux state
+  const todos = useSelector((state) => {
+    console.log('🔍 useSelector called');
+    console.log('🔍 Full Redux state:', state);
+    console.log('🔍 Todos slice:', state.todos);
+    return state.todos.items;
+  });
+  
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (text.trim()) {
+      console.log('👆 User clicked Add button');
+      console.log('💭 Input text:', text);
+      
+      // Create action by calling action creator
+      const action = addTodo(text);
+      console.log('🎬 Action created:', action);
+      console.log('🎬 Action type:', action.type);
+      console.log('🎬 Action payload:', action.payload);
+      
+      // Dispatch the action
+      console.log('📤 Dispatching action...');
+      dispatch(action);
+      
+      // Or in one line (same result):
+      // dispatch(addTodo(text));
+      
+      setText('');
+    }
+  };
+  
+  const handleRemove = (id) => {
+    console.log('👆 User clicked Remove for ID:', id);
+    const action = removeTodo(id);
+    console.log('🎬 Action created:', action);
+    dispatch(action);
+  };
+  
+  const handleToggle = (id) => {
+    console.log('👆 User clicked Toggle for ID:', id);
+    dispatch(toggleTodo(id));
+  };
+  
+  console.log('🎨 Component rendering with todos:', todos);
+  
+  return (
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h1>Redux Toolkit Todo with Logs</h1>
+      
+      <form onSubmit={handleAdd}>
+        <input 
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter todo..."
+          style={{ padding: '8px', marginRight: '8px' }}
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      
+      <ul style={{ marginTop: '20px' }}>
+        {todos.map(todo => (
+          <li key={todo.id} style={{ marginBottom: '10px' }}>
+            <span 
+              onClick={() => handleToggle(todo.id)}
+              style={{ 
+                cursor: 'pointer',
+                textDecoration: todo.completed ? 'line-through' : 'none',
+                marginRight: '10px'
+              }}
+            >
+              {todo.text}
+            </span>
+            <button onClick={() => handleRemove(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+      
+      <div style={{ marginTop: '20px', padding: '10px', background: '#f0f0f0' }}>
+        <strong>Open Console (F12) to see logs!</strong>
+      </div>
+    </div>
+  );
+}
+
+export default TodoApp;
+```
+
+### Console Output When You Add a Todo:
+
+```
+👆 User clicked Add button
+💭 Input text: Buy milk
+🎬 Action created: {type: 'todos/addTodo', payload: 'Buy milk'}
+🎬 Action type: todos/addTodo
+🎬 Action payload: Buy milk
+📤 Dispatching action...
+🎯 REDUCER CALLED: addTodo
+📥 Current state: {"items":[]}
+📦 Action received: {type: 'todos/addTodo', payload: 'Buy milk'}
+📦 Payload: Buy milk
+📤 State after mutation: {"items":[{"id":1674567890,"text":"Buy milk","completed":false}]}
+───────────────────────────────
+🔍 useSelector called
+🔍 Full Redux state: {todos: {items: [{…}]}}
+🔍 Todos slice: {items: Array(1)}
+🎨 Component rendering with todos: [{id: 1674567890, text: 'Buy milk', completed: false}]
+```
+
+---
+
+## Summary
+
+### useSelector
+- ✅ **Purpose:** READ state from Redux
+- ✅ **Usage:** `const data = useSelector(state => state.slice.property)`
+- ✅ **Same for all cases:** Just change the path
+
+### useDispatch
+- ✅ **Purpose:** UPDATE state in Redux
+- ✅ **Usage:** `dispatch(actionCreator(payload))`
+- ✅ **Works with or without payload**
+
+### Immer
+- ✅ **Purpose:** Handle immutability automatically
+- ✅ **How:** Wraps state in Proxy, tracks changes, produces new state
+- ✅ **Benefit:** Write mutating code that's actually immutable
+
+### Auto-Generated Actions
+- ✅ **Purpose:** Eliminate boilerplate
+- ✅ **How:** `createSlice` generates action creators from reducers
+- ✅ **Format:** `'sliceName/reducerKey'`
+
+**Key Takeaway:** Redux Toolkit makes Redux 70% simpler while keeping the same core principles!
