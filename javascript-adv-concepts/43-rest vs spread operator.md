@@ -1,4 +1,56 @@
 ## rest vs spread
+---------------
+
+# Rest Parameter vs Spread Operator
+
+---
+
+## ✅ Understanding
+
+- **Rest Parameter**
+  - Used in the **function definition**
+  - It **collects** arguments
+  - Those collected values become **function parameters**
+
+- **Spread Operator**
+  - Used in the **function call**
+  - It **spreads** values
+  - Those values are **arguments**
+
+---
+
+## 🔧 Interview-Ready Definition
+
+A rest parameter is used in a function definition to collect arguments into a parameter, while the spread operator is used in a function call to expand values as arguments.
+
+---
+
+## 🧠 Code Example
+
+```javascript
+function demo(...params) {   // REST → parameters
+  console.log(params);
+}
+
+const arr = [1, 2];
+demo(...arr);               // SPREAD → arguments
+```
+
+| Syntax      | Type           | Role                          |
+|-------------|----------------|-------------------------------|
+| `...params` | Rest Parameter | Collects arguments into a parameter |
+| `...arr`    | Spread Operator| Expands values as arguments   |
+
+---
+
+## 🎯 Ultra-Short Memory Rule
+
+| Context           | Term       | Role        |
+|-------------------|------------|-------------|
+| Function definition | **REST**   | → parameters |
+| Function call     | **SPREAD** | → arguments  |
+
+---------------
 
 **Rest Operator (...)**
 - The rest operator collects all remaining elements into an array. It is used in function arguments and destructuring assignments.
