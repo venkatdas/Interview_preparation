@@ -1,6 +1,15 @@
 ## rest vs spread
 ---------------
 
+
+| Concept        | Where               | Example                |
+| -------------- | ------------------- | ---------------------- |
+| **Parameters** | Function definition | `function fn(a, b)`    |
+| **Arguments**  | Function call       | `fn(2, 3)`             |
+| **REST**       | Parameters          | `function fn(...args)` |
+| **SPREAD**     | Arguments           | `fn(...args)`          |
+
+
 # Rest Parameter vs Spread Operator
 
 ---
