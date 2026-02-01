@@ -28,3 +28,27 @@ function flattenArrays(arr){
 
 console.log(flattenArrays([1, [2, [3, [4, 5]]], 6]));
 ```
+---------
+
+```js
+function flatten(arr, depth = 1) {
+    const result = [];
+    
+    for (let i = 0; i < arr.length; i++) {
+        const element = arr[i];
+        
+        if (Array.isArray(element) && depth > 0) {
+            result.push(...flatten(element, depth - 1));  // Recursive call
+        } else {
+            result.push(element);
+        }
+    }
+    
+    return result;
+}
+
+// Usage
+const arr = [1, 2, 3, [4, 5, [6, 7]]];
+console.log(flatten(arr, 1));  // [1, 2, 3, 4, 5, [6, 7]]
+console.log(flatten(arr, 2));  // [1, 2, 3, 4, 5, 6, 7]
+```
