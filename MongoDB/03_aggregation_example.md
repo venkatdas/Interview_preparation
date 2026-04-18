@@ -270,3 +270,313 @@ Before writing aggregation, always think:
 * Used for analytics and transformations
 
 ---
+
+# MongoDB Aggregation Stages — Complete Guide
+
+---
+
+# 📌 What is Aggregation?
+
+Aggregation is a **pipeline of stages** where each stage processes data and passes it to the next stage.
+
+```text
+Input → Stage1 → Stage2 → Stage3 → Output
+```
+
+---
+
+# 🧠 Core Rule
+
+👉 **Order matters**
+Each stage works on the output of the previous stage.
+
+---
+
+# 🚀 All Important Aggregation Stages
+
+---
+
+## 🔹 1. `$match` — Filter Data
+
+```js
+{ $match: { age: { $gt: 20 } } }
+```
+
+* Works like SQL `WHERE`
+* Filters documents early
+
+---
+
+## 🔹 2. `$project` — Select / Transform Fields
+
+```js
+{ $project: { name: 1, age: 1, _id: 0 } }
+```
+
+* Select specific fields
+* Rename or compute fields
+
+---
+
+## 🔹 3. `$group` — Aggregate Data
+
+```js
+{
+  $group: {
+    _id: "$userId",
+    total: { $sum: "$amount" }
+  }
+}
+```
+
+* Performs calculations
+* Used for sum, count, avg
+
+---
+
+## 🔹 4. `$sort` — Sort Data
+
+```js
+{ $sort: { age: -1 } }
+```
+
+* `1` → ascending
+* `-1` → descending
+
+---
+
+## 🔹 5. `$limit` — Limit Results
+
+```js
+{ $limit: 5 }
+```
+
+---
+
+## 🔹 6. `$skip` — Skip Documents
+
+```js
+{ $skip: 10 }
+```
+
+---
+
+## 🔹 7. `$lookup` — Join Collections
+
+```js
+{
+  $lookup: {
+    from: "orders",
+    localField: "_id",
+    foreignField: "userId",
+    as: "orders"
+  }
+}
+```
+
+* Joins another collection
+* Returns array
+
+---
+
+## 🔹 8. `$unwind` — Flatten Arrays
+
+```js
+{ $unwind: "$orders" }
+```
+
+* Converts array → multiple documents
+
+---
+
+## 🔹 9. `$addFields` / `$set` — Add Fields
+
+```js
+{ $addFields: { isAdult: { $gte: ["$age", 18] } } }
+```
+
+* Adds computed fields
+
+---
+
+## 🔹 10. `$unset` — Remove Fields
+
+```js
+{ $unset: "password" }
+```
+
+* Removes fields
+
+---
+
+## 🔹 11. `$count` — Count Documents
+
+```js
+{ $count: "totalUsers" }
+```
+
+---
+
+## 🔹 12. `$facet` — Multiple Pipelines
+
+```js
+{
+  $facet: {
+    data: [{ $limit: 5 }],
+    total: [{ $count: "count" }]
+  }
+}
+```
+
+* Runs multiple pipelines in parallel
+
+---
+
+## 🔹 13. `$replaceRoot` / `$replaceWith`
+
+```js
+{ $replaceRoot: { newRoot: "$user" } }
+```
+
+* Replaces document structure
+
+---
+
+## 🔹 14. `$bucket` — Group into Ranges
+
+```js
+{
+  $bucket: {
+    groupBy: "$age",
+    boundaries: [0, 20, 40, 60],
+    default: "Other"
+  }
+}
+```
+
+* Used for ranges
+
+---
+
+## 🔹 15. `$bucketAuto` — Auto Bucketing
+
+```js
+{
+  $bucketAuto: {
+    groupBy: "$price",
+    buckets: 5
+  }
+}
+```
+
+* Automatically creates buckets
+
+---
+
+## 🔹 16. `$sortByCount` — Group + Count
+
+```js
+{ $sortByCount: "$category" }
+```
+
+* Shortcut for group + sort
+
+---
+
+## 🔹 17. `$sample` — Random Documents
+
+```js
+{ $sample: { size: 3 } }
+```
+
+---
+
+## 🔹 18. `$merge` — Save Results
+
+```js
+{
+  $merge: {
+    into: "outputCollection"
+  }
+}
+```
+
+* Writes results to collection
+
+---
+
+## 🔹 19. `$out` — Output to Collection
+
+```js
+{ $out: "newCollection" }
+```
+
+* Replaces collection
+
+---
+
+## 🔹 20. `$redact` — Filter Sensitive Data
+
+```js
+{
+  $redact: {
+    $cond: {
+      if: { $eq: ["$role", "admin"] },
+      then: "$$KEEP",
+      else: "$$PRUNE"
+    }
+  }
+}
+```
+
+---
+
+# 🧠 Recommended Order (Best Practice)
+
+```text
+$match → $lookup → $unwind → $group → $project → $sort → $limit
+```
+
+---
+
+# ⚡ Example Full Pipeline
+
+```js
+db.orders.aggregate([
+  { $match: { status: "completed" } },
+  {
+    $group: {
+      _id: "$userId",
+      total: { $sum: "$amount" }
+    }
+  },
+  { $sort: { total: -1 } },
+  { $limit: 5 }
+])
+```
+
+---
+
+# 🔥 Interview Key Points
+
+* Aggregation = pipeline
+* Order matters
+* `$match` early improves performance
+* `$group` used for calculations
+* `$lookup` used for joins
+
+---
+
+# 🎯 Final Summary
+
+Aggregation stages are building blocks used to:
+
+* Filter
+* Transform
+* Group
+* Analyze
+
+👉 Each stage processes data step-by-step.
+
+---
+
