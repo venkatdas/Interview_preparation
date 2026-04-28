@@ -1,0 +1,1369 @@
+# Application Performance Optimization — Senior / Lead Engineer Handbook
+
+> **Interview mindset:** Always say — *"Before optimizing, I measure first. I identify the bottleneck using profiling tools, then fix with impact-to-effort ratio in mind. Premature optimization is the root of all evil."*
+
+---
+
+## Table of Contents
+
+1. [Frontend — HTML](#1-frontend--html)
+   - Image Formats Explained (WebP, AVIF, srcset, tools)
+2. [Frontend — CSS](#2-frontend--css)
+3. [Frontend — JavaScript](#3-frontend--javascript)
+   - Code Splitting vs Lazy Loading — Clear Difference
+   - Code Splitting Techniques
+4. [Frontend — React](#4-frontend--react)
+   - General React Performance
+   - Component Performance
+   - How to Measure a Slow Component — Step by Step
+   - Identifying Large / Slow Components
+   - How to Fix Large Components
+5. [Backend — Node.js / Express](#5-backend--nodejs--express)
+6. [Database — MongoDB](#6-database--mongodb)
+7. [API Optimization — Deep Dive](#7-api-optimization--deep-dive)
+8. [Caching Strategy](#8-caching-strategy)
+9. [Infrastructure & DevOps](#9-infrastructure--devops)
+10. [Architecture Level](#10-architecture-level)
+11. [Monitoring & Profiling Tools — Explained](#11-monitoring--profiling-tools--explained)
+12. [Interview One-Liners (Quick Recall)](#12-interview-one-liners-quick-recall)
+
+---
+
+## 1. Frontend — HTML
+
+### Reduce Initial Page Load
+
+- **Defer non-critical scripts** — Use `defer` or `async` so HTML parsing isn't blocked
+  ```html
+  <script src="app.js" defer></script>
+  ```
+  - `defer` — executes after HTML fully parsed, in order
+  - `async` — executes as soon as downloaded, order not guaranteed (use for independent scripts like analytics)
+
+- **Preload critical assets** — Fonts, hero images, critical CSS fetched early in parallel
+  ```html
+  <link rel="preload" href="hero.webp" as="image" />
+  <link rel="preload" href="font.woff2" as="font" crossorigin />
+  ```
+
+- **Prefetch next-page resources** — Browser fetches in idle time for likely next navigation
+  ```html
+  <link rel="prefetch" href="/dashboard" />
+  ```
+
+- **Preconnect to third-party origins** — Reduces DNS lookup + TLS handshake time upfront
+  ```html
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  ```
+
+---
+
+### Image Formats Explained — WebP, AVIF, srcset, Tools
+
+#### What is WebP? When is it useful?
+
+**WebP** is a modern image format created by Google.
+
+- **What it does:** Compresses images smaller than JPEG/PNG while keeping the same visual quality
+- **How much smaller:** ~25–40% smaller than JPEG, ~25% smaller than PNG
+- **Supports:** Lossy compression, lossless, and transparency (JPEG doesn't support transparency)
+- **Browser support:** All modern browsers — Chrome, Firefox, Safari 14+, Edge
+
+**When to use it:**
+- Use WebP for ALL photos, product images, banners, thumbnails on any website
+- If you're serving a 500KB JPEG today, WebP makes it ~300KB — no quality loss visible to user
+- It is the current standard. There is almost no reason to use JPEG/PNG for web images anymore.
+
+```html
+<!-- Use <picture> to serve WebP with JPEG fallback for very old browsers -->
+<picture>
+  <source srcset="hero.webp" type="image/webp" />
+  <img src="hero.jpg" alt="Hero image" width="1200" height="600" />
+</picture>
+```
+
+#### What is AVIF? When is it useful?
+
+**AVIF** is an even newer format based on the AV1 video codec.
+
+- **How much smaller:** ~50% smaller than JPEG, ~20% smaller than WebP
+- **Best for:** High-quality photos and illustrations with gradients
+- **Browser support:** Chrome 85+, Firefox 93+, Safari 16+ — not universal yet
+- **Encoding:** AVIF encoding is slower (build time) and not all CDNs support it yet
+
+**When to prefer WebP over AVIF:** For most production apps today, WebP is the sweet spot — widely supported, fast to encode, significant compression gains.
+
+```html
+<!-- Serve AVIF first, WebP as fallback, JPEG as last resort -->
+<picture>
+  <source srcset="hero.avif" type="image/avif" />
+  <source srcset="hero.webp" type="image/webp" />
+  <img src="hero.jpg" alt="Hero" width="1200" height="600" />
+</picture>
+```
+
+#### What is `srcset`? When is it useful?
+
+**Problem it solves:** Without `srcset`, a mobile phone with a 375px screen downloads the same 2000px image as a desktop monitor. That's downloading 5x more image data than needed — pure waste.
+
+**`srcset` tells the browser: "here are multiple sizes of this image — pick the right one for the current device."**
+
+```html
+<img
+  src="img-800.webp"
+  srcset="img-400.webp 400w, img-800.webp 800w, img-1600.webp 1600w"
+  sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1600px"
+  loading="lazy"
+  width="800"
+  height="400"
+  alt="Product image"
+/>
+```
+
+- `400w` — this image file is 400px wide
+- `sizes` — at this viewport width, the image renders at this CSS size
+- Browser picks the smallest image that is still large enough — automatically
+
+**When is it useful:** Any time you have images that display at different sizes on different screen sizes — which is basically every website.
+
+#### Tools for image optimization — what each one is
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **Squoosh** (squoosh.app) | Google's browser-based image compressor. Drag and drop an image, pick output format, compare quality side by side. | Manual one-off conversion. Testing how much quality you lose at different compression levels. |
+| **sharp** (npm package) | Node.js library for image processing and format conversion. Extremely fast (C++ under the hood). | Automate WebP/AVIF conversion in your build pipeline or Express upload handler. |
+| **imagemin** | Webpack/Vite plugin. Converts and compresses images automatically during build. | Auto-optimize all images in `/public` folder on every build — zero manual effort. |
+| **Cloudinary** | Cloud image CDN. Stores original image, serves optimized version on the fly. Detects browser support and serves WebP or AVIF automatically. | When you have user-uploaded images or a large image library. No manual conversion needed. |
+| **Cloudflare Images** | Similar to Cloudinary. Resizes, compresses, and converts on the edge. | When already on Cloudflare — cheapest option for auto image optimization. |
+| **Next.js `<Image>` component** | Built-in React component. Auto-lazy loads, generates srcset, serves WebP, prevents CLS. | Any Next.js project — replaces `<img>` entirely. Zero config. |
+
+> **Interview answer:** "In production I use Cloudinary or Cloudflare to auto-convert and serve the right format per browser. I don't maintain multiple image files manually — the CDN handles format negotiation via the Accept header."
+
+---
+
+### Document Structure
+
+- Minimize DOM depth — deep nesting increases layout recalculation time
+- Avoid excessive DOM nodes — browser struggles above ~1500 nodes
+- Put critical CSS inline in `<head>`, load non-critical CSS asynchronously
+  ```html
+  <link rel="stylesheet" href="non-critical.css" media="print" onload="this.media='all'" />
+  ```
+- Use semantic HTML — `<header>`, `<main>`, `<article>` parse faster and improve accessibility
+
+---
+
+## 2. Frontend — CSS
+
+### Reflow vs Repaint — understand this first
+
+```
+Property changes          → What browser does         → Cost
+width/height/margin       → Reflow + Repaint           → Most expensive
+color/background          → Repaint only               → Medium
+transform/opacity         → Compositor only (GPU)      → Cheapest — use for animations
+```
+
+- **Avoid layout thrashing** — Reading layout property after writing forces reflow
+  ```css
+  /* BAD — triggers reflow on every frame */
+  .box { left: 100px; }
+
+  /* GOOD — compositor-only, no reflow */
+  .box { transform: translateX(100px); }
+  ```
+
+- **Use `will-change` sparingly** — Promotes element to its own GPU layer
+  ```css
+  .animated-card { will-change: transform; }
+  ```
+  > Only add when you actually have animation. Every GPU layer consumes memory. Don't put on every element.
+
+- **CSS containment** — Tells browser: "changes inside this box don't affect anything outside"
+  ```css
+  .card { contain: layout style paint; }
+  ```
+  Useful for widget-style components, dashboards, cards — prevents layout changes from bubbling up.
+
+### Reduce CSS File Size
+
+- **PurgeCSS** — Scans your HTML/JSX and removes CSS selectors that don't appear in your templates
+  - What it is: A build tool / PostCSS plugin
+  - When useful: Most powerful with utility frameworks like Bootstrap or Tailwind — removes 90%+ of shipped CSS that no component actually uses
+  - Result: A 300KB stylesheet can shrink to 8KB after purging
+
+- Minify CSS in production — Vite/Webpack do this automatically
+- Split CSS per route — don't load dashboard styles on the landing page
+
+### Fonts
+
+```css
+@font-face {
+  font-family: 'Inter';
+  src: url('inter.woff2') format('woff2');
+  font-display: swap; /* show fallback text immediately — don't block rendering */
+}
+```
+
+- Without `font-display: swap`: text is invisible until font loads (FOIT — Flash of Invisible Text)
+- With `swap`: system font shows immediately, custom font replaces it (FOUT — acceptable trade-off)
+- Subset fonts — full font file is 500KB+, a Latin subset is ~20KB
+- Prefer system fonts for body text where branding allows — zero download cost
+
+### Animation Performance
+
+- Only animate `transform` and `opacity` — GPU-accelerated, no layout recalculation
+- Always add reduced motion support:
+  ```css
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+  ```
+
+---
+
+## 3. Frontend — JavaScript
+
+### Code Splitting vs Lazy Loading — Clear Difference
+
+> This is the most commonly confused concept in front-end performance interviews.
+
+#### Code Splitting
+
+**What it is:** Breaking your single large JS bundle into multiple smaller chunks at **build time**, so the browser only downloads what's needed for the current page.
+
+**Key point:** Code splitting is about HOW the bundle is divided. It happens at the **bundler level** (Webpack, Vite, Rollup). The output is multiple `.js` files instead of one.
+
+**Without code splitting:**
+```
+dist/
+  bundle.js  →  3.2MB  ← contains ALL routes (home + dashboard + settings + admin)
+
+User visits /home → must download all 3.2MB even though home needs only 200KB
+```
+
+**With code splitting:**
+```
+dist/
+  home.chunk.js        →  200KB
+  dashboard.chunk.js   →  400KB
+  settings.chunk.js    →  150KB
+  vendor.chunk.js      →  900KB  ← React, lodash (cached separately, rarely changes)
+
+User visits /home → downloads home.chunk.js (200KB) + vendor.chunk.js (from cache)
+```
+
+#### Lazy Loading
+
+**What it is:** Deferring the **loading request** to a resource (component, image, module) until it is actually needed at **runtime** — when the user navigates to a route, opens a modal, or an image enters the viewport.
+
+**Key point:** Lazy loading is about WHEN the resource is fetched. It happens in the browser at runtime.
+
+#### The relationship between them
+
+Code splitting creates the separate chunks.
+Lazy loading decides when to download those chunks.
+
+> **Pizza analogy:** Code splitting = cutting the pizza into slices. Lazy loading = only picking up a slice when you're ready to eat it. You need both — slicing alone doesn't help if you still eat the whole pizza at once.
+
+#### Side-by-side comparison
+
+| | Code Splitting | Lazy Loading |
+|---|---|---|
+| **What** | Divides bundle into smaller chunks | Delays fetching a resource until needed |
+| **When** | At build time (bundler) | At runtime (browser) |
+| **Tool** | Webpack / Vite config, `manualChunks` | `React.lazy()`, dynamic `import()`, `loading="lazy"` |
+| **Applies to** | JavaScript modules and routes | Components, images, routes, any module |
+| **Result** | Smaller initial download | Resources load on demand |
+| **Works alone?** | Yes, but files still downloaded eagerly | Yes (e.g. image `loading="lazy"`) |
+| **Best together?** | Route splitting + lazy load = smallest initial JS + on-demand fetch |
+
+---
+
+### Code Splitting Techniques
+
+#### 1. Route-based splitting (biggest impact, start here)
+
+Split the bundle per route — one chunk per page. Most impactful technique.
+
+```jsx
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+const Home      = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Settings  = lazy(() => import('./pages/Settings'));
+const Admin     = lazy(() => import('./pages/Admin'));
+
+function App() {
+  return (
+    <Suspense fallback={<PageSpinner />}>
+      <Routes>
+        <Route path="/"          element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/settings"  element={<Settings />} />
+        <Route path="/admin"     element={<Admin />} />
+      </Routes>
+    </Suspense>
+  );
+}
+```
+
+Vite and Webpack automatically create separate chunk files for each `import()`.
+
+#### 2. Component-based splitting (for heavy components not immediately visible)
+
+Modals, sidebars, charts, rich text editors — things that load only on user action.
+
+```jsx
+const HeavyChartModal = lazy(() => import('./HeavyChartModal'));
+
+function Dashboard() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>View Chart</button>
+      {open && (
+        <Suspense fallback={<Spinner />}>
+          <HeavyChartModal onClose={() => setOpen(false)} />
+        </Suspense>
+      )}
+    </>
+  );
+}
+// HeavyChartModal + its dependencies (chart.js etc.) are only downloaded when user clicks
+```
+
+#### 3. Vendor chunk splitting (separate third-party libraries)
+
+Third-party libraries change rarely — split them into their own chunk so users get them from cache on return visits.
+
+```js
+// vite.config.js
+export default {
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          charts: ['recharts'],
+          utils:  ['lodash', 'date-fns'],
+        }
+      }
+    }
+  }
+};
+```
+
+Now `vendor.chunk.js` is cached forever (or until you update React) — it doesn't re-download when your app code changes.
+
+#### 4. Dynamic import on user action (load library only when needed)
+
+```js
+// BAD — chart.js (500KB) loads on page load even if user never views chart
+import Chart from 'chart.js';
+
+// GOOD — only loads when user clicks "Show Chart"
+async function handleShowChart() {
+  const { Chart } = await import('chart.js');
+  new Chart(canvasRef.current, config);
+}
+```
+
+#### 5. Prefetch on hover (smart preloading — feels instant)
+
+Start downloading the next chunk before the user clicks — the download finishes by the time they click.
+
+```jsx
+const Dashboard = lazy(() => import('./Dashboard'));
+
+function NavLink() {
+  const prefetch = () => import('./Dashboard'); // triggers download silently
+
+  return (
+    <Link to="/dashboard" onMouseEnter={prefetch}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+#### 6. Webpack Magic Comments
+
+Control chunk naming and priority behavior:
+
+```js
+// Named chunk — easier to debug in bundle analyzer
+import(/* webpackChunkName: "user-profile" */ './UserProfile');
+
+// Prefetch — downloaded in browser idle time, low priority
+import(/* webpackPrefetch: true */ './Dashboard');
+
+// Preload — downloaded immediately with high priority (use sparingly)
+import(/* webpackPreload: true */ './HeroSection');
+```
+
+---
+
+### Lazy Loading (Non-Component)
+
+**Images:**
+```html
+<img src="product.webp" loading="lazy" alt="Product" />
+<!-- Browser only fetches image when it's about to enter the viewport -->
+```
+
+**IntersectionObserver — lazy load anything on scroll:**
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src; // swap placeholder with real src
+      observer.unobserve(entry.target);
+    }
+  });
+});
+
+document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+```
+
+---
+
+### Avoid Blocking the Main Thread
+
+- Move heavy computation to **Web Workers** — runs in a separate thread, never blocks UI
+  ```js
+  const worker = new Worker('heavy-task.js');
+  worker.postMessage(largeDataset);
+  worker.onmessage = (e) => setResults(e.data);
+  ```
+- Break long tasks with `setTimeout(fn, 0)` or `scheduler.postTask()`
+- Use `requestIdleCallback` for non-urgent background work
+
+### Memory Management
+
+- Remove event listeners on cleanup — memory leak #1 source
+- Clear `setInterval` / `setTimeout` on unmount
+- Avoid closures that unintentionally keep large objects in scope
+
+### Bundle Analysis Tools
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **webpack-bundle-analyzer** | Visual treemap — every module shown by size | Bundle is too large and you don't know why |
+| **rollup-plugin-visualizer** | Same but for Vite/Rollup | Vite projects |
+| **source-map-explorer** | Shows exact module sizes from source maps | Debugging specific chunk sizes |
+| **Bundlephobia** (bundlephobia.com) | Shows npm package size + tree-shaking potential | Before installing a new dependency |
+
+---
+
+## 4. Frontend — React
+
+### 4.1 General React Performance
+
+- **Avoid unnecessary re-renders** — the #1 React performance issue
+- React re-renders when: state changes, props change, parent re-renders, context value changes
+- A component re-rendering does NOT always update the DOM — React diffs first. But excessive render function execution is still wasted CPU.
+
+### 4.2 Component Performance
+
+**`React.memo`** — Skip re-render if props haven't changed (shallow comparison)
+```jsx
+const UserCard = React.memo(({ name, email }) => {
+  return <div>{name} — {email}</div>;
+});
+// Re-renders only when `name` or `email` changes
+// WITHOUT memo: re-renders every time the parent renders, even if props are same
+```
+
+> Caveat: If you pass an object/array as a prop — `{}` !== `{}` in JS — memo won't help. Memoize the prop too.
+
+**`useMemo`** — Memoize expensive computed values
+```jsx
+// WITHOUT useMemo: sort runs on every render
+const sorted = items.sort((a, b) => a.name.localeCompare(b.name));
+
+// WITH useMemo: sort only runs when `items` changes
+const sorted = useMemo(() => {
+  return [...items].sort((a, b) => a.name.localeCompare(b.name));
+}, [items]);
+```
+
+**`useCallback`** — Stable function reference so React.memo child doesn't re-render
+```jsx
+// WITHOUT: new function reference on every render → child always re-renders
+const handleDelete = () => dispatch(deleteItem(id));
+
+// WITH: same reference unless `id` changes → child skips render
+const handleDelete = useCallback(() => {
+  dispatch(deleteItem(id));
+}, [id]);
+```
+
+**`useTransition`** (React 18) — Mark state updates as non-urgent so input stays responsive
+```jsx
+const [query, setQuery] = useState('');
+const [results, setResults] = useState(data);
+const [isPending, startTransition] = useTransition();
+
+function handleSearch(e) {
+  setQuery(e.target.value);           // urgent — update input field immediately
+  startTransition(() => {
+    setResults(filter(data, e.target.value)); // non-urgent — can wait
+  });
+}
+// Input field updates instantly; list filtering happens without blocking the input
+```
+
+**`useDeferredValue`** (React 18) — Defer rendering of a slow subtree
+```jsx
+const deferredQuery = useDeferredValue(searchQuery);
+// Pass deferredQuery (not searchQuery) to the expensive list component
+// List renders with slight delay while input stays responsive
+```
+
+---
+
+### 4.3 How to Measure a Slow Component — Step by Step
+
+> This is the exact senior engineer process. Never guess — always measure first.
+
+#### Step 1 — Confirm the problem with a specific repro
+
+Get a specific user action that is slow:
+- "After clicking the Filter button, the page freezes for 2 seconds"
+- "Typing in the search box is laggy"
+- "The product table takes 4 seconds to appear after navigating to /products"
+
+You need a reproducible action before you open any tool.
+
+---
+
+#### Step 2 — Open React DevTools Profiler
+
+1. Install React DevTools browser extension
+2. Open DevTools → go to **Profiler** tab
+3. Click **Record** (circle icon)
+4. Perform the slow action in the browser
+5. Click **Stop**
+
+**Reading the results:**
+
+**Flame graph view:**
+- Each horizontal bar = one component
+- Width of bar = how long that component took to render
+- Orange/red = slow, grey = fast
+- Bars stacked = parent–child relationship
+
+**Ranked chart view:**
+- Lists all components sorted by render time — longest at top
+- Find your culprit immediately without scanning the flame graph
+
+**What to look for:**
+- Any component taking > 16ms (breaks 60fps — user will feel it)
+- Components rendering 10+ times for a single user action
+- Components that rendered that you didn't expect to render
+
+---
+
+#### Step 3 — Enable "Why did this render?" in Profiler
+
+In the Profiler settings gear icon → check **"Record why each component rendered while profiling"**
+
+Now when you hover over a component in the flame graph, React tells you:
+- "Props changed: `items`"
+- "State changed: `selectedId`"
+- "Parent re-rendered"
+- "Context changed"
+
+This tells you exactly what to fix without any guessing.
+
+---
+
+#### Step 4 — Install why-did-you-render (for wasted renders)
+
+```bash
+npm install @welldone-software/why-did-you-render
+```
+
+```js
+// src/wdyr.js — import this as the VERY FIRST line of index.js
+import React from 'react';
+import whyDidYouRender from '@welldone-software/why-did-you-render';
+
+if (process.env.NODE_ENV === 'development') {
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
+  });
+}
+```
+
+This logs to the browser console every time a component re-renders with the same props/state:
+```
+UserList re-rendered although props and state are the same.
+Prev props: { items: [Array(100)] }
+Next props: { items: [Array(100)] }
+Hint: The hook useMemo changed its reference — [Array(100)] !== [Array(100)]
+```
+
+Now you know exactly which hook or prop is causing the wasted render.
+
+---
+
+#### Step 5 — Measure render time manually
+
+For a quick rough measurement in development:
+
+```jsx
+// Option 1 — console timing
+console.time('ProductTable');
+// ... render happens
+console.timeEnd('ProductTable');
+
+// Option 2 — Performance API
+useEffect(() => {
+  const mark = `render-${Date.now()}`;
+  performance.mark(mark);
+  return () => {
+    performance.measure('component-render', mark);
+    const [entry] = performance.getEntriesByName('component-render');
+    console.log(`Rendered in ${entry.duration.toFixed(2)}ms`);
+  };
+});
+```
+
+---
+
+#### Step 6 — Chrome DevTools Performance Tab (for main thread and paint issues)
+
+1. DevTools → **Performance** tab
+2. Click Record → perform the slow action → Stop
+3. Read the **Main** thread row:
+   - **Red blocks at top** = Long Tasks (tasks > 50ms that block the main thread — user can't interact)
+   - Yellow = JavaScript execution
+   - Purple = Layout / Reflow
+   - Green = Paint
+4. Click a red block → see the call stack below → find the exact function causing it
+
+---
+
+#### Step 7 — Run Lighthouse for page-level scores
+
+DevTools → **Lighthouse** → Run on Desktop or Mobile
+
+Check:
+- **LCP** (Largest Contentful Paint) — target < 2.5s
+- **INP** (Interaction to Next Paint) — target < 200ms (directly measures component response speed)
+- **CLS** (Cumulative Layout Shift) — target < 0.1
+- **TBT** (Total Blocking Time) — target < 300ms (tied to main thread blocking)
+
+---
+
+#### Step 8 — Decide what to fix based on findings
+
+| Finding from profiler | Fix |
+|---|---|
+| Component renders 20 times on one action | Add `React.memo`, check what's changing via DevTools "why" |
+| useMemo dependency array changing every render | Object/array prop is recreated in parent — memoize in parent with `useMemo` |
+| Long Task > 200ms in JS | Move to Web Worker, or split with `startTransition` |
+| Re-renders caused by context | Split context, or switch to Zustand/Redux with selector |
+| Rendering 2000+ list items | Virtualize with `react-window` |
+| LCP > 4s | Preload hero image, check server response time (TTFB) |
+| CLS > 0.1 | Add `width`/`height` on images, don't inject content above existing content |
+
+---
+
+### 4.4 Identifying Large / Slow Components
+
+**Code symptoms:**
+- Component file is 300+ lines — almost always doing too many things
+- More than 4–5 `useState` hooks — state management is mixed with UI rendering
+- Component fetches data AND renders it AND handles business logic all in one
+- Input typing feels laggy — input state is held too high in the tree causing full subtree re-render
+- Entire page re-renders when only a small widget changes
+
+**DevTools symptoms:**
+- Component appears at top of Ranked chart in Profiler
+- Component renders on every keystroke when it shouldn't
+- Context consumer re-renders even when the value it uses didn't change
+
+---
+
+### 4.5 How to Fix Large / Slow Components
+
+**Split by responsibility (Single Responsibility Principle):**
+
+```
+Before: <ProductPage />
+  — fetches data
+  — manages filter state
+  — manages sort state
+  — renders 500 rows
+  — handles pagination
+  → One filter change re-renders the entire page
+
+After:
+  <ProductPage />        ← layout only, coordinates children
+    <ProductFilters />   ← owns filter state only
+    <ProductTable />     ← receives data via props, renders rows
+    <Pagination />       ← owns page number state only
+  → Filter change re-renders only <ProductFilters /> and <ProductTable />
+```
+
+**Lift state down:**
+
+```jsx
+// BAD — input state in parent re-renders entire tree on every keystroke
+function Parent() {
+  const [query, setQuery] = useState('');
+  return (
+    <>
+      <SearchInput value={query} onChange={setQuery} />
+      <HeavyList items={data} />  {/* re-renders 10x/second while typing */}
+    </>
+  );
+}
+
+// GOOD — SearchInput owns its own state, HeavyList never re-renders while typing
+function SearchInput({ onSearch }) {
+  const [query, setQuery] = useState(''); // local state
+  const debouncedSearch = useCallback(debounce(onSearch, 300), []);
+  return <input value={query} onChange={e => {
+    setQuery(e.target.value);
+    debouncedSearch(e.target.value);
+  }} />;
+}
+```
+
+**Virtualize long lists:**
+
+```jsx
+import { FixedSizeList } from 'react-window';
+
+// Only renders ~15 visible rows at any time, regardless of total count
+<FixedSizeList height={600} itemCount={10000} itemSize={50} width="100%">
+  {({ index, style }) => (
+    <div style={style}>{items[index].name}</div>
+  )}
+</FixedSizeList>
+```
+
+**Avoid context for high-frequency updates:**
+
+Context re-renders ALL consumers on every change. Use Zustand with selectors for frequently-changing global state:
+```js
+// Only re-renders when user.name changes — not on any other store update
+const name = useStore(state => state.user.name);
+```
+
+**Code-split heavy components:**
+```jsx
+const HeavyEditor = lazy(() => import('./RichTextEditor'));
+
+{showEditor && (
+  <Suspense fallback={<Spinner />}>
+    <HeavyEditor />
+  </Suspense>
+)}
+```
+
+---
+
+## 5. Backend — Node.js / Express
+
+### Event Loop Protection
+
+```js
+// BAD — blocks event loop, no other requests can be served while this runs
+const data = fs.readFileSync('large-file.txt');
+
+// GOOD — async, event loop free to handle other requests while waiting
+const data = await fs.promises.readFile('large-file.txt');
+```
+
+CPU-bound tasks (image processing, PDF generation, complex computation) → Worker Threads:
+```js
+const { Worker } = require('worker_threads');
+const worker = new Worker('./pdf-generator.js', { workerData: payload });
+worker.on('message', result => res.json(result));
+```
+
+### Clustering
+
+```js
+const cluster = require('cluster');
+const os = require('os');
+
+if (cluster.isPrimary) {
+  os.cpus().forEach(() => cluster.fork());
+  cluster.on('exit', () => cluster.fork()); // restart dead workers automatically
+} else {
+  require('./server'); // each worker is an independent Express app
+}
+```
+
+Or use **PM2**: `pm2 start server.js -i max` — spawns one worker per CPU core automatically.
+
+### Streams for Large Data
+
+```js
+// BAD — loads entire file into memory before sending
+app.get('/report', async (req, res) => {
+  const data = await fs.promises.readFile('./large-report.csv'); // memory spike
+  res.send(data);
+});
+
+// GOOD — streams directly to client, constant low memory usage
+app.get('/report', (req, res) => {
+  const stream = fs.createReadStream('./large-report.csv');
+  stream.pipe(res);
+});
+```
+
+### Express Middleware
+
+```js
+const compression = require('compression');
+app.use(compression({ level: 6, threshold: 1024 })); // gzip responses > 1KB
+```
+
+### Connection Pooling
+
+```js
+// Mongoose pools connections automatically
+mongoose.connect(URI, { maxPoolSize: 10 }); // reuse 10 connections, don't open new one per request
+```
+
+---
+
+## 6. Database — MongoDB
+
+### Indexing
+
+```js
+db.users.createIndex({ email: 1 });               // single field
+db.orders.createIndex({ userId: 1, status: 1 });  // compound (order matters)
+db.products.createIndex({ name: "text" });         // full-text search
+```
+
+Always verify with explain:
+```js
+db.users.find({ email: "x@y.com" }).explain("executionStats");
+// Look for:
+//   stage: "IXSCAN"   → index used (good)
+//   stage: "COLLSCAN" → full scan (missing index — add one)
+//   executionTimeMillis → actual query time
+```
+
+### Query Optimization
+
+```js
+// Project — only return fields the client needs
+User.findById(id).select('name email avatar').lean();
+
+// .lean() — returns plain JS object not Mongoose Document → 3-5x faster
+
+// Cursor-based pagination (better than skip for large datasets)
+Model.find({ _id: { $gt: lastId } }).limit(20).lean();
+```
+
+### Aggregation Pipeline
+
+```js
+Order.aggregate([
+  { $match: { status: 'completed' } },  // filter FIRST — reduces documents early
+  { $group: { _id: '$userId', total: { $sum: '$amount' } } },
+  { $sort: { total: -1 } },
+  { $limit: 10 }
+]);
+// Process data inside MongoDB, not in Node.js
+```
+
+### Schema Design
+
+- **Embed** for 1:few, frequently-accessed-together data (user + address)
+- **Reference** for 1:many or large growing sub-documents (user → orders)
+- Never let arrays grow unboundedly inside a document
+
+---
+
+## 7. API Optimization — Deep Dive
+
+### Identify the Category of Slowness First
+
+| Symptom | Root cause | Fix |
+|---|---|---|
+| All endpoints slow | Server under-resourced or event loop blocked | Cluster, scale up |
+| One specific endpoint slow | Slow DB query | Index, projection, pipeline |
+| Fast first hit, slow after | Cache warming | Add Redis cache |
+| Slow under high load | No connection pooling | Pool DB connections |
+| Large response payload | Over-fetching | Projection, pagination, GraphQL |
+| Many API calls for one page load | Chatty API design | Batch endpoint, BFF pattern |
+| Mobile slower than desktop | Same heavy payload for all clients | Field filtering, BFF |
+
+---
+
+### Measure API Performance First
+
+**Log response times in development:**
+```js
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(`${req.method} ${req.path} → ${res.statusCode} [${duration}ms]`);
+    if (duration > 500) console.warn(`SLOW: ${req.path} took ${duration}ms`);
+  });
+  next();
+});
+```
+
+**In production — use APM (Datadog / New Relic / Sentry):**
+- See p95 and p99 latency per endpoint — not average (average hides outliers)
+- Trace exactly where time is spent: app code vs DB query vs external API call
+- Set alerts on p95 > 500ms
+
+---
+
+### 1. Reduce Response Payload
+
+**Projection — never send more than the client needs:**
+```js
+// User list page only needs name + avatar + role
+router.get('/users', async (req, res) => {
+  const users = await User.find({})
+    .select('name avatar role')
+    .lean(); // plain object, no Mongoose overhead
+  res.json(users);
+});
+```
+
+**Field filtering via query params:**
+```
+GET /api/users?fields=name,email,role
+```
+```js
+const fields = req.query.fields?.split(',').join(' ') || '';
+const users = await User.find({}).select(fields).lean();
+```
+
+---
+
+### 2. Pagination — Always
+
+**Offset-based (simple, good for small datasets):**
+```js
+const page  = parseInt(req.query.page)  || 1;
+const limit = parseInt(req.query.limit) || 20;
+const skip  = (page - 1) * limit;
+
+const [data, total] = await Promise.all([
+  Model.find({}).skip(skip).limit(limit).lean(),
+  Model.countDocuments()
+]);
+
+res.json({ data, total, page, pages: Math.ceil(total / limit) });
+```
+
+**Cursor-based (better for large, real-time datasets):**
+```js
+// Client sends: ?cursor=<lastDocumentId>
+const cursor = req.query.cursor;
+const query  = cursor ? { _id: { $gt: mongoose.Types.ObjectId(cursor) } } : {};
+
+const data = await Model.find(query).limit(20).lean();
+const nextCursor = data.length === 20 ? data[data.length - 1]._id : null;
+
+res.json({ data, nextCursor });
+```
+
+> Cursor-based stays fast at page 10,000. Offset-based with `skip(200000)` scans 200,000 documents and is slow.
+
+---
+
+### 3. Redis Caching for APIs
+
+**Cache-aside pattern:**
+```js
+async function getCachedOrFetch(key, ttlSeconds, fetchFn) {
+  const cached = await redis.get(key);
+  if (cached) return JSON.parse(cached);
+
+  const data = await fetchFn();
+  await redis.setEx(key, ttlSeconds, JSON.stringify(data));
+  return data;
+}
+
+router.get('/products', async (req, res) => {
+  const products = await getCachedOrFetch(
+    'products:all',
+    300, // 5 minute cache
+    () => Product.find({}).lean()
+  );
+  res.json(products);
+});
+```
+
+**Invalidate cache on write:**
+```js
+router.put('/products/:id', async (req, res) => {
+  await Product.findByIdAndUpdate(req.params.id, req.body);
+  await redis.del('products:all'); // bust the cache
+  res.json({ success: true });
+});
+```
+
+---
+
+### 4. HTTP Caching Headers
+
+```js
+// Public data — browser and CDN can cache for 1 day
+res.set('Cache-Control', 'public, max-age=86400');
+
+// User-specific data — browser can cache but CDN cannot
+res.set('Cache-Control', 'private, max-age=300');
+
+// ETag — conditional request: browser sends ETag back, server returns 304 if unchanged
+// 304 = no body = saves bandwidth
+const etag = generateETag(data);
+res.set('ETag', etag);
+if (req.headers['if-none-match'] === etag) {
+  return res.status(304).end(); // data unchanged — don't resend it
+}
+```
+
+---
+
+### 5. Compression
+
+```js
+const compression = require('compression');
+app.use(compression({
+  level: 6,        // 1-9 scale. 6 = sweet spot (good compression, not too slow)
+  threshold: 1024  // only compress responses larger than 1KB
+}));
+```
+
+**Brotli (better than gzip — 20–26% smaller):**
+```js
+const shrinkRay = require('shrink-ray-current');
+app.use(shrinkRay()); // auto-serves brotli to supported clients, gzip otherwise
+```
+
+> Always verify: check response headers for `Content-Encoding: gzip` or `Content-Encoding: br`
+
+---
+
+### 6. Avoid N+1 Queries
+
+**The N+1 problem:** 1 query to get a list → N more queries for each item in the list.
+
+```js
+// BAD — 1 query for orders + 1 query per order for the user = N+1
+const orders = await Order.find({ status: 'pending' });
+for (const order of orders) {
+  order.user = await User.findById(order.userId); // executes N times
+}
+
+// GOOD option 1 — 2 queries total using $in
+const orders  = await Order.find({ status: 'pending' }).lean();
+const userIds = [...new Set(orders.map(o => o.userId.toString()))];
+const users   = await User.find({ _id: { $in: userIds } }).lean();
+const userMap = Object.fromEntries(users.map(u => [u._id.toString(), u]));
+orders.forEach(o => { o.user = userMap[o.userId.toString()]; });
+
+// GOOD option 2 — $lookup in aggregation (single DB round-trip)
+const orders = await Order.aggregate([
+  { $match: { status: 'pending' } },
+  { $lookup: {
+    from: 'users',
+    localField: 'userId',
+    foreignField: '_id',
+    as: 'user',
+    pipeline: [{ $project: { name: 1, email: 1 } }] // only fetch needed fields
+  }},
+  { $unwind: '$user' }
+]);
+```
+
+---
+
+### 7. Debounce & Batch on the Client
+
+**Debounce search:**
+```js
+// Without debounce: user types "javascript" → 10 API calls
+// With debounce: user stops typing → 1 API call after 300ms
+const searchAPI = debounce(async (query) => {
+  const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+  setResults(await res.json());
+}, 300);
+
+<input onChange={e => searchAPI(e.target.value)} />
+```
+
+**Batch multiple calls into one:**
+```js
+// BAD — 5 separate API calls on page load (5 round trips)
+const [user, orders, notifications, settings, stats] = await Promise.all([
+  fetch('/api/user'),
+  fetch('/api/orders'),
+  fetch('/api/notifications'),
+  fetch('/api/settings'),
+  fetch('/api/stats'),
+]);
+
+// GOOD — 1 API call returns everything the dashboard needs (1 round trip)
+const dashboard = await fetch('/api/dashboard/init');
+// { user, orders, notifications, settings, stats }
+```
+
+---
+
+### 8. Database Query Diagnosis Per Endpoint
+
+For every slow endpoint, follow this process:
+
+```js
+// Step 1 — Run explain on the slow query
+const result = await Model
+  .find({ status: 'active', userId: id })
+  .explain("executionStats");
+
+/*
+  Look at:
+  executionTimeMillis  → actual time taken
+  totalDocsExamined    → docs scanned (high number = missing index or inefficient query)
+  totalKeysExamined    → index keys used
+  stage: "COLLSCAN"   → full collection scan — you need an index
+  stage: "IXSCAN"     → index used — good
+*/
+
+// Step 2 — Add the right index
+await Model.collection.createIndex({ status: 1, userId: 1 });
+// Compound index on fields used in the query — order matches query selectivity
+
+// Step 3 — Re-run explain and confirm improvement
+// totalDocsExamined should drop dramatically
+// executionTimeMillis should drop from 500ms to < 5ms
+```
+
+---
+
+### 9. HTTP/2 and Connection
+
+**HTTP/2 benefits:**
+- Multiplexing — multiple requests over one TCP connection (HTTP/1.1 = 6 connections max, one request each)
+- Header compression — HPACK reduces repeated headers (saves bandwidth on JSON APIs)
+- No head-of-line blocking at HTTP level
+
+Enable in Nginx:
+```nginx
+listen 443 ssl http2;
+```
+
+**Keep-Alive** — reuse existing TCP connection across requests:
+```
+Connection: keep-alive
+Keep-Alive: timeout=5, max=1000
+```
+
+---
+
+### 10. Rate Limiting
+
+```js
+const rateLimit = require('express-rate-limit');
+
+// Global limit
+app.use('/api/', rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+
+// Stricter on auth endpoints
+app.use('/api/auth/', rateLimit({ windowMs: 15 * 60 * 1000, max: 10 }));
+```
+
+---
+
+### 11. GraphQL vs REST for Performance
+
+| | REST | GraphQL |
+|---|---|---|
+| **Over-fetching** | Returns fixed fields — client may get unused data | Client requests exactly the fields it needs |
+| **Under-fetching** | Multiple endpoints needed for one page | One query, any nested shape |
+| **Caching** | Easy — HTTP GET is cacheable by URL | Harder — all requests POST to `/graphql` |
+| **Best for** | Simple CRUD, public APIs, mobile apps needing cache | Complex UIs, mobile (bandwidth-sensitive), internal APIs |
+
+---
+
+### 12. API Response Time Targets
+
+| Response time | Assessment |
+|---|---|
+| < 100ms | Excellent — perceived as instant |
+| 100–300ms | Good |
+| 300–1000ms | Acceptable — consider caching or optimization |
+| 1–3s | Poor — user notices the wait |
+| > 3s | Unacceptable — must fix |
+
+> **Target p95 < 300ms** for most endpoints. **p99 < 1s.** Never optimize for average latency alone.
+
+---
+
+## 8. Caching Strategy
+
+### Caching Layers (fastest to slowest)
+
+| Layer | Location | Speed | Use For |
+|---|---|---|---|
+| Browser cache | Client | Fastest | Static assets, API responses with cache headers |
+| CDN cache | Edge server near user | Very fast | Public static + semi-static content |
+| Redis | App server memory | Fast | DB results, session data, computed values |
+| DB query cache | Database | Moderate | Repeated identical queries |
+| Disk | Server | Slow | Pre-generated large files |
+
+### Cache Invalidation Strategies
+
+- **TTL-based** — cache expires after fixed time (simple, may serve briefly stale data)
+- **Event-based** — invalidate on data change (accurate, more complex)
+- **Write-through** — update cache and DB together on write (always fresh, slower writes)
+- **Stale-while-revalidate** — serve stale instantly, refresh in background (best UX)
+
+---
+
+## 9. Infrastructure & DevOps
+
+### Load Balancing
+
+- Distribute traffic across multiple server instances — no single point of failure
+- Strategies: Round Robin, Least Connections, IP Hash (sticky sessions)
+- Tools: Nginx, AWS ALB, Cloudflare
+
+### Auto-Scaling
+
+- Horizontal scaling: more instances under load, fewer at night
+- AWS: Auto Scaling Groups + ECS / EKS
+- Kubernetes: Horizontal Pod Autoscaler (HPA)
+
+### Docker Optimization
+
+```dockerfile
+# Order matters — deps layer cached unless package.json changes
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+
+# Multi-stage build
+FROM node:20 AS builder
+RUN npm ci && npm run build
+
+FROM node:20-alpine       # Alpine: 5MB vs 900MB for full Node image
+COPY --from=builder /app/dist ./dist
+```
+
+### CI/CD
+
+- Parallelize jobs — test + lint + build simultaneously
+- Cache `node_modules` between runs
+- Affected test detection — only test changed modules
+
+---
+
+## 10. Architecture Level
+
+### Message Queues for Async Processing
+
+```
+User clicks "Export PDF"
+
+BAD:  POST /export → server generates PDF (30s) → user waits with spinner
+GOOD: POST /export → queues job → returns { jobId, status: "queued" } immediately
+      Worker picks up job → generates PDF → notifies via WebSocket
+```
+
+Tools: RabbitMQ, Kafka, Bull (Redis-based for Node.js)
+
+### CQRS
+
+- Separate read and write paths — optimize each independently
+- Write model: normalized, ACID-safe, slower
+- Read model: denormalized, cached, optimized purely for speed
+
+### Circuit Breaker
+
+- If downstream service is failing, stop sending requests — fail fast
+- Prevents cascade failures when one service is down
+- Library: `opossum` for Node.js
+
+---
+
+## 11. Monitoring & Profiling Tools — Explained
+
+### Frontend Tools
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **Chrome DevTools — Performance tab** | Records a timeline of JS execution, layout recalculations, and paint events. Shows Long Tasks (red blocks) that block the main thread. | When the page feels laggy — find exactly which code is blocking |
+| **Chrome DevTools — Memory tab** | Heap snapshots and memory allocation over time. Compare snapshots to find leaks. | When app gets slower the longer you use it — memory leak investigation |
+| **Lighthouse** | Automated audit tool built into DevTools. Scores LCP, INP, CLS, TBT, and gives specific recommendations. | Run before and after an optimization to measure improvement objectively |
+| **React DevTools Profiler** | Shows flame graph of component render times and render counts. Tells you why each component rendered. | When React UI is slow or re-rendering excessively |
+| **why-did-you-render** | npm package that logs to console whenever a component re-renders with same props/state. | When you suspect useless re-renders — it catches them with exact cause |
+| **webpack-bundle-analyzer** | Generates an interactive treemap showing every module in your bundle and its size. | When your bundle is too large — reveals which libraries are bloating it |
+| **rollup-plugin-visualizer** | Same as bundle-analyzer but for Vite/Rollup. | Vite projects |
+| **Squoosh** (squoosh.app) | Browser-based image compressor by Google. Converts to WebP/AVIF, lets you compare quality vs size side by side. | Manually converting and optimizing images before adding to project |
+| **WebPageTest** | Tests your page from real browsers in multiple geographic locations. Shows real-world load time and waterfall. | Pre-launch — check how your site performs from India, US, Europe simultaneously |
+| **web-vitals** (npm) | Measures Core Web Vitals (LCP, INP, CLS) in real user browsers, not synthetic testing. | Collect Real User Monitoring (RUM) data in production |
+
+### Backend Tools
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **clinic.js** | Profiles a running Node.js process. Detects event loop blocking (`clinic doctor`), generates flame graphs (`clinic flame`), and finds memory leaks. | Backend is slow under load — find where time is actually going |
+| **0x** | Generates CPU flame graphs from Node.js — shows which functions consume the most CPU time. | High CPU usage — find the hot path |
+| **Artillery** | Load testing tool. Simulates thousands of concurrent users and reports p95/p99 latency, error rates. | Before launch — find your breaking point under realistic load |
+| **k6** | Modern load testing tool written in Go, scripts in JS. | Same as Artillery — more developer-friendly scripting |
+
+### Database Tools
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **`.explain("executionStats")`** | MongoDB's built-in query planner. Shows execution time, documents scanned, index usage. | Every time a DB query is slow — run this first |
+| **MongoDB Atlas Performance Advisor** | Atlas cloud feature. Analyzes your query patterns and automatically recommends missing indexes. | When you're on Atlas and want index suggestions without running explain manually |
+| **MongoDB Compass** | Official GUI for MongoDB. Visual explain plans, query builder, real-time metrics. | Visual investigation of query plans and collection stats |
+
+### Production Monitoring Tools
+
+| Tool | What it is | When to use |
+|---|---|---|
+| **Datadog** | Full-stack APM. Traces every request from frontend to backend to DB query. Shows p95/p99 per endpoint, error rates, infrastructure metrics. | Production performance monitoring at any serious scale |
+| **New Relic** | Similar to Datadog — end-to-end request tracing, browser monitoring, infrastructure. | Production APM — alternative to Datadog |
+| **Sentry** | Error tracking + performance. Catches unhandled errors and slow transactions with stack traces. | Always on in production — catches errors you don't know about |
+| **Grafana + Prometheus** | Prometheus collects metrics (CPU, memory, request counts). Grafana visualizes them as dashboards. | Infrastructure and custom business metrics dashboards |
+
+---
+
+## 12. Interview One-Liners (Quick Recall)
+
+> Open your answer with one of these, then expand into the detail above.
+
+- **"I always measure before I optimize — React DevTools Profiler for components, Lighthouse for page metrics, explain() for DB queries, APM for production APIs. Guessing wastes time."**
+
+- **"Code splitting and lazy loading are related but different. Code splitting cuts the bundle into smaller files at build time. Lazy loading decides when to fetch those files at runtime. You need both — splitting alone doesn't help if you download all chunks at once."**
+
+- **"WebP is a modern image format — 40% smaller than JPEG at the same quality. I use it for all web images. In production I serve it via Cloudinary or Cloudflare which auto-converts and picks the right format per browser."**
+
+- **"To find a slow component: I open React DevTools Profiler, record the slow action, look at the Ranked chart for the longest render, then enable 'why did this render' to find the exact prop or state that triggered it."**
+
+- **"For a slow API endpoint, I first check the response time breakdown — is it DB time or app code? I run explain() on the query, check for COLLSCAN, add an index, and verify the improvement. Then I add Redis caching if it's a frequently-read, rarely-changing dataset."**
+
+- **"N+1 is the most common API performance bug — fetch a list of orders, then query the DB once per order for the user data. Fix it with $in to batch into 2 queries, or $lookup to do it in one aggregation."**
+
+- **"React.memo prevents re-renders by shallowly comparing props. useMemo memoizes an expensive computed value. useCallback memoizes a function reference so React.memo children don't re-render. All three prevent wasted work — but I always profile first before adding them."**
+
+- **"Backend: Never block the event loop. Use async/await for I/O. Cluster across CPU cores. Stream large data. Cache hot reads in Redis. Pool DB connections."**
+
+- **"Database: Index what you filter and sort on. Project only the fields you need. Paginate every list. Run explain() before and after changes. Use aggregation pipeline instead of post-processing in Node."**
+
+- **"Caching layers: Browser → CDN → Redis → DB. Always serve from the nearest, cheapest layer. Cache-aside pattern in Redis. Invalidate on write. Set appropriate TTL per data type."**
+
+- **"For architecture-level performance: move slow work (PDF gen, email, reports) out of the request cycle into a message queue. User gets a 202 immediately, worker processes async, result delivered via WebSocket or notification."**
