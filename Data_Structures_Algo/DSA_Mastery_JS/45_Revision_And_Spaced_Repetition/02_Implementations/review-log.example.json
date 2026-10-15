@@ -1,0 +1,82 @@
+[
+  {
+    "problem": "Two Sum",
+    "topic": "05_Hashing",
+    "link": "05_Hashing/03_Problems/01_Easy/01_two_sum.md",
+    "reviews": [
+      { "date": "2026-10-01", "grade": 2 },
+      { "date": "2026-10-02", "grade": 3 },
+      { "date": "2026-10-06", "grade": 2 }
+    ]
+  },
+  {
+    "problem": "Longest Substring Without Repeating Characters",
+    "topic": "07_Sliding_Window",
+    "link": "07_Sliding_Window/03_Problems/02_Medium/03_longest_substring_without_repeating.md",
+    "reviews": [
+      { "date": "2026-10-10", "grade": 1 },
+      { "date": "2026-10-11", "grade": 1 },
+      { "date": "2026-10-12", "grade": 2 }
+    ]
+  },
+  {
+    "problem": "Valid Parentheses",
+    "topic": "16_Stacks",
+    "link": "16_Stacks/03_Problems/01_Easy/01_valid_parentheses.md",
+    "reviews": [
+      { "date": "2026-10-14", "grade": 3 }
+    ]
+  },
+  {
+    "problem": "Course Schedule",
+    "topic": "26_Topological_Sorting",
+    "link": "26_Topological_Sorting/03_Problems/02_Medium/01_course_schedule.md",
+    "reviews": [
+      { "date": "2026-10-05", "grade": 0 },
+      { "date": "2026-10-06", "grade": 0 }
+    ]
+  },
+  {
+    "problem": "Coin Change",
+    "topic": "29_Dynamic_Programming/01_One_Dimensional_DP",
+    "link": "29_Dynamic_Programming/01_One_Dimensional_DP/03_Problems/02_Medium/15_coin_change.md",
+    "reviews": [
+      { "date": "2026-09-20", "grade": 2 },
+      { "date": "2026-09-21", "grade": 2 },
+      { "date": "2026-09-23", "grade": 2 },
+      { "date": "2026-09-27", "grade": 1 }
+    ]
+  },
+  {
+    "problem": "Number of Islands",
+    "topic": "24_Graph_Traversal",
+    "link": "24_Graph_Traversal/03_Problems/02_Medium/05_number_of_islands.md",
+    "reviews": [
+      { "date": "2026-10-13", "grade": 2 },
+      { "date": "2026-10-14", "grade": 2 }
+    ]
+  },
+  {
+    "problem": "Merge Intervals",
+    "topic": "31_Intervals",
+    "link": "31_Intervals/03_Problems/02_Medium/03_merge_intervals.md",
+    "reviews": [
+      { "date": "2026-06-01", "grade": 2 },
+      { "date": "2026-06-02", "grade": 2 },
+      { "date": "2026-06-04", "grade": 2 },
+      { "date": "2026-06-08", "grade": 2 },
+      { "date": "2026-06-15", "grade": 2 },
+      { "date": "2026-07-01", "grade": 2 },
+      { "date": "2026-07-31", "grade": 2 }
+    ]
+  },
+  {
+    "problem": "Kth Largest Element in an Array",
+    "topic": "19_Heaps_And_Priority_Queues",
+    "link": "19_Heaps_And_Priority_Queues/03_Problems/02_Medium/01_kth_largest_element.md",
+    "reviews": [
+      { "date": "2026-10-08", "grade": 2 },
+      { "date": "2026-10-09", "grade": 2 }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "name": "dsa-mastery-js",
+  "version": "1.0.0",
+  "description": "Complete Data Structures & Algorithms curriculum in JavaScript: scratch to advanced, folder-wise, with runnable implementations, problems, and tests.",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"**/*.test.js\"",
+    "test:topic": "node tests/run-topic.js",
+    "test:all-files": "node tests/run-all-files.js",
+    "run": "node tests/run-file.js",
+    "check:links": "node tests/check-links.js",
+    "index": "node tests/generate-index.js"
+  }
+}
